@@ -18,6 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.service})
       : super(HomeHasData(listOfPlaylist: [])) {
     on<HomeLoadPlaylist>(_loadPlaylist);
+    on<HomeLoadMorePlaylist>(_loadMorePlaylist);
   }
 
   FutureOr<void> _loadPlaylist(
@@ -28,4 +29,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
  emit(HomeHasData(listOfPlaylist: listOfPlaylist));
  
  }
+
+  FutureOr<void> _loadMorePlaylist(HomeLoadMorePlaylist event, Emitter<HomeState> emit)async {
+ if (state is HomeHasData) {
+    HomeHasData currentState = state as HomeHasData;
+    List<Playlist> existingPlaylist = currentState.listOfPlaylist;
+
+    // Fetch more playlists and store them in a new list
+    List<Playlist> playlistMore = await service.fetchPlaylists(channelId: ChannelConstants.CHANNEL_ID);
+
+    // Combine the existing and new playlists
+    List<Playlist> updatedPlaylist = [...existingPlaylist, ...playlistMore];
+
+    // Update the state with the new list
+    emit(HomeHasData(listOfPlaylist: updatedPlaylist));
+  }
+
+  }
 }

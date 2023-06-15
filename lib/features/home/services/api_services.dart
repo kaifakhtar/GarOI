@@ -14,6 +14,7 @@ class APIService {
 
   final String _baseUrl = 'www.googleapis.com';
   String _nextPageToken = '';
+  String _nextPageTokenForPlaylist = '';
 
   Future<Channel> fetchChannel({required String channelId}) async {
     Map<String, String> parameters = {
@@ -88,6 +89,7 @@ class APIService {
     Map<String, String> parameters = {
       'part': 'snippet,contentDetails',
       'channelId': channelId,
+      'pageToken': _nextPageTokenForPlaylist,
       'key': API_KEY,
     };
     Uri uri = Uri.https(
@@ -102,8 +104,13 @@ class APIService {
     // Get Channel
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
-      final  listOfPlaylistsJSON =
-          json.decode(response.body)['items'];
+      final listOfPlaylistsJSON = json.decode(response.body)['items'];
+
+      final jsondata = json.decode(response.body);
+  if (jsondata.containsKey('nextPageToken')) {
+    _nextPageTokenForPlaylist = jsondata['nextPageToken'];
+    // Perform the desired action when 'nextPageToken' exists
+  }
 
       List<Playlist> listOfPlaylistModals = [];
       for (var json in listOfPlaylistsJSON) {

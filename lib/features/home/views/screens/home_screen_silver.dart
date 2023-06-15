@@ -15,15 +15,35 @@ class HomeScreenSilver extends StatefulWidget {
 }
 
 class _HomeScreenSilverState extends State<HomeScreenSilver> {
-  late  HomeBloc homebloc;
+  late HomeBloc homebloc;
+  late ScrollController _scrollController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+
     homebloc = BlocProvider.of<HomeBloc>(context);
     homebloc.add(HomeLoadPlaylist());
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
   }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      // Reach the end of the list
+      // Emit an event to fetch more videos
+      print("In the _scrool");
+      homebloc.add(HomeLoadMorePlaylist());
+
+      // Update the state in the BLoC
+    }
+  }
+@override
+void dispose() {
+  _scrollController.dispose();
+  super.dispose();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +57,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
           }
           if (state is HomeHasData) {
             return CustomScrollView(
+              controller: _scrollController,
               slivers: [
                 SliverPersistentHeader(
                   pinned: true,
@@ -47,6 +68,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                   children: [
                     const Text("Playlist"),
                     ListView.builder(
+                    
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.listOfPlaylist.length,
@@ -139,10 +161,10 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 300;
+  double get maxExtent => 200;
 
   @override
-  double get minExtent => 90;
+  double get minExtent => 150;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../../../models/playlistmodal.dart';
 
@@ -34,10 +35,11 @@ class PlaylistTile extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 90.h-25,
+                  bottom: 0,
                   left: 0,
                   right: 0,
-                  child: Container(alignment: Alignment.center,
+                  child: Container(
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.70),
                       borderRadius: BorderRadius.only(
@@ -47,12 +49,25 @@ class PlaylistTile extends StatelessWidget {
                     ),
                     padding:
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                    child:  Text(
-                      'Playlist',
-                      style: GoogleFonts.lato(
-                        fontSize: 12.sp,
-                        color: Colors.white,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Iconsax.video_square,
+                          size: 16.h,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
+                        Text(
+                          'Playlist',
+                          style: GoogleFonts.lato(
+                            fontSize: 12.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
