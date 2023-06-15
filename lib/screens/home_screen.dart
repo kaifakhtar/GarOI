@@ -4,7 +4,7 @@ import 'package:ytyt/screens/video_screen.dart';
 
 import '../models/channel_model.dart';
 import '../models/video_model.dart';
-import '../services/api_services.dart';
+import '../features/home/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

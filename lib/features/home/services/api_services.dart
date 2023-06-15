@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../models/channel_model.dart';
-import '../models/video_model.dart';
-import '../utilities/keys.dart';
+
+import '../../../models/channel_model.dart';
+import '../../../models/playlistmodal.dart';
+import '../../../models/video_model.dart';
+import '../../../utilities/keys.dart';
 
 class APIService {
   APIService._instantiate();
@@ -44,7 +46,7 @@ class APIService {
     }
   }
 
-   Future<List<Video>> fetchVideosFromPlaylist({required playlistId}) async {
+  Future<List<Video>> fetchVideosFromPlaylist({required playlistId}) async {
     Map<String, String> parameters = {
       'part': 'snippet',
       'playlistId': playlistId,
@@ -82,17 +84,7 @@ class APIService {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-  Future<void> fetchPlaylists({required String channelId}) async {
+  Future<List<Playlist>> fetchPlaylists({required String channelId}) async {
     Map<String, String> parameters = {
       'part': 'snippet,contentDetails',
       'channelId': channelId,
@@ -110,7 +102,19 @@ class APIService {
     // Get Channel
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      final  listOfPlaylistsJSON =
+          json.decode(response.body)['items'];
+
+      List<Playlist> listOfPlaylistModals = [];
+      for (var json in listOfPlaylistsJSON) {
+        listOfPlaylistModals.add(
+          Playlist.fromMap(json),
+        );
+      }
+
+      print(listOfPlaylistModals);
+      return listOfPlaylistModals;
+
       // Map<String, dynamic> data = json.decode(response.body)['items'][0];
       // print(data.toString());
 

@@ -1,24 +1,21 @@
-
-
 import 'package:ytyt/models/video_model.dart';
 
 class Channel {
-
   final String id;
   final String title;
   final String profilePictureUrl;
   final String subscriberCount;
   final String videoCount;
   final String uploadPlaylistId;
-  List<Video>? videos=[]; 
+  List<Video>? videos = [];
 
   Channel({
     required this.id,
     required this.title,
-  required  this.profilePictureUrl,
+    required this.profilePictureUrl,
     required this.subscriberCount,
-  required  this.videoCount,
-  required  this.uploadPlaylistId,
+    required this.videoCount,
+    required this.uploadPlaylistId,
     this.videos,
   });
 
@@ -32,5 +29,4 @@ class Channel {
       uploadPlaylistId: map['contentDetails']['relatedPlaylists']['uploads'],
     );
   }
-
 }
