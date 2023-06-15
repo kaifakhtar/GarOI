@@ -129,16 +129,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // _loadMoreVideos() async {
-  //   _isLoading = true;
-  //   List<Video> moreVideos = await APIService.instance
-  //       .fetchVideosFromPlaylist(playlistId: _channel.uploadPlaylistId);
-  //   List<Video> allVideos = _channel.videos!..addAll(moreVideos);
-  //   setState(() {
-  //     _channel.videos = allVideos;
-  //   });
-  //   _isLoading = false;
-  // }
+  _loadMoreVideos() async {
+    _isLoading = true;
+    List<Video> moreVideos = await APIService.instance
+        .fetchVideosFromPlaylist(playlistId: _channel.uploadPlaylistId);
+    List<Video> allVideos = _channel.videos!..addAll(moreVideos);
+    setState(() {
+      _channel.videos = allVideos;
+    });
+    _isLoading = false;
+  }
 
   @override
   Widget build(BuildContext context) {
