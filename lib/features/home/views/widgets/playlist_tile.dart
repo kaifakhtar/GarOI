@@ -24,7 +24,7 @@ class PlaylistTile extends StatelessWidget {
             final videolistbloc = BlocProvider.of<VideoListBloc>(context);
             videolistbloc.add(VideoListFetch(selectedPlaylist: playlist));
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => VideoListScreen()));
+                MaterialPageRoute(builder: (context) => VideoListScreen(selectedPlaylist: playlist,)));
           },
           child: Container(
             // height: 130.h,

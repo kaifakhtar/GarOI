@@ -47,7 +47,8 @@ class APIService {
     }
   }
 
-  Future<List<Video>> fetchVideosFromPlaylist({required playlistId}) async { ///TODO: Error resolve, last videos adding again and again
+  Future<List<Video>> fetchVideosFromPlaylist({required playlistId}) async {
+    ///TODO: Error resolve, last videos adding again and again
     Map<String, String> parameters = {
       'part': 'snippet',
       'playlistId': playlistId,
@@ -74,11 +75,13 @@ class APIService {
 
       // Fetch first eight videos from uploads playlist
       List<Video> videos = [];
-      videosJson.forEach(
-        (json) => videos.add(
+      for (var json in videosJson) {
+        print(json['snippet']);
+        videos.add(
           Video.fromMap(json['snippet']),
-        ),
-      );
+        );
+      }
+
       return videos;
     } else {
       throw json.decode(response.body)['error']['message'];
@@ -107,10 +110,10 @@ class APIService {
       final listOfPlaylistsJSON = json.decode(response.body)['items'];
 
       final jsondata = json.decode(response.body);
-  if (jsondata.containsKey('nextPageToken')) {
-    _nextPageTokenForPlaylist = jsondata['nextPageToken'];
-    // Perform the desired action when 'nextPageToken' exists
-  }
+      if (jsondata.containsKey('nextPageToken')) {
+        _nextPageTokenForPlaylist = jsondata['nextPageToken'];
+        // Perform the desired action when 'nextPageToken' exists
+      }
 
       List<Playlist> listOfPlaylistModals = [];
       for (var json in listOfPlaylistsJSON) {

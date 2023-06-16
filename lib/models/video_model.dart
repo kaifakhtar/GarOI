@@ -15,8 +15,13 @@ class Video {
     return Video(
       id: snippet['resourceId']['videoId'],
       title: snippet['title'],
-      thumbnailUrl: snippet['thumbnails']['high']['url'],
+      thumbnailUrl: snippet['thumbnails']?['default']?['url'] ?? '',
       channelTitle: snippet['channelTitle'],
     );
+  }
+  
+  @override
+  String toString() {
+    return 'Video: {id: $id, title: $title, thumbnailUrl: $thumbnailUrl, channelTitle: $channelTitle}';
   }
 }

@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 
+import '../../../../models/playlistmodal.dart';
+
 class VideoListScreen extends StatefulWidget {
-  const VideoListScreen({super.key});
+  final Playlist selectedPlaylist;
+
+  const VideoListScreen({super.key, required this.selectedPlaylist});
 
   @override
   State<VideoListScreen> createState() => _VideoListScreenState();
 }
 
 class _VideoListScreenState extends State<VideoListScreen> {
+  late final VideoListBloc videoListBloc;
+  @override
+  void initState() {
+    super.initState();
+
+    videoListBloc = BlocProvider.of<VideoListBloc>(context);
+    videoListBloc.add(VideoListReset());
+    videoListBloc
+        .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   // Reset the bloc and trigger the fetch event after the first frame
+    //   videoListBloc.add(VideoListReset());
+    //   videoListBloc.add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,35 +43,75 @@ class _VideoListScreenState extends State<VideoListScreen> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           children: [
-            Image.network(""),
             SizedBox(
               height: 24.h,
             ),
-            const Text("Video title"),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(16.r),
+                child: Image.network(
+                  widget.selectedPlaylist.thumbnailUrl,
+                  height: 184.h,
+                  width: 328,
+                  fit: BoxFit.cover,
+                )),
             SizedBox(
-              height: 4.h,
+              height: 24.h,
             ),
-            const Text("Video description hjty drghjhjyj"),
+            Text(
+              widget.selectedPlaylist.title,
+              style: GoogleFonts.lato(fontSize: 14.sp),
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            Text(
+              widget.selectedPlaylist.description.isNotEmpty
+                  ? widget.selectedPlaylist.description
+                  : "No description",
+              style: GoogleFonts.lato(fontSize: 12.sp),
+            ),
             const Divider(),
             SizedBox(
               height: 24.h,
             ),
-            const Text("Videos"),
-            SizedBox(
-              child: BlocBuilder<VideoListBloc, VideoListState>(
-                builder: (context, state) {
-                  if (state is VideoListData) {
-                    return ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        return;
-                      },
-                    );
-                  } else if (state is VideoListError) {
-                    return const Text("Some error occurred");
-                  }
-                  return const SizedBox.shrink();
-                },
+            Text(
+              "Videos",
+              style: GoogleFonts.lato(fontSize: 14.sp),
+            ),
+            Expanded(
+              child: SizedBox(
+                child: BlocConsumer<VideoListBloc, VideoListState>(
+                  listener: (context, state) {
+                    if (state is VideoListError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('Error occurred: ${state.errorMessage}'),
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is VideoListData) {
+                      return ListView.builder(
+                        itemCount: state.videoList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (state.videoList[index].title != 'Deleted video') {
+                            return ListTile(
+                              title: Text(state.videoList[index].title),
+                            );
+                          }
+                          return const SizedBox(
+                            height: 0,
+                          );
+                        },
+                      );
+                    } else if (state is VideoListLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
               ),
             ),
           ],

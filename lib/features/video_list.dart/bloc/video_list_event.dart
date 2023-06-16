@@ -11,3 +11,4 @@ class VideoListFetch extends VideoListEvent {
     required this.selectedPlaylist,
   });
 }
+class VideoListReset extends VideoListEvent {}

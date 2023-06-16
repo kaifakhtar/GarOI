@@ -15,12 +15,23 @@ class VideoListBloc extends Bloc<VideoListEvent, VideoListState> {
 
   VideoListBloc({required this.service}) : super(VideoListData(videoList: [])) {
     on<VideoListFetch>(_fetchVideoList);
+    on<VideoListReset>(_resetVideoList);
   }
 
   FutureOr<void> _fetchVideoList(
-      VideoListFetch event, Emitter<VideoListState> emit)async {
+      VideoListFetch event, Emitter<VideoListState> emit) async {
     emit(VideoListLoading());
-    List<Video> listOfVideoFromPlaylist= await service.fetchVideosFromPlaylist(playlistId: event.selectedPlaylist.id);
-  emit(VideoListData(videoList: listOfVideoFromPlaylist));
+
+    try {
+      List<Video> listOfVideoFromPlaylist = await service
+          .fetchVideosFromPlaylist(playlistId: event.selectedPlaylist.id);
+      emit(VideoListData(videoList: listOfVideoFromPlaylist));
+    } catch (err) {
+      emit(VideoListError(errorMessage: err.toString()));
+    }
+  }
+
+  void _resetVideoList(VideoListReset event, Emitter<VideoListState> emit) {
+    emit(VideoListData(videoList: []));
   }
 }

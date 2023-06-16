@@ -19,6 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : super(HomeHasData(listOfPlaylist: [])) {
     on<HomeLoadPlaylist>(_loadPlaylist);
     on<HomeLoadMorePlaylist>(_loadMorePlaylist);
+    
   }
 
   FutureOr<void> _loadPlaylist(
@@ -46,4 +47,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   }
+
 }

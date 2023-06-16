@@ -13,4 +13,10 @@ class VideoListData extends VideoListState {
     required this.videoList,
   });
 }
-class VideoListError extends VideoListState {}
+
+class VideoListError extends VideoListState {
+  final String errorMessage;
+  VideoListError({
+    required this.errorMessage,
+  });
+}
