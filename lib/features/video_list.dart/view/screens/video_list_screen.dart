@@ -17,20 +17,29 @@ class VideoListScreen extends StatefulWidget {
 
 class _VideoListScreenState extends State<VideoListScreen> {
   late final VideoListBloc videoListBloc;
+  late ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
-
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
     videoListBloc = BlocProvider.of<VideoListBloc>(context);
     videoListBloc.add(VideoListReset());
     videoListBloc
         .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
+  }
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   // Reset the bloc and trigger the fetch event after the first frame
-    //   videoListBloc.add(VideoListReset());
-    //   videoListBloc.add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
-    // });
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      // Reach the end of the list
+      // Emit an event to fetch more videos
+      print("In the _scrool");
+      videoListBloc
+          .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
+
+      // Update the state in the BLoC
+    }
   }
 
   @override
@@ -42,6 +51,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
               height: 24.h,
@@ -59,7 +69,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
             ),
             Text(
               widget.selectedPlaylist.title,
-              style: GoogleFonts.lato(fontSize: 14.sp),
+              style: GoogleFonts.lato(
+                  fontSize: 14.sp, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 8.h,
@@ -68,7 +79,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
               widget.selectedPlaylist.description.isNotEmpty
                   ? widget.selectedPlaylist.description
                   : "No description",
-              style: GoogleFonts.lato(fontSize: 12.sp),
+              style: GoogleFonts.lato(fontSize: 12.sp, color: Colors.black45),
             ),
             const Divider(),
             SizedBox(
@@ -94,9 +105,11 @@ class _VideoListScreenState extends State<VideoListScreen> {
                   builder: (context, state) {
                     if (state is VideoListData) {
                       return ListView.builder(
+                        // controller: _scrollController,
                         itemCount: state.videoList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          if (state.videoList[index].title != 'Deleted video') {
+                          if (state.videoList[index].title != 'Deleted video' &&
+                              state.videoList[index].title != 'Private video') {
                             return ListTile(
                               title: Text(state.videoList[index].title),
                             );

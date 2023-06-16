@@ -32,6 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
  }
 
   FutureOr<void> _loadMorePlaylist(HomeLoadMorePlaylist event, Emitter<HomeState> emit)async {
+
  if (state is HomeHasData) {
     HomeHasData currentState = state as HomeHasData;
     List<Playlist> existingPlaylist = currentState.listOfPlaylist;

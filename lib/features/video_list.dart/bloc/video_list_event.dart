@@ -12,3 +12,4 @@ class VideoListFetch extends VideoListEvent {
   });
 }
 class VideoListReset extends VideoListEvent {}
+class VideoListLoadMore extends VideoListEvent {}

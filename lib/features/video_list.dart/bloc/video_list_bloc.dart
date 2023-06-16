@@ -21,7 +21,6 @@ class VideoListBloc extends Bloc<VideoListEvent, VideoListState> {
   FutureOr<void> _fetchVideoList(
       VideoListFetch event, Emitter<VideoListState> emit) async {
     emit(VideoListLoading());
-
     try {
       List<Video> listOfVideoFromPlaylist = await service
           .fetchVideosFromPlaylist(playlistId: event.selectedPlaylist.id);
@@ -29,9 +28,24 @@ class VideoListBloc extends Bloc<VideoListEvent, VideoListState> {
     } catch (err) {
       emit(VideoListError(errorMessage: err.toString()));
     }
+    // try {
+    //   VideoListData currentState = state as VideoListData;
+    //   List<Video> existingVideolist = currentState.videoList;
+
+    //   List<Video> listOfVideoFromPlaylist = await service
+    //       .fetchVideosFromPlaylist(playlistId: event.selectedPlaylist.id);
+    //   List<Video> updatedVideolist = [
+    //     ...existingVideolist,
+    //     ...listOfVideoFromPlaylist
+    //   ];
+    //   emit(VideoListData(videoList: updatedVideolist));
+    // } catch (err) {
+    //   emit(VideoListError(errorMessage: err.toString()));
+    // }
   }
 
   void _resetVideoList(VideoListReset event, Emitter<VideoListState> emit) {
+    // service.resetHasMoreItems();
     emit(VideoListData(videoList: []));
   }
 }

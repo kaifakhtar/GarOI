@@ -16,6 +16,8 @@ class APIService {
   String _nextPageToken = '';
   String _nextPageTokenForPlaylist = '';
 
+
+
   Future<Channel> fetchChannel({required String channelId}) async {
     Map<String, String> parameters = {
       'part': 'snippet, contentDetails, statistics',
@@ -46,14 +48,15 @@ class APIService {
       throw json.decode(response.body)['error']['message'];
     }
   }
+// Flag to track availability of more items
+  // Flag to track availability of more items
 
   Future<List<Video>> fetchVideosFromPlaylist({required playlistId}) async {
-    ///TODO: Error resolve, last videos adding again and again
     Map<String, String> parameters = {
       'part': 'snippet',
       'playlistId': playlistId,
-      'maxResults': '8',
-      'pageToken': _nextPageToken,
+      'maxResults': '1000',
+      //'pageToken': _nextPageToken,
       'key': API_KEY,
     };
     Uri uri = Uri.https(
@@ -65,26 +68,34 @@ class APIService {
       HttpHeaders.contentTypeHeader: 'application/json',
     };
 
-    // Get Playlist Videos
-    var response = await http.get(uri, headers: headers);
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+    try {
+      // Get Playlist Videos
+      var response = await http.get(uri, headers: headers);
 
-      _nextPageToken = data['nextPageToken'] ?? '';
-      List<dynamic> videosJson = data['items'];
+      if (response.statusCode == 200) {
 
-      // Fetch first eight videos from uploads playlist
-      List<Video> videos = [];
-      for (var json in videosJson) {
-        print(json['snippet']);
-        videos.add(
-          Video.fromMap(json['snippet']),
-        );
+        var data = json.decode(response.body);
+
+        int totalvideosfromResponse = data['pageInfo']['totalResults'];
+        
+        _nextPageToken = data['nextPageToken'] ?? '';
+        List<dynamic> videosJson = data['items'];
+
+        // Fetch videos from uploads playlist
+        List<Video> videos = [];
+
+        for (var json in videosJson) {
+          videos.add(
+            Video.fromMap(json['snippet']),
+          );
+        }
+
+        return videos;
+      } else {
+        throw Exception('Failed to fetch videos: ${response.statusCode}');
       }
-
-      return videos;
-    } else {
-      throw json.decode(response.body)['error']['message'];
+    } catch (error) {
+      throw Exception('Failed to fetch videos: $error');
     }
   }
 
