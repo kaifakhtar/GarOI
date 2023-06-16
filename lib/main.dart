@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
+import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 
 
 import 'features/home/bloc/home_bloc.dart';
@@ -22,8 +23,16 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return BlocProvider(
-            create: (context) => HomeBloc(service: APIService.instance),
+          return MultiBlocProvider(
+            providers: [
+    BlocProvider<HomeBloc>(
+      create: (BuildContext context) => HomeBloc(service: APIService.instance),
+    ),
+    BlocProvider<VideoListBloc>(
+      create: (BuildContext context) => VideoListBloc(service: APIService.instance),
+    ),
+            ],
+           
             child: MaterialApp(
               title: 'Flutter Demo',
               theme: ThemeData(
