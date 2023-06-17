@@ -93,7 +93,7 @@ class PlaylistTile extends StatelessWidget {
                     children: [
                       Text(
                         playlist.title,
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.outfit(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -117,7 +117,7 @@ class PlaylistTile extends StatelessWidget {
             ),
           ),
         ),
-        const Divider()
+        //const Divider()
       ],
     );
   }

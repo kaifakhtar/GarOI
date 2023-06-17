@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
+import 'package:ytyt/screens/video_screen.dart';
 
 import '../../../../models/playlistmodal.dart';
 
@@ -47,6 +48,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        title: Text("Video"),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -54,23 +56,23 @@ class _VideoListScreenState extends State<VideoListScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 24.h,
+              height: 4.h,
             ),
             ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: Image.network(
                   widget.selectedPlaylist.thumbnailUrl,
                   height: 184.h,
-                  width: 328,
+                  width: double.infinity,
                   fit: BoxFit.cover,
                 )),
             SizedBox(
-              height: 24.h,
+              height: 12.h,
             ),
             Text(
               widget.selectedPlaylist.title,
-              style: GoogleFonts.lato(
-                  fontSize: 14.sp, fontWeight: FontWeight.w600),
+              style: GoogleFonts.outfit(
+                  fontSize: 18.sp, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 8.h,
@@ -79,7 +81,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
               widget.selectedPlaylist.description.isNotEmpty
                   ? widget.selectedPlaylist.description
                   : "No description",
-              style: GoogleFonts.lato(fontSize: 12.sp, color: Colors.black45),
+              style: GoogleFonts.outfit(fontSize: 14.sp, color: Colors.black45),
             ),
             const Divider(),
             SizedBox(
@@ -87,7 +89,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
             ),
             Text(
               "Videos",
-              style: GoogleFonts.lato(fontSize: 14.sp),
+              style: GoogleFonts.outfit(fontSize: 16.sp),
             ),
             Expanded(
               child: SizedBox(
@@ -111,8 +113,24 @@ class _VideoListScreenState extends State<VideoListScreen> {
                           if (state.videoList[index].title != 'Deleted video' &&
                               state.videoList[index].title != 'Private video') {
                             return ListTile(
-                              title: Text(state.videoList[index].title),
-                            );
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => VideoScreen(
+                                                currentVideo:
+                                                    state.videoList[index],
+                                              )));
+                                },
+                                title: Card(
+                                  child: ListTile(
+                                    title: Text(
+                                      state.videoList[index].title,
+                                      style:
+                                          GoogleFonts.outfit(fontSize: 14.sp),
+                                    ),
+                                  ),
+                                ));
                           }
                           return const SizedBox(
                             height: 0,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ytyt/screens/video_screen.dart';
 
-
 import '../models/channel_model.dart';
 import '../models/video_model.dart';
 import '../features/home/services/api_services.dart';
@@ -24,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _initChannel() async {
     Channel channel = await APIService.instance
         .fetchChannel(channelId: 'UC_ING8slQbpvxRHYp99stJQ');
-         await APIService.instance
+    await APIService.instance
         .fetchPlaylists(channelId: 'UC_ING8slQbpvxRHYp99stJQ');
     setState(() {
       _channel = channel;
@@ -90,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => VideoScreen(id: video.id),
+          builder: (_) => VideoScreen(currentVideo: video),
         ),
       ),
       child: Container(
@@ -153,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _channel.videos!.length != int.parse(_channel.videoCount) &&
                     scrollDetails.metrics.pixels ==
                         scrollDetails.metrics.maxScrollExtent) {
-                //  _loadMoreVideos();
+                  //  _loadMoreVideos();
                 }
                 return false;
               },

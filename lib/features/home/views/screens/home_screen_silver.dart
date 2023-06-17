@@ -21,11 +21,10 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    homebloc = BlocProvider.of<HomeBloc>(context);
-    homebloc.add(HomeLoadPlaylist());
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    homebloc = BlocProvider.of<HomeBloc>(context);
+    homebloc.add(HomeLoadPlaylist());
   }
 
   void _scrollListener() {
@@ -39,11 +38,12 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
       // Update the state in the BLoC
     }
   }
-@override
-void dispose() {
-  _scrollController.dispose();
-  super.dispose();
-}
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +66,16 @@ void dispose() {
                 SliverToBoxAdapter(
                     child: Column(
                   children: [
-                    const Text("Playlist"),
-                    ListView.builder(
+                     Text(
+                  'Playlist',
+                  style: GoogleFonts.outfit(
+                    fontSize: 20.sp,
                     
-                      shrinkWrap: true,
+                  ),
+                ),
+                    ListView.builder(
+                      // controller: _scrollController,
+                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.listOfPlaylist.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -120,7 +126,7 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
                   children: [
                     Text(
                       'Welcome to',
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.outfit(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
@@ -135,10 +141,10 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
                         color: AppColors.gold,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text(
-                      'Learn authentic knowledge\n from the comfort of you home',
-                      style: GoogleFonts.lato(
+                      'Learn authentic knowledge\nfrom the comfort of you home',
+                      style: GoogleFonts.outfit(
                         fontSize: 16.sp,
                         color: Colors.white70,
                       ),
@@ -148,8 +154,8 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
               else
                 Text(
                   'Playlist',
-                  style: GoogleFonts.lato(
-                    fontSize: 16.sp,
+                  style: GoogleFonts.outfit(
+                    fontSize: 20.sp,
                     color: Colors.white,
                   ),
                 ),
@@ -161,10 +167,10 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 200;
+  double get maxExtent => 300.h;
 
   @override
-  double get minExtent => 150;
+  double get minExtent => 200.h;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
