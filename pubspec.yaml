@@ -36,6 +36,8 @@ dependencies:
   google_fonts: ^5.0.0
   http: ^1.0.0
   iconsax: ^0.0.8
+  flutter_animate: ^4.1.1+1
+  animations: ^2.0.7
   youtube_player_flutter: ^8.1.2
 
 dev_dependencies:

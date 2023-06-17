@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -91,6 +92,9 @@ class _VideoListScreenState extends State<VideoListScreen> {
               "Videos",
               style: GoogleFonts.outfit(fontSize: 16.sp),
             ),
+            SizedBox(
+              height: 8.h,
+            ),
             Expanded(
               child: SizedBox(
                 child: BlocConsumer<VideoListBloc, VideoListState>(
@@ -112,25 +116,38 @@ class _VideoListScreenState extends State<VideoListScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           if (state.videoList[index].title != 'Deleted video' &&
                               state.videoList[index].title != 'Private video') {
-                            return ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => VideoScreen(
-                                                currentVideo:
-                                                    state.videoList[index],
-                                              )));
-                                },
-                                title: Card(
-                                  child: ListTile(
+                            return Card(
+                              child: OpenContainer(
+                                transitionType:
+                                    ContainerTransitionType.fadeThrough,
+                                closedBuilder: (context, action) {
+                                  return ListTile(
+                                    // onTap: () {
+                                    //   Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) => VideoScreen(
+                                    //                 currentVideo:
+                                    //                     state.videoList[index],
+                                    //               )));
+                                    // },
+                                    leading: CircleAvatar(
+                                      foregroundImage: NetworkImage(
+                                          state.videoList[index].thumbnailUrl),
+                                    ),
                                     title: Text(
                                       state.videoList[index].title,
                                       style:
                                           GoogleFonts.outfit(fontSize: 14.sp),
                                     ),
-                                  ),
-                                ));
+                                  );
+                                },
+                                openBuilder: (context, action) {
+                                  return VideoScreen(
+                                      currentVideo: state.videoList[index]);
+                                },
+                              ),
+                            );
                           }
                           return const SizedBox(
                             height: 0,
