@@ -1,9 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:ytyt/features/notes/view/screens/note_screen.dart';
 import 'package:ytyt/models/video_model.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -49,7 +51,7 @@ class _VideoScreenState extends State<VideoScreen> {
                       height: 400.h,
                     ),
                     const Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(16.0),
                       child: SingleChildScrollView(
                         child: TextField(
                           // controller: _notesController,
@@ -73,32 +75,38 @@ class _VideoScreenState extends State<VideoScreen> {
                     bottom: 24.h,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: SizedBox(
-                          width: ScreenUtil.defaultSize.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Pause and take notes ...",
-                                  style: GoogleFonts.outfit(fontSize: 16.sp),
-                                ),
-                                Icon(
-                                  Iconsax.pen_add,
-                                  size: 24,
-                                  color: Colors.black,
-                                )
-                              ],
+                      child: OpenContainer(
+                        closedBuilder: (context, action) {
+                          return Card(
+                          child: SizedBox(
+                            width: ScreenUtil.defaultSize.width,
+                            child: Padding(
+                              padding: EdgeInsets.all(16.h),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Pause and take notes ...",
+                                    style: GoogleFonts.outfit(fontSize: 16.sp),
+                                  ),
+                                  const Icon(
+                                    Iconsax.pen_add,
+                                    size: 24,
+                                    color: Colors.black,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                          .animate()
-                          .fadeIn()
-              
-                          .shake(duration: 2000.ms, curve: Curves.easeIn,hz: 8.h),
+                        ).animate().fadeIn().shake(
+                            duration: 2000.ms, curve: Curves.easeIn, hz: 8.h);
+                        },
+                        openBuilder: (context, action) {
+                          return NoteScreen();
+                        },
+                    
+                      ),
                     ))
               ],
             );
