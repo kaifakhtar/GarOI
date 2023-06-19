@@ -23,11 +23,15 @@ class PlaylistTile extends StatelessWidget {
           onTap: () {
             final videolistbloc = BlocProvider.of<VideoListBloc>(context);
             videolistbloc.add(VideoListFetch(selectedPlaylist: playlist));
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => VideoListScreen(selectedPlaylist: playlist,)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => VideoListScreen(
+                          selectedPlaylist: playlist,
+                        )));
           },
           child: Container(
-            // height: 130.h,
+            //height: 130.h,
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             child: Row(
               children: [
@@ -88,22 +92,22 @@ class PlaylistTile extends StatelessWidget {
                   width: 160.w,
                   height: 80.h,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         playlist.title,
                         style: GoogleFonts.outfit(
                           fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                         maxLines: 2, // Limit the text to 2 lines
                         overflow: TextOverflow
                             .ellipsis, // Apply ellipsis for overflow
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 8.h),
                       Text(
-                        "Videos : ${playlist.videoCount.toString()}",
+                        "videos : ${playlist.videoCount.toString()}",
                         style: GoogleFonts.lato(
                           fontSize: 12.sp,
                           color: Colors.black54,

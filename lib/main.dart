@@ -6,7 +6,6 @@ import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 
-
 import 'features/home/bloc/home_bloc.dart';
 import 'features/notes/note_service/note_service.dart';
 
@@ -27,18 +26,21 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MultiBlocProvider(
             providers: [
-    BlocProvider<HomeBloc>(
-      create: (BuildContext context) => HomeBloc(service: APIService.instance),
-    ),
-    BlocProvider<VideoListBloc>(
-      create: (BuildContext context) => VideoListBloc(service: APIService.instance),
-    ),
-    BlocProvider<NoteBloc>(
-      create: (BuildContext context) => NoteBloc(noteDataBaseService: NoteDataBaseService()),
-    ),
+              BlocProvider<HomeBloc>(
+                create: (BuildContext context) =>
+                    HomeBloc(service: APIService.instance),
+              ),
+              BlocProvider<VideoListBloc>(
+                create: (BuildContext context) =>
+                    VideoListBloc(service: APIService.instance),
+              ),
+              BlocProvider<NoteBloc>(
+                create: (BuildContext context) =>
+                    NoteBloc(noteDataBaseService: NoteDataBaseService()),
+              ),
             ],
-           
             child: MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
                 // This is the theme of your application.
@@ -56,8 +58,8 @@ class MyApp extends StatelessWidget {
                 //
                 // This works for code too, not just values: Most code changes can be
                 // tested with just a hot reload.
-                colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFC07F00)),
-                useMaterial3: true,
+                colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF00000)),
+                //    useMaterial3: true,
               ),
               home: const HomeScreenSilver(),
             ),

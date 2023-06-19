@@ -48,6 +48,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading) {
@@ -59,23 +60,51 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
             return CustomScrollView(
               controller: _scrollController,
               slivers: [
-                SliverPersistentHeader(
+                SliverAppBar(
+                  elevation: 1.h,
                   pinned: true,
-                  delegate: MyHeaderDelegate(),
+                  expandedHeight: 150.h,
+                  flexibleSpace: LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      return FlexibleSpaceBar(
+                        centerTitle: true,
+                        title: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            'For you',
+                            style: GoogleFonts.readexPro(
+                              color: Colors.black,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  backgroundColor: Colors.white,
                 ),
                 SliverToBoxAdapter(
                     child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
-                  'Playlist',
-                  style: GoogleFonts.outfit(
-                    fontSize: 20.sp,
                     
-                  ),
-                ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.w),
+                      child: Text(
+                        'Playlist',
+                        style: GoogleFonts.readexPro(
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                    ),
                     ListView.builder(
                       // controller: _scrollController,
-                       shrinkWrap: true,
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.listOfPlaylist.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -141,7 +170,7 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
                         color: AppColors.gold,
                       ),
                     ),
-                     SizedBox(height: 16.h),
+                    SizedBox(height: 16.h),
                     Text(
                       'Learn authentic knowledge\nfrom the comfort of you home',
                       style: GoogleFonts.outfit(

@@ -48,8 +48,14 @@ class _VideoListScreenState extends State<VideoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
-        title: Text("Video"),
+        backgroundColor: Colors.white,
+        title: Text(
+          "Video",
+          style: GoogleFonts.readexPro(color: Colors.black),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -72,25 +78,27 @@ class _VideoListScreenState extends State<VideoListScreen> {
             ),
             Text(
               widget.selectedPlaylist.title,
-              style: GoogleFonts.outfit(
+              style: GoogleFonts.readexPro(
                   fontSize: 18.sp, fontWeight: FontWeight.w600),
             ),
             SizedBox(
-              height: 8.h,
+              height: 12.h,
             ),
             Text(
               widget.selectedPlaylist.description.isNotEmpty
                   ? widget.selectedPlaylist.description
                   : "No description",
+              maxLines: 3,
+              overflow: TextOverflow.fade,
               style: GoogleFonts.outfit(fontSize: 14.sp, color: Colors.black45),
             ),
             const Divider(),
             SizedBox(
-              height: 24.h,
+              height: 12.h,
             ),
             Text(
               "Videos",
-              style: GoogleFonts.outfit(fontSize: 16.sp),
+              style: GoogleFonts.readexPro(fontSize: 16.sp),
             ),
             SizedBox(
               height: 8.h,
