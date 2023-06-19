@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
+import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 
 
 import 'features/home/bloc/home_bloc.dart';
+import 'features/notes/note_service/note_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +32,9 @@ class MyApp extends StatelessWidget {
     ),
     BlocProvider<VideoListBloc>(
       create: (BuildContext context) => VideoListBloc(service: APIService.instance),
+    ),
+    BlocProvider<NoteBloc>(
+      create: (BuildContext context) => NoteBloc(noteDataBaseService: NoteDataBaseService()),
     ),
             ],
            

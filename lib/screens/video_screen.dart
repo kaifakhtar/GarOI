@@ -1,11 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:ytyt/features/notes/bloc/note_bloc.dart';
+
 import 'package:ytyt/features/notes/view/screens/note_screen.dart';
+import 'package:ytyt/features/notes/view/widgets/note_card.dart';
 import 'package:ytyt/models/video_model.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -19,10 +24,13 @@ class VideoScreen extends StatefulWidget {
 
 class _VideoScreenState extends State<VideoScreen> {
   late YoutubePlayerController _controller;
-
+  late final NoteBloc noteBloc;
   @override
   void initState() {
     super.initState();
+
+    noteBloc = BlocProvider.of<NoteBloc>(context);
+    noteBloc.add(LoadNotes(videoId: widget.currentVideo.id));
     _controller = YoutubePlayerController(
       initialVideoId: widget.currentVideo.id,
       flags: const YoutubePlayerFlags(
@@ -48,21 +56,42 @@ class _VideoScreenState extends State<VideoScreen> {
                 Column(
                   children: [
                     SizedBox(
-                      height: 400.h,
+                      height: 325.h,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: SingleChildScrollView(
-                        child: TextField(
-                          // controller: _notesController,
-                          maxLines:
-                              10, // Allow the text field to grow dynamically
-                          decoration: InputDecoration(
-                            hintText: 'Pause and write your notes here...',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
+                    BlocBuilder<NoteBloc, NoteState>(
+                      builder: (context, state) {
+                        if (state is NoNotes) {
+                          print("No state ran");
+                          return const Center(
+                            child: Text("No Notes"),
+                          );
+                        }
+
+                        if (state is NoteLoading) {
+                          print("Loading state ran");
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state is NoteLoaded) {
+                          return SizedBox(
+                            height: 330.h,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: state.notes.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: NoteCard(note: state.notes[index]),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                        return Text("Useless builer");
+                      },
                     ),
                   ],
                 ),
@@ -75,37 +104,8 @@ class _VideoScreenState extends State<VideoScreen> {
                     bottom: 24.h,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: OpenContainer(
-                        closedBuilder: (context, action) {
-                          return Card(
-                          child: SizedBox(
-                            width: ScreenUtil.defaultSize.width,
-                            child: Padding(
-                              padding: EdgeInsets.all(16.h),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Pause and take notes ...",
-                                    style: GoogleFonts.outfit(fontSize: 16.sp),
-                                  ),
-                                  const Icon(
-                                    Iconsax.pen_add,
-                                    size: 24,
-                                    color: Colors.black,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ).animate().fadeIn().shake(
-                            duration: 2000.ms, curve: Curves.easeIn, hz: 8.h);
-                        },
-                        openBuilder: (context, action) {
-                          return NoteScreen();
-                        },
-                    
+                      child: TakeNotesFloatingButton(
+                        videoId: widget.currentVideo.id,
                       ),
                     ))
               ],
@@ -164,6 +164,49 @@ class _VideoScreenState extends State<VideoScreen> {
           const Divider()
         ],
       ),
+    );
+  }
+}
+
+class TakeNotesFloatingButton extends StatelessWidget {
+  final String videoId;
+  const TakeNotesFloatingButton({
+    Key? key,
+    required this.videoId,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OpenContainer(
+      closedBuilder: (context, action) {
+        return Card(
+          child: SizedBox(
+            width: ScreenUtil.defaultSize.width,
+            child: Padding(
+              padding: EdgeInsets.all(16.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Pause and take notes ...",
+                    style: GoogleFonts.outfit(fontSize: 16.sp),
+                  ),
+                  const Icon(
+                    Iconsax.pen_add,
+                    size: 24,
+                    color: Colors.black,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ).animate().fadeIn();
+      },
+      openBuilder: (context, action) {
+        return NoteScreen(
+          videoId: videoId,
+        );
+      },
     );
   }
 }
