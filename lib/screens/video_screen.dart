@@ -77,7 +77,7 @@ class _VideoScreenState extends State<VideoScreen> {
                           return SizedBox(
                             height: 330.h,
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(vertical: 8.h),
+                              padding: EdgeInsets.symmetric(vertical: 8.h),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
@@ -86,7 +86,9 @@ class _VideoScreenState extends State<VideoScreen> {
                                   return Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 16.w),
-                                    child: NoteCard(note: state.notes[index],vidId:widget.currentVideo.id),
+                                    child: NoteCard(
+                                        note: state.notes[index],
+                                        vidId: widget.currentVideo.id),
                                   );
                                 },
                               ),
@@ -156,8 +158,8 @@ class _VideoScreenState extends State<VideoScreen> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     widget.currentVideo.title,
-                    style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
+                    style: GoogleFonts.readexPro(
+                      fontSize: 16.sp,
                     ),
                   ),
                 ),
@@ -180,36 +182,42 @@ class TakeNotesFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OpenContainer(
-      closedBuilder: (context, action) {
-        return Card(
-          child: SizedBox(
+    return Align(
+      alignment: Alignment.center,
+      child: OpenContainer(
+        closedBuilder: (context, action) {
+          return SizedBox(
             width: ScreenUtil.defaultSize.width,
-            child: Padding(
-              padding: EdgeInsets.all(16.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Pause and take notes ...",
-                    style: GoogleFonts.outfit(fontSize: 16.sp),
-                  ),
-                  const Icon(
-                    Iconsax.pen_add,
-                    size: 24,
-                    color: Colors.black,
-                  )
-                ],
-              ),
+            child: Card(
+              elevation: 4.h,
+              color: Color.fromARGB(255, 255, 241, 200),
+              child: Padding(
+                padding: EdgeInsets.all(16.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Pause and take notes ...",
+                      style: GoogleFonts.outfit(
+                          fontSize: 16.sp, color: Colors.black87),
+                    ),
+                    const Icon(
+                      Iconsax.pen_add,
+                      size: 24,
+                      color: Colors.black,
+                    )
+                  ],
+                ),
+              ).animate().fadeIn(),
             ),
-          ),
-        ).animate().fadeIn();
-      },
-      openBuilder: (context, action) {
-        return NoteScreen(
-          videoId: videoId,
-        );
-      },
+          );
+        },
+        openBuilder: (context, action) {
+          return NoteScreen(
+            videoId: videoId,
+          );
+        },
+      ),
     );
   }
 }

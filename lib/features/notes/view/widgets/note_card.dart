@@ -4,7 +4,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ytyt/features/home/bloc/home_bloc.dart';
+
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 
 import '../../../../models/note_modal.dart';
@@ -47,7 +47,8 @@ class NoteCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 16.sp,
+                      color: Colors.black87
                     ),
                   ),
                 ),
@@ -62,7 +63,7 @@ class NoteCard extends StatelessWidget {
                             maxLines: 9,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.outfit(
-                                fontSize: 16.sp, color: Colors.black54)),
+                                fontSize: 14.sp, color: Colors.black54)),
                       ),
                       Text(timeago.format(note.timestamp),
                           style: GoogleFonts.outfit(

@@ -48,7 +48,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      backgroundColor: const Color.fromARGB(255, 252, 251, 247),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading) {

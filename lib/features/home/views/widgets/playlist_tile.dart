@@ -31,6 +31,7 @@ class PlaylistTile extends StatelessWidget {
                         )));
           },
           child: Container(
+            color: Colors.white,
             //height: 130.h,
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             child: Row(
