@@ -76,17 +76,20 @@ class _VideoScreenState extends State<VideoScreen> {
                         if (state is NoteLoaded) {
                           return SizedBox(
                             height: 330.h,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: state.notes.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
-                                  child: NoteCard(note: state.notes[index]),
-                                );
-                              },
+                            child: Padding(
+                              padding:  EdgeInsets.symmetric(vertical: 8.h),
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: state.notes.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                    child: NoteCard(note: state.notes[index],vidId:widget.currentVideo.id),
+                                  );
+                                },
+                              ),
                             ),
                           );
                         }
