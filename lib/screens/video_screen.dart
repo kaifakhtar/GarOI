@@ -35,6 +35,7 @@ class _VideoScreenState extends State<VideoScreen> {
       initialVideoId: widget.currentVideo.id,
       flags: const YoutubePlayerFlags(
         mute: false,
+        hideControls: true,
         useHybridComposition: false,
         autoPlay: true,
       ),
@@ -181,7 +182,7 @@ class _VideoScreenState extends State<VideoScreen> {
           height: 56.h,
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
           child: Text(
             'Make notes!',
             style: GoogleFonts.readexPro(
@@ -191,7 +192,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
           child: Text(
             'Improved retention and understanding.',
             style:
@@ -199,7 +200,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
           child: Text(
             'Enhanced organization and structure.',
             style:
@@ -207,7 +208,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
           child: Text(
             'Promotes active learning.',
             style:
@@ -215,7 +216,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
           child: Text(
             'Increases focus and attention.',
             style:

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/notes/view/screens/note_screen.dart';
+import 'package:ytyt/features/notes/view/screens/update_note_screen.dart';
 
 import '../../../../models/note_modal.dart';
 
@@ -38,7 +39,7 @@ class NoteCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.h, 16.h, 0, 16.h),
+            padding: EdgeInsetsDirectional.fromSTEB(16.h, 16.h, 16.h, 16.h),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,25 +50,21 @@ class NoteCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                        fontSize: 16.sp, color: Colors.black87),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.sp,
+                        color: Colors.black87),
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(note.description,
-                          maxLines: 9,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.outfit(
-                              fontSize: 14.sp, color: Colors.black54)),
-                      Text(timeago.format(note.timestamp),
-                          style: GoogleFonts.outfit(
-                              fontSize: 12.sp, color: Colors.black38)),
-                    ],
-                  ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                SizedBox(
+                  height: 200.h,
+                  child: Text(note.description,
+                      maxLines: 11,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.outfit(
+                          fontSize: 14.sp, color: Colors.black54)),
                 ),
               ],
             ),
@@ -97,24 +94,39 @@ class NoteCard extends StatelessWidget {
             right: 56.w,
             child: GestureDetector(
               onTap: () {
-              // //  final notebloc = BlocProvider.of<NoteBloc>(context);
-              //     Navigator.push(
-              //                             context,
-              //                             MaterialPageRoute(
-              //                                 builder: (context) => NoteScreen(
-              //                                       videoId:vidId ,
-              //                                     )));
+                // //  final notebloc = BlocProvider.of<NoteBloc>(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UpdateNoteScreen(
+                              videoId: vidId,
+                              oldNote: note,
+                            )));
               },
               child: CircleAvatar(
                 radius: 16.r,
                 backgroundColor: Colors.blue[900],
                 child: Icon(
-                  Iconsax.note_remove,
+                  Iconsax.magicpen5,
                   color: Colors.white,
                   size: 20.h,
                 ),
               ),
-            ))
+            )),
+        Positioned(
+          bottom: 28.h,
+          left: 16.w,
+          child: Text(timeago.format(note.timestamp),
+              style:
+                  GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
+        ),
+        Positioned(
+          bottom: 28.h,
+          left: 96.w,
+          child: Text("${note.words.toString()} words",
+              style:
+                  GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
+        )
       ],
     ); // Generated code for this Container Widget...
   }
