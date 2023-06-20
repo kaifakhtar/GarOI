@@ -62,8 +62,8 @@ class _VideoScreenState extends State<VideoScreen> {
                       builder: (context, state) {
                         if (state is NoNotes) {
                           print("No state ran");
-                          return const Center(
-                            child: Text("No Notes"),
+                          return Center(
+                            child: noNotesWidget(),
                           );
                         }
 
@@ -95,7 +95,7 @@ class _VideoScreenState extends State<VideoScreen> {
                             ),
                           );
                         }
-                        return Text("Useless builer");
+                        return const Text("Useless builer");
                       },
                     ),
                   ],
@@ -171,6 +171,64 @@ class _VideoScreenState extends State<VideoScreen> {
       ),
     );
   }
+
+  Widget noNotesWidget() {
+    return // Generated code for this Column Widget...
+        Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 56.h,
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+          child: Text(
+            'Make notes!',
+            style: GoogleFonts.readexPro(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          child: Text(
+            'Improved retention and understanding.',
+            style:
+                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          child: Text(
+            'Enhanced organization and structure.',
+            style:
+                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          child: Text(
+            'Promotes active learning.',
+            style:
+                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          child: Text(
+            'Increases focus and attention.',
+            style:
+                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+          ),
+        ),
+        Text(
+          'Effective study aid.',
+          style: GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+        ),
+      ],
+    );
+  }
 }
 
 class TakeNotesFloatingButton extends StatelessWidget {
@@ -190,7 +248,7 @@ class TakeNotesFloatingButton extends StatelessWidget {
             width: ScreenUtil.defaultSize.width,
             child: Card(
               elevation: 4.h,
-              color: Color.fromARGB(255, 255, 241, 200),
+              color: const Color.fromARGB(255, 255, 241, 200),
               child: Padding(
                 padding: EdgeInsets.all(16.h),
                 child: Row(

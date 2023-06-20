@@ -129,4 +129,16 @@ class NoteDataBaseService {
       whereArgs: [noteId],
     );
   }
+
+//  Future<bool> checkNoteExists(Note note) async {
+// Database db = await database;
+
+//     final List<Map<String, dynamic>> result = await db.query(
+//       'notes',
+//       where: 'note_id = ?',
+//       whereArgs: [note.id],
+//     );
+
+//     return result.isNotEmpty;
+//   }
 }
