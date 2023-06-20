@@ -105,7 +105,7 @@ class NoteCard extends StatelessWidget {
               },
               child: CircleAvatar(
                 radius: 16.r,
-                backgroundColor: Colors.blue[900],
+                backgroundColor: Colors.blue,
                 child: Icon(
                   Iconsax.magicpen5,
                   color: Colors.white,
