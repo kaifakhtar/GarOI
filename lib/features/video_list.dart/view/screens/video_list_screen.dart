@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
+import 'package:ytyt/features/video_list.dart/view/widgets/video_tile.dart';
 import 'package:ytyt/screens/video_screen.dart';
 
 import '../../../../models/playlistmodal.dart';
@@ -60,19 +61,33 @@ class _VideoListScreenState extends State<VideoListScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 4.h,
             ),
-            ClipRRect(
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: 2.r, // Spread radius
+                    blurRadius: 5.r, // Blur radius
+                    offset: Offset(0, 2.h), // Offset in the x and y directions
+                  ),
+                ],
+              ),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: Image.network(
                   widget.selectedPlaylist.thumbnailUrl,
                   height: 184.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                )),
+                ),
+              ),
+            ),
             SizedBox(
               height: 12.h,
             ),
@@ -94,14 +109,16 @@ class _VideoListScreenState extends State<VideoListScreen> {
             ),
             const Divider(),
             SizedBox(
-              height: 12.h,
+              height: 16.h,
             ),
             Text(
-              "Videos",
-              style: GoogleFonts.readexPro(fontSize: 16.sp),
+              'Videos',
+              style: GoogleFonts.readexPro(
+                fontSize: 18.sp,
+              ),
             ),
             SizedBox(
-              height: 8.h,
+              height: 12.h,
             ),
             Expanded(
               child: SizedBox(
@@ -124,38 +141,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           if (state.videoList[index].title != 'Deleted video' &&
                               state.videoList[index].title != 'Private video') {
-                            return Card(
-                              child: OpenContainer(
-                                transitionType:
-                                    ContainerTransitionType.fadeThrough,
-                                closedBuilder: (context, action) {
-                                  return ListTile(
-                                    // onTap: () {
-                                    //   Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //           builder: (context) => VideoScreen(
-                                    //                 currentVideo:
-                                    //                     state.videoList[index],
-                                    //               )));
-                                    // },
-                                    leading: CircleAvatar(
-                                      foregroundImage: NetworkImage(
-                                          state.videoList[index].thumbnailUrl),
-                                    ),
-                                    title: Text(
-                                      state.videoList[index].title,
-                                      style:
-                                          GoogleFonts.outfit(fontSize: 14.sp),
-                                    ),
-                                  );
-                                },
-                                openBuilder: (context, action) {
-                                  return VideoScreen(
-                                      currentVideo: state.videoList[index]);
-                                },
-                              ),
-                            );
+                            return VideoListTile(
+                                      video: state.videoList[index]);
                           }
                           return const SizedBox(
                             height: 0,

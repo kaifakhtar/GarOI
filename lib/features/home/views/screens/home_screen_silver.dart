@@ -48,7 +48,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 252, 251, 247),
+      backgroundColor: Colors.white,
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading) {
@@ -62,8 +62,10 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
               slivers: [
                 SliverAppBar(
                   elevation: 1.h,
+                 
                   pinned: true,
-                  expandedHeight: 150.h,
+                 // bottom: PreferredSize(child: Text("hdf"), preferredSize: Size.fromHeight(10)),
+                  expandedHeight: 100.h,
                   flexibleSpace: LayoutBuilder(
                     builder:
                         (BuildContext context, BoxConstraints constraints) {
@@ -92,15 +94,15 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                     SizedBox(
                       height: 24.h,
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(left: 16.w),
-                    //   child: Text(
-                    //     'Playlist',
-                    //     style: GoogleFonts.readexPro(
-                    //       fontSize: 20.sp,
-                    //     ),
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.w),
+                      child: Text(
+                        'What do you want to study?',
+                        style: GoogleFonts.readexPro(
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                    ),
                     ListView.builder(
                       // controller: _scrollController,
                       shrinkWrap: true,

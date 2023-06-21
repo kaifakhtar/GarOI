@@ -71,7 +71,7 @@ class NoteCard extends StatelessWidget {
           ),
         ),
         Positioned(
-            bottom: 28.h,
+            bottom: 16.h,
             right: 16.w,
             child: GestureDetector(
               onTap: () {
@@ -90,7 +90,7 @@ class NoteCard extends StatelessWidget {
               ),
             )),
         Positioned(
-            bottom: 28.h,
+            bottom: 16.h,
             right: 56.w,
             child: GestureDetector(
               onTap: () {
@@ -114,14 +114,14 @@ class NoteCard extends StatelessWidget {
               ),
             )),
         Positioned(
-          bottom: 28.h,
+          bottom: 16.h,
           left: 16.w,
           child: Text(timeago.format(note.timestamp),
               style:
                   GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
         ),
         Positioned(
-          bottom: 28.h,
+          bottom: 16.h,
           left: 96.w,
           child: Text("${note.words.toString()} words",
               style:

@@ -18,6 +18,7 @@ class NoteScreen extends StatefulWidget {
 }
 
 class _NoteScreenState extends State<NoteScreen> {
+  bool isButtonEnabled = true;
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
   final TextEditingController _descriptionController = TextEditingController();
@@ -41,72 +42,85 @@ class _NoteScreenState extends State<NoteScreen> {
     super.initState();
 
     noteBloc = BlocProvider.of<NoteBloc>(context);
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        noteBloc.add(LoadNotes(videoId: widget.videoId));
-        // Handle back button press
-        // Return true to allow popping the screen, or false to prevent it
-        return true; // You can customize the behavior here
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Add note'),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(16.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Title',
-                ),
+    return Hero(
+      tag: 'addnote',
+      child: WillPopScope(
+        onWillPop: () async {
+          noteBloc.add(LoadNotes(videoId: widget.videoId));
+          // Handle back button press
+          // Return true to allow popping the screen, or false to prevent it
+          return true; // You can customize the behavior here
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            title: const Text('Add note'),
+          ),
+          body: Padding(
+            padding: EdgeInsets.all(16.h),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Title',
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextField(
+                    controller: _descriptionController,
+                    maxLines: 20,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Description',
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: isButtonEnabled
+                        ? () {
+                            // Save note logic
+                            String title = _titleController.text;
+                            String description = _descriptionController.text;
+                            Note note = Note(
+                                title: title,
+                                description: description,
+                                videoId: widget.videoId,
+                                words: countWords(description),
+                                timestamp: DateTime.now());
+                      
+                            noteBloc.add(AddNote(note: note));
+                         
+                            // Perform necessary actions with the note data
+                            print(note.toString());
+                          }
+                        : null,
+                    child: BlocBuilder<NoteBloc  , NoteState>(
+                      builder: (context, state) {
+                        if (state is NoteLoading) {
+                           print("Note loading state");
+                          return const CircularProgressIndicator();
+                        }  if (state is NoteAdded) {
+                          print("Note added state");
+                          isButtonEnabled = false;
+                    
+                       
+                          return const Icon(Iconsax.tick_circle);
+                        }
+                        return const Text('Save');
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16.0),
-              TextField(
-                controller: _descriptionController,
-                maxLines: 30,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  // Save note logic
-                  String title = _titleController.text;
-                  String description = _descriptionController.text;
-                  Note note = Note(
-                      title: title,
-                      description: description,
-                      videoId: widget.videoId,
-                      words: countWords(description),
-                      timestamp: DateTime.now());
-
-                  noteBloc.add(AddNote(note: note));
-                  noteBloc.add(LoadNotes(videoId: widget.videoId));
-                  // Perform necessary actions with the note data
-                  print(note.toString());
-              
-                },
-                child: BlocBuilder<NoteBloc, NoteState>(
-                  builder: (context, state) {
-                    if (state is NoteLoading) {
-                      return const CircularProgressIndicator();
-                    } else if (state is NoteAdded) {
-                      return const Icon(Iconsax.tick_circle);
-                    }
-                    return const Text('Save');
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

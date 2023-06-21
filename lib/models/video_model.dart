@@ -17,7 +17,7 @@ class Video {
     return Video(
       id: snippet['resourceId']['videoId'],
       title: snippet['title'],
-      thumbnailUrl: snippet['thumbnails']?['default']?['url'] ?? '',
+      thumbnailUrl: snippet['thumbnails']?['standard']?['url'] ?? '',
       channelTitle: snippet['channelTitle'],
       position: snippet['position'], // Set the initial position value as desired
     );

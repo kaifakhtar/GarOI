@@ -17,8 +17,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     on<LoadNotes>(_loadNotes);
     on<AddNote>(_addNote);
     on<DeleteNote>(_deleteNote);
-     on<UpdateNote>(_updateNote);
-  
+    on<UpdateNote>(_updateNote);
   }
 
   FutureOr<void> _loadNotes(LoadNotes event, Emitter<NoteState> emit) async {
@@ -38,10 +37,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     }
   }
 
-  FutureOr<void> _addNote(AddNote event, Emitter<NoteState> emit) {
+  FutureOr<void> _addNote(AddNote event, Emitter<NoteState> emit) async {
     emit(NoteLoading());
     try {
-      noteDataBaseService.insertNoteForVideo(event.note);
+      await noteDataBaseService.insertNoteForVideo(event.note);
+      print("after add note");
       emit(NoteAdded());
     } catch (e) {
       print("Error:${e.toString}");
@@ -57,12 +57,13 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
       emit(NoteError(message: "Some error happened while deleting"));
     }
   }
-    FutureOr<void> _updateNote(UpdateNote event, Emitter<NoteState> emit) {
+
+  FutureOr<void> _updateNote(UpdateNote event, Emitter<NoteState> emit) {
     emit(NoteLoading());
     try {
       noteDataBaseService.updateNote(event.updatedNote);
       emit(NoteSuccess(message: "Done updating"));
-       emit(NoteAdded());
+      emit(NoteAdded());
     } catch (e) {
       emit(NoteError(message: "Something error happened while updating"));
     }

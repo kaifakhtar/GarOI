@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 
 import 'package:ytyt/features/notes/view/screens/note_screen.dart';
@@ -35,7 +36,6 @@ class _VideoScreenState extends State<VideoScreen> {
       initialVideoId: widget.currentVideo.id,
       flags: const YoutubePlayerFlags(
         mute: false,
-        
         useHybridComposition: false,
         autoPlay: true,
       ),
@@ -78,7 +78,7 @@ class _VideoScreenState extends State<VideoScreen> {
                           return SizedBox(
                             height: 330.h,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.h),
+                              padding: EdgeInsets.only(top: 32.h),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
@@ -106,19 +106,21 @@ class _VideoScreenState extends State<VideoScreen> {
                     left: 0,
                     //width: MediaQuery.of(context).size.width,
                     child: videoPlayerCard(player)),
-                Positioned(
-                    bottom: 24.h,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TakeNotesFloatingButton(
-                        videoId: widget.currentVideo.id,
-                      ),
-                    ))
+                // Positioned(
+                //     bottom: 24.h,
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: TakeNotesFloatingButton(
+                //         videoId: widget.currentVideo.id,
+                //       ),
+                //     ))
               ],
             );
           },
           player: YoutubePlayer(
             controller: _controller,
+            progressColors: const ProgressBarColors(
+                handleColor: AppColors.gold, playedColor: AppColors.gold),
             showVideoProgressIndicator: true,
             onReady: () {
               //_controller.addListener(listener);
@@ -126,6 +128,20 @@ class _VideoScreenState extends State<VideoScreen> {
             },
           ),
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'addnote',
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NoteScreen(
+                        videoId: widget.currentVideo.id,
+                      )));
+        },
+        label: const Text("Pause and add note"),
+        icon: const Icon(Iconsax.note_1),
       ),
     );
   }
