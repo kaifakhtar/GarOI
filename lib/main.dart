@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF00000)),
                 //    useMaterial3: true,
               ),
-              home: const HomeScreenSilver(),
+              home: const BottomNavScreen(),
             ),
           );
         });

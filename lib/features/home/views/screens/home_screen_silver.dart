@@ -72,7 +72,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         title: Align(
                           alignment: Alignment.bottomCenter,
                           child: Text(
-                            'For you',
+                            'Playlists',
                             style: GoogleFonts.readexPro(
                               color: Colors.black,
                               fontSize: 20.sp,
@@ -89,19 +89,18 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     SizedBox(
                       height: 24.h,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w),
-                      child: Text(
-                        'Playlist',
-                        style: GoogleFonts.readexPro(
-                          fontSize: 20.sp,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 16.w),
+                    //   child: Text(
+                    //     'Playlist',
+                    //     style: GoogleFonts.readexPro(
+                    //       fontSize: 20.sp,
+                    //     ),
+                    //   ),
+                    // ),
                     ListView.builder(
                       // controller: _scrollController,
                       shrinkWrap: true,
