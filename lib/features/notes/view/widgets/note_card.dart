@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
-import 'package:ytyt/features/notes/view/screens/note_screen.dart';
+
 import 'package:ytyt/features/notes/view/screens/update_note_screen.dart';
 
 import '../../../../models/note_modal.dart';
