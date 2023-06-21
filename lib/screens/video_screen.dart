@@ -131,6 +131,7 @@ class _VideoScreenState extends State<VideoScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.black,
         heroTag: 'addnote',
         onPressed: () {
           Navigator.push(
@@ -140,8 +141,14 @@ class _VideoScreenState extends State<VideoScreen> {
                         videoId: widget.currentVideo.id,
                       )));
         },
-        label: const Text("Pause and add note"),
-        icon: const Icon(Iconsax.note_1),
+        label: Text(
+          "Pause and add note",
+          style: GoogleFonts.readexPro(color: AppColors.gold),
+        ),
+        icon: const Icon(
+          Iconsax.note_1,
+          color: AppColors.gold,
+        ),
       ),
     );
   }
@@ -177,6 +184,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     widget.currentVideo.title,
                     style: GoogleFonts.readexPro(
                       fontSize: 16.sp,
+                      fontWeight: FontWeight.w500
                     ),
                   ),
                 ),
