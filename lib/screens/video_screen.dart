@@ -59,6 +59,9 @@ class _VideoScreenState extends State<VideoScreen> {
                     SizedBox(
                       height: 325.h,
                     ),
+                    OutlinedButton.icon(onPressed: (){
+                      
+                    }, icon: const Icon(Iconsax.export), label: const Text("Export these notes")),
                     BlocBuilder<NoteBloc, NoteState>(
                       builder: (context, state) {
                         if (state is NoNotes) {
