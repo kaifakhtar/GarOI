@@ -1,16 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ytyt/features/auth/view/screens/login_screen.dart';
 import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 
+import 'features/auth/view/screens/signup_screen.dart';
 import 'features/home/bloc/home_bloc.dart';
 import 'features/notes/note_service/note_service.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -62,7 +67,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF00000)),
                 //    useMaterial3: true,
               ),
-              home: const BottomNavScreen(),
+              home:  SignUpScreen(),
             ),
           );
         });
