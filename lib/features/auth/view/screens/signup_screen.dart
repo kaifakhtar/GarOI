@@ -39,7 +39,7 @@ class SignUpScreen extends StatelessWidget {
                 signUp(email, password);
                 // Perform sign up operations with the entered data
               },
-              child: Text('Sign Up'),
+              child: const Text('Sign Up'),
             ),
           ],
         ),
