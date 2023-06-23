@@ -14,6 +14,8 @@ import 'package:ytyt/features/notes/view/screens/note_screen.dart';
 import 'package:ytyt/features/notes/view/widgets/note_card.dart';
 import 'package:ytyt/models/video_model.dart';
 
+import '../features/notes/note_service/note_pdf_service.dart';
+
 class VideoScreen extends StatefulWidget {
   final Video currentVideo;
 
@@ -59,6 +61,13 @@ class _VideoScreenState extends State<VideoScreen> {
                     SizedBox(
                       height: 325.h,
                     ),
+                    OutlinedButton.icon(
+                        onPressed: () {
+                          final notePdfService = NotePdfService();
+                          notePdfService.generatePDF();
+                        },
+                        icon: const Icon(Iconsax.export),
+                        label: const Text("Export these notes")),
                     BlocBuilder<NoteBloc, NoteState>(
                       builder: (context, state) {
                         if (state is NoNotes) {
@@ -183,9 +192,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     overflow: TextOverflow.ellipsis,
                     widget.currentVideo.title,
                     style: GoogleFonts.readexPro(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500
-                    ),
+                        fontSize: 16.sp, fontWeight: FontWeight.w500),
                   ),
                 ),
               ],

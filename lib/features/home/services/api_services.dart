@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../models/channel_model.dart';
 import '../../../models/playlistmodal.dart';
 import '../../../models/video_model.dart';
@@ -22,7 +22,7 @@ class APIService {
     Map<String, String> parameters = {
       'part': 'snippet, contentDetails, statistics',
       'id': channelId,
-      'key': API_KEY,
+      'key': dotenv.env['API_KEY']??"",
     };
     Uri uri = Uri.https(
       _baseUrl,
@@ -57,7 +57,7 @@ class APIService {
       'playlistId': playlistId,
       'maxResults': '1000',
       //'pageToken': _nextPageToken,
-      'key': API_KEY,
+      'key': dotenv.env['API_KEY']??"",
     };
     Uri uri = Uri.https(
       _baseUrl,
