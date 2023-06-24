@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
@@ -56,7 +57,7 @@ class _NoteScreenState extends State<NoteScreen> {
           return true; // You can customize the behavior here
         },
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          //resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text('Add note'),
           ),
@@ -68,59 +69,93 @@ class _NoteScreenState extends State<NoteScreen> {
                 children: [
                   TextField(
                     controller: _titleController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Title',
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Title...",
+                      hintStyle: GoogleFonts.outfit(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+
+                      // labelText: 'Title',
+                    ),
+                    style: GoogleFonts.outfit(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 8.h),
                   TextField(
                     controller: _descriptionController,
+                    decoration: InputDecoration(
+                        //  labelText: 'Description',
+                        hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
+                        border: InputBorder.none,
+                        hintText: "Write the description and be concise..."),
+                    style: GoogleFonts.outfit(fontSize: 16.sp),
                     maxLines: 20,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Description',
-                    ),
+                    // Allows the text field to grow dynamically
+                    keyboardType: TextInputType.multiline,
+                    scrollPhysics: const BouncingScrollPhysics(),
                   ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: isButtonEnabled
-                        ? () {
-                            // Save note logic
-                            String title = _titleController.text;
-                            String description = _descriptionController.text;
-                            Note note = Note(
-                                title: title,
-                                description: description,
-                                videoId: widget.videoId,
-                                words: countWords(description),
-                                timestamp: DateTime.now());
-                      
-                            noteBloc.add(AddNote(note: note));
-                         
-                            // Perform necessary actions with the note data
-                            print(note.toString());
-                          }
-                        : null,
-                    child: BlocBuilder<NoteBloc  , NoteState>(
-                      builder: (context, state) {
-                        if (state is NoteLoading) {
-                           print("Note loading state");
-                          return const CircularProgressIndicator();
-                        }  if (state is NoteAdded) {
-                          print("Note added state");
-                          isButtonEnabled = false;
-                    
-                       
-                          return const Icon(Iconsax.tick_circle);
-                        }
-                        return const Text('Save');
-                      },
-                    ),
-                  ),
+                  SizedBox(height: 16.h),
+                  // ElevatedButton(
+                  //   onPressed: isButtonEnabled
+                  //       ? () {
+                  //           // Save note logic
+                  //           String title = _titleController.text;
+                  //           String description = _descriptionController.text;
+                  //           Note note = Note(
+                  //               title: title,
+                  //               description: description,
+                  //               videoId: widget.videoId,
+                  //               words: countWords(description),
+                  //               timestamp: DateTime.now());
+
+                  //           noteBloc.add(AddNote(note: note));
+
+                  //           // Perform necessary actions with the note data
+                  //           print(note.toString());
+                  //         }
+                  //       : null,
+                  //   child: BlocBuilder<NoteBloc  , NoteState>(
+                  //     builder: (context, state) {
+                  //       if (state is NoteLoading) {
+                  //          print("Note loading state");
+                  //         return const CircularProgressIndicator();
+                  //       }  if (state is NoteAdded) {
+                  //         print("Note added state");
+                  //         isButtonEnabled = false;
+
+                  //         return const Icon(Iconsax.tick_circle);
+                  //       }
+                  //       return const Text('Save');
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
             ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            heroTag: null,
+            onPressed: () {
+              // Save note logic
+              String title = _titleController.text;
+              String description = _descriptionController.text;
+              Note note = Note(
+                  title: title,
+                  description: description,
+                  videoId: widget.videoId,
+                  words: countWords(description),
+                  timestamp: DateTime.now());
+
+              noteBloc.add(AddNote(note: note));
+
+              // Perform necessary actions with the note data
+              print(note.toString());
+            },
+            child: const Icon(Iconsax.tick_circle),
           ),
         ),
       ),

@@ -32,8 +32,8 @@ class NoteCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 blurRadius: 4.r,
-                color: const Color(0x33000000),
-                offset: const Offset(0, 2),
+                color: const Color.fromARGB(51, 131, 131, 131),
+                offset: const Offset(0, 0),
               )
             ],
             borderRadius: BorderRadius.circular(16.r),
@@ -50,7 +50,7 @@ class NoteCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontSize: 16.sp,
                         color: Colors.black87),
                   ),
@@ -71,7 +71,7 @@ class NoteCard extends StatelessWidget {
           ),
         ),
         Positioned(
-            bottom: 16.h,
+            bottom: 24.h,
             right: 16.w,
             child: GestureDetector(
               onTap: () {
@@ -90,7 +90,7 @@ class NoteCard extends StatelessWidget {
               ),
             )),
         Positioned(
-            bottom: 16.h,
+            bottom: 24.h,
             right: 56.w,
             child: GestureDetector(
               onTap: () {
@@ -114,14 +114,14 @@ class NoteCard extends StatelessWidget {
               ),
             )),
         Positioned(
-          bottom: 16.h,
+          bottom: 24.h,
           left: 16.w,
           child: Text(timeago.format(note.timestamp),
               style:
                   GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
         ),
         Positioned(
-          bottom: 16.h,
+          bottom: 24.h,
           left: 96.w,
           child: Text("${note.words.toString()} words",
               style:

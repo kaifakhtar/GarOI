@@ -59,15 +59,8 @@ class _VideoScreenState extends State<VideoScreen> {
                 Column(
                   children: [
                     SizedBox(
-                      height: 325.h,
+                      height: 300.h,
                     ),
-                    OutlinedButton.icon(
-                        onPressed: () {
-                          final notePdfService = NotePdfService();
-                          notePdfService.generatePDF(widget.currentVideo.id);
-                        },
-                        icon: const Icon(Iconsax.export),
-                        label: const Text("Export these notes")),
                     BlocBuilder<NoteBloc, NoteState>(
                       builder: (context, state) {
                         if (state is NoNotes) {
@@ -84,25 +77,38 @@ class _VideoScreenState extends State<VideoScreen> {
                           );
                         }
                         if (state is NoteLoaded) {
-                          return SizedBox(
-                            height: 330.h,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 32.h),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: state.notes.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 16.w),
-                                    child: NoteCard(
-                                        note: state.notes[index],
-                                        vidId: widget.currentVideo.id),
-                                  );
-                                },
+                          return Column(
+                            children: [
+                              OutlinedButton.icon(
+                                  onPressed: () {
+                                    final notePdfService = NotePdfService();
+                                    notePdfService
+                                        .generatePDF(widget.currentVideo.id);
+                                  },
+                                  icon: const Icon(Iconsax.export),
+                                  label: const Text("Export these notes")),
+                              SizedBox(
+                                height: 330.h,
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 16.h),
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: state.notes.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.w),
+                                        child: NoteCard(
+                                            note: state.notes[index],
+                                            vidId: widget.currentVideo.id),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           );
                         }
                         return const Text("Useless builer");
