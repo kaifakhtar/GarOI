@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ytyt/models/student_modal.dart';
+
 
 class SignUpScreen extends StatelessWidget {
   TextEditingController usernameController = TextEditingController();
@@ -56,12 +59,24 @@ class SignUpScreen extends StatelessWidget {
         email: email,
         password: password,
       );
-
+      final student = Student(uid: userCredential.user!.uid, username: "User");
+      student.toJson();
+      createStudentDocument(student);
       // Successful sign-up
       print('Sign-up successful. User ID: ${userCredential.user!.uid}');
     } catch (error) {
       // Sign-up failed
       print('Sign-up failed: $error');
     }
+  }
+
+  void createStudentDocument(Student student) {
+   // Replace with your desired student ID
+
+    FirebaseFirestore.instance.collection('students').doc(student.uid).set(student.toJson()).then((value) {
+      print("Student document created successfully!");
+    }).catchError((error) {
+      print("Failed to create student document: $error");
+    });
   }
 }

@@ -27,26 +27,14 @@ class NotePdfService {
       await createPDFAndOpen(vidId);
     } else if (storageStatus.isDenied) {
       // Permission has been denied once
-      final bool? isOpenSettings = await showOpenSettingsDialog();
-      if (isOpenSettings != null && isOpenSettings) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("We need this permission to export your notes.")));
+     // final bool? isOpenSettings = await showOpenSettingsDialog();
+    } 
+      if (storageStatus.isPermanentlyDenied) {
         // User has chosen to open app settings
         await openAppSettings();
-      } else {
-        // User has chosen not to open app settings or dismissed the dialog
-        print('Storage permission denied.');
-      }
-    } else {
-      // Permission has not been requested yet
-      final PermissionStatus requestedStatus =
-          await Permission.storage.request();
-      if (requestedStatus.isGranted) {
-        // Permission has been granted
-        await createPDFAndOpen(vidId);
-      } else {
-        // Permission has been denied or permanently denied
-        print('Storage permission denied.');
-      }
-    }
+      } 
   }
 
   Future<void> createPDFAndOpen(String vidId) async {

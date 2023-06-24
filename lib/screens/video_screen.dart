@@ -52,6 +52,7 @@ class _VideoScreenState extends State<VideoScreen> {
         child: YoutubePlayerBuilder(
           onEnterFullScreen: () {
             _controller.pause();
+            
           },
           builder: (context, player) {
             return Stack(
