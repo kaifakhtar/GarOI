@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:open_file/open_file.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
@@ -16,27 +18,38 @@ class NotePdfService {
     if (await Permission.storage.request().isGranted) {
       // Create a new PDF document
       final pdf = pw.Document();
-  // Get the notes from the database
+      // Get the notes from the database
       final notes = await getNotesFromDatabase(vidId);
-      final combinedNoteDescription = notes.join('\n\n'); // Concatenate notes with line breaks
+      // final combinedNoteDescription =
+      //     notes.join('\n\n'); // Concatenate notes with line breaks
       // Add "Hello, World!" to the PDF
-  pdf.addPage(
+ pdf.addPage(
   pw.Page(
     build: (pw.Context context) {
-      return pw.Center(
-        child: pw.Text(
-          combinedNoteDescription,
-          style: const pw.TextStyle(fontSize: 16),
-          textAlign: pw.TextAlign.center,
-        ),
+      final noteWidgets = notes.map((note) {
+        return pw.Column(
+          mainAxisAlignment: pw.MainAxisAlignment.start,
+          children: [
+            pw.Text(note.title,style: pw.TextStyle(fontSize: 20.sp,fontBold: pw.Font.courier())),
+            pw.SizedBox(height: 8.h),
+            pw.Text(note.description,style: pw.TextStyle(fontSize: 14.sp)),
+            pw.SizedBox(height: 36.h)
+          ],
+        );
+      }).toList();
+
+      return pw.Column(
+        mainAxisAlignment: pw.MainAxisAlignment.start,
+        children: noteWidgets,
       );
     },
   ),
 );
+
       // Get the document directory path
       // final directory = await getTemporaryDirectory();
       Directory generalDownloadDir = Directory('/storage/emulated/0/Download');
-      final path = '${generalDownloadDir.path}/hello_world.pdf';
+      final path = '${generalDownloadDir.path}/notes$vidId.pdf';
 
       // Save the PDF document to a file
       final file = await File(path).writeAsBytes(await pdf.save());
