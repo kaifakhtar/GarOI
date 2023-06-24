@@ -63,7 +63,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     ),
                     OutlinedButton.icon(
                         onPressed: () {
-                          final notePdfService = NotePdfService();
+                          final notePdfService = NotePdfService(context);
                           notePdfService.generatePDF(widget.currentVideo.id);
                         },
                         icon: const Icon(Iconsax.export),
