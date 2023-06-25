@@ -31,16 +31,15 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           children: _screens,
         ),
         bottomNavigationBar: Container(
-         
           decoration: BoxDecoration(
             color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4,
-              offset: const Offset(0, 0),
-            ),
-          ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 0),
+              ),
+            ],
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -51,20 +50,20 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 iconSize: 20.h,
                 color: Colors.black,
                 tabBackgroundColor: Colors.black,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                tabBorderRadius: 16.r,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                tabBorderRadius: 1000.r,
                 tabs: const [
                   GButton(
                     icon: Iconsax.home,
                     text: 'Home',
                   ),
                   GButton(
-                    icon: Iconsax.star,
+                    icon:  Iconsax.star,
                     text: 'Importants',
                   ),
                   GButton(
-                    icon: Iconsax.message_question,
+                    icon: 
+                         Iconsax.message_question,
                     text: 'Ask',
                   ),
                 ],

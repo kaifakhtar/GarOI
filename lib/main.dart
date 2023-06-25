@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/auth/view/screens/login_screen.dart';
 import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
@@ -46,6 +48,10 @@ class MyApp extends StatelessWidget {
                 create: (BuildContext context) =>
                     NoteBloc(noteDataBaseService: NoteDataBaseService()),
               ),
+              BlocProvider<AuthCubit>(
+                create: (BuildContext context) =>
+                    AuthCubit(FirebaseAuth.instance),
+              ),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -69,7 +75,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 0, 0)),
                 //    useMaterial3: true,
               ),
-              home:  const HomeScreenSilver(),
+              home:   SignUpScreen(),
             ),
           );
         });
