@@ -3,11 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ytyt/models/student_modal.dart';
 
-
 class SignUpScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-    final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +45,10 @@ class SignUpScreen extends StatelessWidget {
                 // Handle sign up logic here
                 String email = _emailController.text;
                 String password = _passwordController.text;
-                signUp(email, password,_usernameController.text);
+                signUp(email, password, _usernameController.text);
                 // Perform sign up operations with the entered data
               },
-              child: const Text('Sign Up'),
+              child: const Text('Sign up'),
             ),
           ],
         ),
@@ -59,14 +58,15 @@ class SignUpScreen extends StatelessWidget {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> signUp(String email, String password,String username) async {
+  Future<void> signUp(String email, String password, String username) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final student = Student(uid: userCredential.user!.uid, username: username);
+      final student =
+          Student(uid: userCredential.user!.uid, username: username);
       student.toJson();
       createStudentDocument(student);
       // Successful sign-up
@@ -78,9 +78,13 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void createStudentDocument(Student student) {
-   // Replace with your desired student ID
+    // Replace with your desired student ID
 
-    FirebaseFirestore.instance.collection('students').doc(student.uid).set(student.toJson()).then((value) {
+    FirebaseFirestore.instance
+        .collection('students')
+        .doc(student.uid)
+        .set(student.toJson())
+        .then((value) {
       print("Student document created successfully!");
     }).catchError((error) {
       print("Failed to create student document: $error");
