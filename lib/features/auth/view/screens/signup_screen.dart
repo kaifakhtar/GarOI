@@ -5,8 +5,9 @@ import 'package:ytyt/models/student_modal.dart';
 
 
 class SignUpScreen extends StatelessWidget {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +21,20 @@ class SignUpScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: usernameController,
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                labelText: 'Username',
+              ),
+            ),
+            TextField(
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
               ),
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: passwordController,
+              controller: _passwordController,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: 'Password',
@@ -37,9 +44,9 @@ class SignUpScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Handle sign up logic here
-                String email = usernameController.text;
-                String password = passwordController.text;
-                signUp(email, password);
+                String email = _emailController.text;
+                String password = _passwordController.text;
+                signUp(email, password,_usernameController.text);
                 // Perform sign up operations with the entered data
               },
               child: const Text('Sign Up'),
@@ -52,14 +59,14 @@ class SignUpScreen extends StatelessWidget {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(String email, String password,String username) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final student = Student(uid: userCredential.user!.uid, username: "User");
+      final student = Student(uid: userCredential.user!.uid, username: username);
       student.toJson();
       createStudentDocument(student);
       // Successful sign-up
