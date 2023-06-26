@@ -26,7 +26,8 @@ class AuthCubit extends Cubit<AuthState> {
       );
 
       final User user = userCredential.user!;
-      emit(AuthSuccess(successMessage: "Login successful"));
+     
+      emit(AuthLoginSuccess(successMessage: "Login successful"));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -48,7 +49,7 @@ final student =
 
       createStudentDocument(student);
      // final User user = userCredential.user!;
-      emit(AuthSuccess(successMessage: "Sign up successful"));
+      emit(AuthSignUpSuccess(successMessage: "Sign up successful"));
     } catch (e) {
       emit(AuthError(e.toString()));
     }

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // Authentication State
 
+import '../../../models/student_modal.dart';
 
 abstract class AuthState {}
 
@@ -8,15 +9,29 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
+class AuthData extends AuthState {
+  final Student student;
+  AuthData({
+    required this.student,
+  });
+}
+
 class AuthError extends AuthState {
   final String errorMessage;
 
   AuthError(this.errorMessage);
 }
 
-class AuthSuccess extends AuthState {
-final String successMessage;
-  AuthSuccess({
+class AuthLoginSuccess extends AuthState {
+  final String successMessage;
+  AuthLoginSuccess({
     required this.successMessage,
   });
 }
+class AuthSignUpSuccess extends AuthState {
+  final String successMessage;
+  AuthSignUpSuccess({
+    required this.successMessage,
+  });
+}
+
