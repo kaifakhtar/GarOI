@@ -10,7 +10,7 @@ import 'package:ytyt/features/auth/view/screens/login_screen.dart';
 import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
 import 'package:ytyt/models/student_modal.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../cubit/auth_cubit.dart';
 import '../../cubit/auth_state.dart';
 
@@ -55,6 +55,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+
+        //    SvgPicture.asset('assets/auth_svg_images/rocket_laptop.svg'),
              Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 28.h, 0, 0),
                   child: TextFormField(

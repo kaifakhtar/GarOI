@@ -23,19 +23,20 @@ class _NoteScreenState extends State<NoteScreen> {
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
   final TextEditingController _descriptionController = TextEditingController();
-  int countWords(String text) {
-    if (text.isEmpty) {
-      return 0;
-    }
-
-    // Split the string into words using whitespace as the delimiter
-    List<String> words = text.trim().split(' ');
-
-    // Remove empty strings from the list (e.g., consecutive whitespaces)
-    words.removeWhere((word) => word.isEmpty);
-
-    return words.length;
+int countWords(String text) {
+  if (text.isEmpty || text.trim().isEmpty) {
+    return 0;
   }
+
+  // Split the text into words using whitespace, line breaks, and punctuation marks as delimiters
+  final words = text.trim().split(RegExp(r'\s+|\n|(?<=\w)(?=[^\w\s])|(?<=[^\w\s])(?=\w)'));
+
+  // Remove any empty strings from the list of words
+  final filteredWords = words.where((word) => word.isNotEmpty);
+
+  // Return the count of words
+  return filteredWords.length;
+}
 
   @override
   void initState() {

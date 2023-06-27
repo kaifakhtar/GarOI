@@ -16,6 +16,8 @@ import 'features/home/bloc/home_bloc.dart';
 import 'features/notes/note_service/note_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'features/onboarding/onboarding_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
@@ -72,10 +74,11 @@ class MyApp extends StatelessWidget {
                 //
                 // This works for code too, not just values: Most code changes can be
                 // tested with just a hot reload.
-                colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 0, 0)),
+                colorScheme: ColorScheme.fromSeed(
+                    seedColor: const Color.fromARGB(255, 0, 0, 0)),
                 //    useMaterial3: true,
               ),
-              home:   SignUpScreen(),
+              home: const BottomNavScreen(),
             ),
           );
         });

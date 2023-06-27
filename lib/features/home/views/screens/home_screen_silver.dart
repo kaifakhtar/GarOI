@@ -33,7 +33,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
       // Reach the end of the list
       // Emit an event to fetch more videos
       print("In the _scrool");
-      homebloc.add(HomeLoadMorePlaylist());
+      // homebloc.add(HomeLoadMorePlaylist());
 
       // Update the state in the BLoC
     }
@@ -57,66 +57,68 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
             );
           }
           if (state is HomeHasData) {
-            return CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  elevation: 1.h,
-                 
-                  pinned: true,
-                 // bottom: PreferredSize(child: Text("hdf"), preferredSize: Size.fromHeight(10)),
-                  expandedHeight: 100.h,
-                  flexibleSpace: LayoutBuilder(
-                    builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                      return FlexibleSpaceBar(
-                        centerTitle: true,
-                        title: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                            'Playlists',
-                            style: GoogleFonts.readexPro(
-                              color: Colors.black,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
+            return Scrollbar(
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverAppBar(
+                    elevation: 1.h,
+
+                    pinned: true,
+                    // bottom: PreferredSize(child: Text("hdf"), preferredSize: Size.fromHeight(10)),
+                    expandedHeight: 100.h,
+                    flexibleSpace: LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        return FlexibleSpaceBar(
+                          centerTitle: true,
+                          title: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              'Playlists',
+                              style: GoogleFonts.readexPro(
+                                color: Colors.black,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  backgroundColor: Colors.white,
-                ),
-                SliverToBoxAdapter(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w),
-                      child: Text(
-                        'What do you want to study?',
-                        style: GoogleFonts.readexPro(
-                          fontSize: 18.sp,
-                        ),
-                      ),
-                    ),
-                    ListView.builder(
-                      // controller: _scrollController,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.listOfPlaylist.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return PlaylistTile(
-                          playlist: state.listOfPlaylist[index],
                         );
                       },
                     ),
-                  ],
-                )),
-              ],
+                    backgroundColor: Colors.white,
+                  ),
+                  SliverToBoxAdapter(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 24.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.w),
+                        child: Text(
+                          'Pick whatever you want to study',
+                          style: GoogleFonts.readexPro(
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                      ListView.builder(
+                        // controller: _scrollController,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.listOfPlaylist.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return PlaylistTile(
+                            playlist: state.listOfPlaylist[index],
+                          );
+                        },
+                      ),
+                    ],
+                  )),
+                ],
+              ),
             );
           }
           return const Placeholder();

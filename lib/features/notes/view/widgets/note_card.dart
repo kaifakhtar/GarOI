@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
+import 'package:ytyt/features/notes/view/screens/note_view_screen.dart';
 
 import 'package:ytyt/features/notes/view/screens/update_note_screen.dart';
 
@@ -24,49 +25,59 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          width: 328.w,
-          height: 296.h,
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFF7D4),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 4.r,
-                color: const Color.fromARGB(51, 131, 131, 131),
-                offset: const Offset(0, 0),
-              )
-            ],
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.h, 16.h, 16.h, 16.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: Text(
-                    note.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.sp,
-                        color: Colors.black87),
-                  ),
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                SizedBox(
-                  height: 200.h,
-                  child: Text(note.description,
-                      maxLines: 11,
+        InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => NoteViewScreen(
+                          note: note,
+                        )));
+          },
+          child: Container(
+            width: 328.w,
+            height: 296.h,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFF7D4),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4.r,
+                  color: const Color.fromARGB(51, 131, 131, 131),
+                  offset: const Offset(0, 0),
+                )
+              ],
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.h, 16.h, 16.h, 16.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Text(
+                      note.title,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.outfit(
-                          fontSize: 14.sp, color: Colors.black54)),
-                ),
-              ],
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.sp,
+                          color: Colors.black87),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  SizedBox(
+                    height: 200.h,
+                    child: Text(note.description,
+                        maxLines: 11,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.outfit(
+                            fontSize: 14.sp, color: Colors.black54)),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -122,7 +133,7 @@ class NoteCard extends StatelessWidget {
         ),
         Positioned(
           bottom: 24.h,
-          left: 96.w,
+          left: 108.w,
           child: Text("${note.words.toString()} words",
               style:
                   GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),

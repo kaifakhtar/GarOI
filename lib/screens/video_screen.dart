@@ -52,7 +52,6 @@ class _VideoScreenState extends State<VideoScreen> {
         child: YoutubePlayerBuilder(
           onEnterFullScreen: () {
             _controller.pause();
-            
           },
           builder: (context, player) {
             return Stack(
@@ -79,34 +78,45 @@ class _VideoScreenState extends State<VideoScreen> {
                         }
                         if (state is NoteLoaded) {
                           return Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              OutlinedButton.icon(
-                                  onPressed: () {
-                                    final notePdfService = NotePdfService(context);
-                                    notePdfService
-                                        .generatePDF(widget.currentVideo.id);
-                                  },
-                                  icon: const Icon(Iconsax.export),
-                                  label: const Text("Export these notes")),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              // OutlinedButton.icon(
+                              //     onPressed: () {
+                              //       final notePdfService =
+                              //           NotePdfService(context);
+                              //       notePdfService
+                              //           .generatePDF(widget.currentVideo.id);
+                              //     },
+                              //     icon: const Icon(Iconsax.export),
+                              //     label: const Text("Export these notes")),
+                              Text(
+                                "${state.notes.length} cards",
+                                style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38),
+                              ),
+                              SizedBox(
+                                height: 24,
+                              ),
                               SizedBox(
                                 height: 330.h,
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 16.h),
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemCount: state.notes.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 16.w),
-                                        child: NoteCard(
-                                            note: state.notes[index],
-                                            vidId: widget.currentVideo.id),
-                                      );
-                                    },
-                                  ),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: state.notes.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8.h, horizontal: 16.w),
+                                      child: NoteCard(
+                                          note: state.notes[index],
+                                          vidId: widget.currentVideo.id),
+                                    );
+                                  },
                                 ),
                               ),
                             ],

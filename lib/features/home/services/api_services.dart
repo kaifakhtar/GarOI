@@ -103,7 +103,7 @@ class APIService {
     Map<String, String> parameters = {
       'part': 'snippet,contentDetails',
       'channelId': channelId,
-      'maxResults':'10',
+      'maxResults':'50',
       'pageToken': _nextPageTokenForPlaylist,
       'key': API_KEY,
     };
