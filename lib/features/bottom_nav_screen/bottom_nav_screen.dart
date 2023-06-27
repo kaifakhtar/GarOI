@@ -58,12 +58,11 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                     text: 'Home',
                   ),
                   GButton(
-                    icon:  Iconsax.star,
+                    icon: Iconsax.star,
                     text: 'Importants',
                   ),
                   GButton(
-                    icon: 
-                         Iconsax.message_question,
+                    icon: Iconsax.message_question,
                     text: 'Ask',
                   ),
                 ],

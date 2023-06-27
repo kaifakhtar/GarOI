@@ -46,205 +46,269 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign Up'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16.w, 44.h, 16.w, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Align(
+                alignment: const AlignmentDirectional(0, 0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 56.h, 0, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16.r),
+                    child: Image.network(
+                      'https://fastly.picsum.photos/id/109/4287/2392.jpg?hmac=K5ytllhfakgsUEDFnY5ujHIGJTzELPQgVJjZMpRlfJY',
+                      width: 325.w,
+                      height: 168.h,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 32.h, 0, 0),
+                child: Text(
+                  'Create Account',
+                  textAlign: TextAlign.start,
+                  style: GoogleFonts.readexPro(
+                      fontSize: 32.sp, fontWeight: FontWeight.w600),
+                ),
+              ),
+              //    SvgPicture.asset('assets/auth_svg_images/rocket_laptop.svg'),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 32.h, 0, 0),
+                child: TextFormField(
+                  controller: _usernameController,
+                  autofocus: true,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    //   labelText: 'Password',
+                    labelStyle: GoogleFonts.readexPro(
+                        fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    hintText: 'Enter your username...',
+                    hintStyle: GoogleFonts.readexPro(
+                        fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: const Color(0xffE0E3E7),
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                  ),
+                  style: GoogleFonts.readexPro(
+                      fontSize: 14.sp, fontWeight: FontWeight.normal),
+                  // validator:
+                  //     _model.textController2Validator.asValidator(context),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 12.h, 0, 0),
+                child: TextFormField(
+                  controller: _emailController,
+                  autofocus: true,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    //   labelText: 'Password',
+                    labelStyle: GoogleFonts.readexPro(
+                        fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    hintText: 'Enter your email...',
+                    hintStyle: GoogleFonts.readexPro(
+                        fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: const Color(0xffE0E3E7),
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                  ),
+                  style: GoogleFonts.readexPro(
+                      fontSize: 14.sp, fontWeight: FontWeight.normal),
+                  // validator:
+                  //     _model.textController2Validator.asValidator(context),
+                ),
+              ),
 
-        //    SvgPicture.asset('assets/auth_svg_images/rocket_laptop.svg'),
-             Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 28.h, 0, 0),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      labelStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      hintText: 'What do we call you?',
-                      hintStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color(0xffE0E3E7),
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                    ),
-                    style: GoogleFonts.readexPro(
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 12.h, 0, 0),
+                child: TextFormField(
+                  controller: _passwordController,
+                  autofocus: true,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    //   labelText: 'Password',
+                    labelStyle: GoogleFonts.readexPro(
                         fontSize: 14.sp, fontWeight: FontWeight.normal),
-                    // validator:
-                    //     _model.emailControllerValidator.asValidator(context),
-                  ),
-                ),
-             Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 28.h, 0, 0),
-                  child: TextFormField(
-                    controller: _emailController,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      hintText: 'Enter your email...',
-                      hintStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color(0xffE0E3E7),
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                    ),
-                    style: GoogleFonts.readexPro(
+                    hintText: 'Enter your password...',
+                    hintStyle: GoogleFonts.readexPro(
                         fontSize: 14.sp, fontWeight: FontWeight.normal),
-                    // validator:
-                    //     _model.emailControllerValidator.asValidator(context),
-                  ),
-                ),
-            const SizedBox(height: 12.0),
-            Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      hintText: 'Enter your password...',
-                      hintStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color(0xffE0E3E7),
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: const Color(0xffE0E3E7),
+                        width: 2.w,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
-                    style: GoogleFonts.readexPro(
-                        fontSize: 14.sp, fontWeight: FontWeight.normal),
-                    // validator:
-                    //     _model.textController2Validator.asValidator(context),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.w,
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
                   ),
+                  style: GoogleFonts.readexPro(
+                      fontSize: 14.sp, fontWeight: FontWeight.normal),
+                  // validator:
+                  //     _model.textController2Validator.asValidator(context),
                 ),
-             SizedBox(height: 24.h,),
-            ElevatedButton(
-              onPressed: () {
-                // Handle sign up logic here
-                String email = _emailController.text;
-                String password = _passwordController.text;
-                _authCubit.signUp(email, password, _usernameController.text);
-                // Perform sign up operations with the entered data
-              },
-              style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(1000),
               ),
-            ),
-              child: BlocConsumer<AuthCubit, AuthState>(
-                listener: (context, state) {
-                  if (state is AuthError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.errorMessage),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  if (state is AuthLoading) {
-                    return const CircularProgressIndicator(color: AppColors.gold,);
-                  } else if (state is AuthSignUpSuccess) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
-});
-                  }
-                  return  Text("Sign up",style: GoogleFonts.readexPro(color:AppColors.gold),);
-                },
+              SizedBox(
+                height: 24.h,
               ),
-            ),
-          ],
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle sign up logic here
+                    String email = _emailController.text;
+                    String password = _passwordController.text;
+                    _authCubit.signUp(
+                        email, password, _usernameController.text);
+                    // Perform sign up operations with the entered data
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    padding: EdgeInsets.all(14.h),
+                  ),
+                  child: BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.errorMessage),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is AuthLoading) {
+                        return const CircularProgressIndicator(
+                          color: AppColors.gold,
+                        );
+                      } else if (state is AuthSignUpSuccess) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const LoginScreen()));
+                        });
+                      }
+                      return Text(
+                        "Sign up",
+                        style: GoogleFonts.readexPro(color: AppColors.gold),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 12.h, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account?  ',
+                      style: GoogleFonts.readexPro(
+                          fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const LoginScreen()));
+                      },
+                      child: Text(
+                        'Log in',
+                        style: GoogleFonts.readexPro(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

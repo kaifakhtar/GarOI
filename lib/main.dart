@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                     seedColor: const Color.fromARGB(255, 0, 0, 0)),
                 //    useMaterial3: true,
               ),
-              home: const BottomNavScreen(),
+              home: const LoginScreen(),
             ),
           );
         });

@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/auth/cubit/auth_state.dart';
+import 'package:ytyt/features/auth/view/screens/signup_screen.dart';
 
 import '../../../bottom_nav_screen/bottom_nav_screen.dart';
 import '../../cubit/auth_cubit.dart';
@@ -36,14 +37,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     // _model.dispose();
-
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      //onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: scaffoldKey,
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 44, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.w, 44.h, 16.w, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -60,13 +62,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: const AlignmentDirectional(0, 0),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 56, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 56.h, 0, 0),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(16.r),
                       child: Image.network(
                         'https://picsum.photos/seed/942/600',
-                        width: 325,
-                        height: 168,
+                        width: 325.w,
+                        height: 168.h,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -82,13 +84,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 28.h, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 32.h, 0, 0),
                   child: TextFormField(
                     controller: _emailController,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      //   labelText: 'Password',
                       labelStyle: GoogleFonts.readexPro(
                           fontSize: 14.sp, fontWeight: FontWeight.normal),
                       hintText: 'Enter your email...',
@@ -99,57 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: const Color(0xffE0E3E7),
                           width: 2.w,
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                    ),
-                    style: GoogleFonts.readexPro(
-                        fontSize: 14.sp, fontWeight: FontWeight.normal),
-                    // validator:
-                    //     _model.emailControllerValidator.asValidator(context),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      hintText: 'Enter your password...',
-                      hintStyle: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color(0xffE0E3E7),
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(16.r),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -180,8 +132,66 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 12.h, 0, 0),
+                  child: TextFormField(
+                    controller: _passwordController,
+                    autofocus: true,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      //   labelText: 'Password',
+                      labelStyle: GoogleFonts.readexPro(
+                          fontSize: 14.sp, fontWeight: FontWeight.normal),
+                      hintText: 'Enter your password...',
+                      hintStyle: GoogleFonts.readexPro(
+                          fontSize: 14.sp, fontWeight: FontWeight.normal),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: const Color(0xffE0E3E7),
+                          width: 2.w,
+                        ),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 2.w,
+                        ),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2.w,
+                        ),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2.w,
+                        ),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                    ),
+                    style: GoogleFonts.readexPro(
+                        fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    // validator:
+                    //     _model.textController2Validator.asValidator(context),
+                  ),
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      padding: EdgeInsets.all(14.h),
+                    ),
                     onPressed: () {
                       _authCubit.login(
                           _emailController.text, _passwordController.text);
@@ -191,27 +201,50 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: BlocBuilder<AuthCubit, AuthState>(
                       builder: (context, state) {
                         if (state is AuthLoading) {
-                          return const CircularProgressIndicator(color: AppColors.gold,);
+                          return const CircularProgressIndicator(
+                            color: AppColors.gold,
+                          );
                         } else if (state is AuthLoginSuccess) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const BottomNavScreen()));
-});
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const BottomNavScreen()));
+                          });
                         }
-                        return const Text('Login');
+                        return Text(
+                          "Log in",
+                          style: GoogleFonts.readexPro(color: AppColors.gold),
+                        );
                       },
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 12.h, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'No account?',
+                        'No account?  ',
                         style: GoogleFonts.readexPro(
                             fontSize: 14.sp, fontWeight: FontWeight.normal),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SignUpScreen()));
+                        },
+                        child: Text(
+                          'Create one',
+                          style: GoogleFonts.readexPro(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.primaryColor),
+                        ),
                       ),
                     ],
                   ),
