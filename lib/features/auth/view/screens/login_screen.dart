@@ -1,3 +1,5 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,11 +9,13 @@ import 'package:provider/provider.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/auth/cubit/auth_state.dart';
 import 'package:ytyt/features/auth/view/screens/signup_screen.dart';
+import 'package:ytyt/routes/routes_imports.gr.dart';
 
 import '../../../../common_widgets/loading_dialog.dart';
 import '../../../bottom_nav_screen/bottom_nav_screen.dart';
 import '../../cubit/auth_cubit.dart';
 
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -203,14 +207,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: BlocConsumer<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is AuthError) {
-                              Navigator.of(context, rootNavigator: true).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(state.errorMessage),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      }
+                            Navigator.of(context, rootNavigator: true).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.errorMessage),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         },
                         builder: (context, state) {
                           if (state is AuthLoading) {
@@ -252,10 +256,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => SignUpScreen()));
+                            AutoRouter.of(context).replace(const SignUpScreenRoute());
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (_) => SignUpScreen()));
                           },
                           child: Text(
                             'Create one',

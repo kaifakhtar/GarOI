@@ -17,17 +17,18 @@ import 'features/notes/note_service/note_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'features/onboarding/onboarding_screen.dart';
+import 'routes/routes_imports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+   MyApp({super.key});
+  final _approuter = AppRouter();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
                     AuthCubit(FirebaseAuth.instance),
               ),
             ],
-            child: MaterialApp(
+            child: MaterialApp.router(
+              routerConfig: _approuter.config(),
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
@@ -78,7 +80,7 @@ class MyApp extends StatelessWidget {
                     seedColor: const Color.fromARGB(255, 0, 0, 0)),
                 //    useMaterial3: true,
               ),
-              home: const LoginScreen(),
+             // home: const LoginScreen(),
             ),
           );
         });

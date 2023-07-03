@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ import 'package:ytyt/models/student_modal.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../cubit/auth_cubit.dart';
 import '../../cubit/auth_state.dart';
-
+@RoutePage()
 class SignUpScreen extends StatefulWidget {
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
