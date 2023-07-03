@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/home/bloc/home_bloc.dart';
 
+import '../../../auth/view/screens/login_screen.dart';
+import '../../../user_profile/view/screens/user_profile_screen.dart';
 import '../widgets/playlist_tile.dart';
+import '../widgets/playlist_tile_shimmer.dart';
 
 class HomeScreenSilver extends StatefulWidget {
-  const HomeScreenSilver({super.key});
+  const HomeScreenSilver({Key? key}) : super(key: key);
 
   @override
   State<HomeScreenSilver> createState() => _HomeScreenSilverState();
@@ -17,9 +21,9 @@ class HomeScreenSilver extends StatefulWidget {
 class _HomeScreenSilverState extends State<HomeScreenSilver> {
   late HomeBloc homebloc;
   late ScrollController _scrollController;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
@@ -49,52 +53,63 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          if (state is HomeLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is HomeHasData) {
-            return Scrollbar(
-              child: CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverAppBar(
-                    elevation: 1.h,
-
-                    pinned: true,
-                    // bottom: PreferredSize(child: Text("hdf"), preferredSize: Size.fromHeight(10)),
-                    expandedHeight: 100.h,
-                    flexibleSpace: LayoutBuilder(
-                      builder:
-                          (BuildContext context, BoxConstraints constraints) {
-                        return FlexibleSpaceBar(
-                          centerTitle: true,
-                          title: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              'Playlists',
-                              style: GoogleFonts.readexPro(
-                                color: Colors.black,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    backgroundColor: Colors.white,
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          SliverAppBar(
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(right: 16.w),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserProfilePage()),
+                    );
+                  },
+                  child: const Icon(
+                    Iconsax.user,
+                    size: 20,
+                    color: Colors.black,
                   ),
-                  SliverToBoxAdapter(
-                      child: Column(
+                ),
+              )
+            ],
+            elevation: 1.h,
+            pinned: true,
+            expandedHeight: 100.h,
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      'Playlists',
+                      style: GoogleFonts.readexPro(
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            backgroundColor: Colors.white,
+          ),
+          SliverToBoxAdapter(
+            child: BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is HomeLoading) {
+                  return ShimmerList();
+                }
+                if (state is HomeHasData) {
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 24.h,
-                      ),
+                      SizedBox(height: 24.h),
                       Padding(
                         padding: EdgeInsets.only(left: 16.w),
                         child: Text(
@@ -105,7 +120,6 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         ),
                       ),
                       ListView.builder(
-                        // controller: _scrollController,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: state.listOfPlaylist.length,
@@ -116,13 +130,13 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         },
                       ),
                     ],
-                  )),
-                ],
-              ),
-            );
-          }
-          return const Placeholder();
-        },
+                  );
+                }
+                return const Placeholder();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

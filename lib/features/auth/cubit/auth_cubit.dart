@@ -33,6 +33,16 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+// Logout method
+  Future<void> logout() async {
+    try {
+      emit(AuthLoading());
+      await _firebaseAuth.signOut();
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
   // Sign up method
   Future<void> signUp(String email, String password, String username) async {
     try {

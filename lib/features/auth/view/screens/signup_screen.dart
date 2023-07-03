@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
+import 'package:ytyt/common_widgets/loading_dialog.dart';
 import 'package:ytyt/features/auth/view/screens/login_screen.dart';
 import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
@@ -249,6 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: BlocConsumer<AuthCubit, AuthState>(
                     listener: (context, state) {
                       if (state is AuthError) {
+                        Navigator.of(context, rootNavigator: true).pop();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(state.errorMessage),
@@ -259,9 +261,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     builder: (context, state) {
                       if (state is AuthLoading) {
-                        return const CircularProgressIndicator(
-                          color: AppColors.gold,
-                        );
+                               WidgetsBinding.instance.addPostFrameCallback((_) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return const LoadingDialog();
+                },
+              );
+            });
                       } else if (state is AuthSignUpSuccess) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           Navigator.pushReplacement(
