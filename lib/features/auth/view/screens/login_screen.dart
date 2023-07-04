@@ -199,11 +199,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.all(14.h),
                       ),
                       onPressed: () {
-                        _authCubit.login(
-                            _emailController.text, _passwordController.text);
+  String email = _emailController.text.trim();
+  String password = _passwordController.text.trim();
 
-                        print('Button pressed ...');
-                      },
+  if (email.isEmpty) {
+    print('Email field is empty');
+    // Add code to show an error message or perform any other necessary action
+    return; // Stop execution if the email field is empty
+  }
+
+  if (password.isEmpty) {
+    print('Password field is empty');
+    // Add code to show an error message or perform any other necessary action
+    return; // Stop execution if the password field is empty
+  }
+
+  // Both fields are not empty, proceed with login
+  _authCubit.login(email, password);
+
+  print('Button pressed ...');
+},
+
                       child: BlocConsumer<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is AuthError) {
