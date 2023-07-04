@@ -62,7 +62,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                 padding: EdgeInsets.only(right: 16.w),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => UserProfilePage()),

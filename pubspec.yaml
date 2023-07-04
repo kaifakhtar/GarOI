@@ -54,6 +54,7 @@ dependencies:
   open_file: ^3.3.2
   pdf: ^3.10.4
   permission_handler: ^10.3.0
+  shared_preferences: ^2.2.0
   shimmer: ^3.0.0
   sqflite: ^2.2.8+4
   timeago: ^3.4.0

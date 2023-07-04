@@ -14,6 +14,8 @@ class UserProfilePage extends StatefulWidget {
 class _UserProfilePageState extends State<UserProfilePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late final AuthCubit _authCubit;
+
+
   void _logout(BuildContext context) async {
     await _auth.signOut().then((value) {
 Navigator.pushReplacement(
@@ -59,7 +61,7 @@ Navigator.pushReplacement(
                 Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => LoginScreen()));
+                                    builder: (_) =>const LoginScreen()));
                 // error catching
               },
             ),

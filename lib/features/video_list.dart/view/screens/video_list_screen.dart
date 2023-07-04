@@ -85,7 +85,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                       } else {
                         final videoIndex = index - 2;
 
-                        if (videoIndex < videoList.length ) {
+                        if (videoIndex < videoList.length) {
                           final video = videoList[videoIndex];
                           return VideoListTile(video: video);
                         } else if (videoIndex == videoList.length) {

@@ -44,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // _model.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _authCubit.close();
     super.dispose();
   }
 
@@ -199,27 +200,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.all(14.h),
                       ),
                       onPressed: () {
-  String email = _emailController.text.trim();
-  String password = _passwordController.text.trim();
+                        String email = _emailController.text.trim();
+                        String password = _passwordController.text.trim();
 
-  if (email.isEmpty) {
-    print('Email field is empty');
-    // Add code to show an error message or perform any other necessary action
-    return; // Stop execution if the email field is empty
-  }
+                        if (email.isEmpty) {
+                          print('Email field is empty');
+                          // Add code to show an error message or perform any other necessary action
+                          return; // Stop execution if the email field is empty
+                        }
 
-  if (password.isEmpty) {
-    print('Password field is empty');
-    // Add code to show an error message or perform any other necessary action
-    return; // Stop execution if the password field is empty
-  }
+                        if (password.isEmpty) {
+                          print('Password field is empty');
+                          // Add code to show an error message or perform any other necessary action
+                          return; // Stop execution if the password field is empty
+                        }
 
-  // Both fields are not empty, proceed with login
-  _authCubit.login(email, password);
+                        // Both fields are not empty, proceed with login
+                        _authCubit.login(email, password);
 
-  print('Button pressed ...');
-},
-
+                        print('Button pressed ...');
+                      },
                       child: BlocConsumer<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is AuthError) {
@@ -272,7 +272,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            AutoRouter.of(context).replace(const SignUpScreenRoute());
+                            AutoRouter.of(context)
+                                .replace(const SignUpScreenRoute());
                             // Navigator.pushReplacement(
                             //     context,
                             //     MaterialPageRoute(
