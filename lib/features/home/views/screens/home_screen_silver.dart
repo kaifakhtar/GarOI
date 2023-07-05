@@ -109,11 +109,20 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 24.h),
                       Padding(
                         padding: EdgeInsets.only(left: 16.w),
                         child: Text(
-                          'Pick whatever you want to study',
+                          'Hi Kaif',
+                          style: GoogleFonts.readexPro(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.w),
+                        child: Text(
+                          'Study whatever you like',
                           style: GoogleFonts.readexPro(
                             fontSize: 18.sp,
                           ),
