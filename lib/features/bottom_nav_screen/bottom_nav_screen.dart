@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -25,6 +26,14 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     const ImportantsScreen(),
     const AskQuesScreen(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setUpPushNotification();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,5 +85,13 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 }),
           ),
         ));
+  }
+
+  void setUpPushNotification() async {
+    final fcm = FirebaseMessaging.instance;
+    await fcm.requestPermission();
+    fcm.subscribeToTopic('update');
+    // String? token = await fcm.getToken();
+    // print(token);
   }
 }

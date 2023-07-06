@@ -53,99 +53,108 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverAppBar(
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 16.w),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UserProfilePage()),
-                    );
-                  },
-                  child: const Icon(
-                    Iconsax.user,
-                    size: 20,
-                    color: Colors.black,
-                  ),
+      body: SafeArea(
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverAppBar(
+                centerTitle: true,
+                title: Text(
+                  "Garden of Ilm",
+                  style: GoogleFonts.readexPro(color: Colors.black),
                 ),
-              )
-            ],
-            elevation: 1.h,
-            pinned: true,
-            expandedHeight: 100.h,
-            flexibleSpace: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                return FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'Playlists',
-                      style: GoogleFonts.readexPro(
+                actions: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 16.w),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserProfilePage()),
+                        );
+                      },
+                      child: Icon(
+                        Iconsax.user,
+                        size: 20.h,
                         color: Colors.black,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-            backgroundColor: Colors.white,
-          ),
-          SliverToBoxAdapter(
-            child: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                if (state is HomeLoading) {
-                  return ShimmerList();
-                }
-                if (state is HomeHasData) {
-                  return Column(
+                  )
+                ],
+                elevation: 1.h,
+                pinned: true,
+                // expandedHeight: 100.h,
+                // flexibleSpace: LayoutBuilder(
+                //   builder: (BuildContext context, BoxConstraints constraints) {
+                //     return FlexibleSpaceBar(
+                //       centerTitle: true,
+                //       title: Align(
+                //         alignment: Alignment.bottomCenter,
+                //         child: Text(
+                //           'Playlists',
+                //           style: GoogleFonts.readexPro(
+                //             color: Colors.black,
+                //             fontSize: 20.sp,
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
+                backgroundColor: Colors.white.withOpacity(.9)),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 100.h,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16.h, right: 16.h),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.w),
-                        child: Text(
-                          'Hi Kaif',
+                      Text("Kaif!",
                           style: GoogleFonts.readexPro(
-                            fontSize: 20.sp,
-                          ),
-                        ),
+                              color: Colors.black87, fontSize: 32)),
+                      SizedBox(
+                        height: 12.h,
                       ),
-                      SizedBox(height: 8.h),
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.w),
-                        child: Text(
-                          'Study whatever you like',
+                      Text("Pick up from my garden",
                           style: GoogleFonts.readexPro(
-                            fontSize: 18.sp,
-                          ),
-                        ),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.listOfPlaylist.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return PlaylistTile(
-                            playlist: state.listOfPlaylist[index],
-                          );
-                        },
-                      ),
+                              color: Colors.black54, fontSize: 20)),
                     ],
-                  );
-                }
-                return const Placeholder();
-              },
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+            SliverToBoxAdapter(
+              child: BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeLoading) {
+                    return ShimmerList();
+                  }
+                  if (state is HomeHasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.listOfPlaylist.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return PlaylistTile(
+                              playlist: state.listOfPlaylist[index],
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                  return const Placeholder();
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

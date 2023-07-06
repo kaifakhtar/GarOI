@@ -47,7 +47,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
           SliverAppBar(
             elevation: 1.h,
             iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.white.withOpacity(.9),
             title: Text(
               widget.selectedPlaylist.title,
               style: GoogleFonts.readexPro(color: Colors.black),
@@ -110,7 +110,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                 );
               }
 
-              return const SliverToBoxAdapter();
+              return const SliverToBoxAdapter(); // this is the adapter
             },
           ),
         ],

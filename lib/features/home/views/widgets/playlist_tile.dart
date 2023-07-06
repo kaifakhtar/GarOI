@@ -78,7 +78,7 @@ class PlaylistTile extends StatelessWidget {
                           ),
                           Text(
                             'Playlist',
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.readexPro(
                               fontSize: 12.sp,
                               color: Colors.white,
                             ),
