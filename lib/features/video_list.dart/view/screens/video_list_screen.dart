@@ -26,7 +26,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     videoListBloc = BlocProvider.of<VideoListBloc>(context);
-    videoListBloc.add(VideoListReset());
+   // videoListBloc.add(VideoListReset());
     videoListBloc
         .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
   }
@@ -34,8 +34,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
   void _scrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      videoListBloc
-          .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
+      // videoListBloc
+      //     .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
     }
   }
 
@@ -76,7 +76,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           child: Text(
-                            'videos',
+                            'Videos',
                             style: GoogleFonts.readexPro(
                               fontSize: 18.sp,
                             ),
