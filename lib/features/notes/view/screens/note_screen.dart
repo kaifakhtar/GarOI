@@ -92,7 +92,8 @@ int countWords(String text) {
                         //  labelText: 'Description',
                         hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
                         border: InputBorder.none,
-                        hintText: "Write the description and be concise..."),
+                       // hintText: "Write the description and be concise..."
+                        ),
                     style: GoogleFonts.outfit(fontSize: 16.sp),
                     maxLines: 20,
                     // Allows the text field to grow dynamically

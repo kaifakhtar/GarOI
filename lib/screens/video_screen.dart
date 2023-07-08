@@ -98,7 +98,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black38),
                               ),
-                              SizedBox(
+                             const SizedBox(
                                 height: 24,
                               ),
                               SizedBox(

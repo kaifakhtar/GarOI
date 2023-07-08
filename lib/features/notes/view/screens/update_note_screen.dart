@@ -73,10 +73,13 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
               SizedBox(height: 16.h),
               TextField(
                 controller: _descriptionController,
-                maxLines: 8,
+              //  maxLines: 8,
                 decoration: const InputDecoration(
                   labelText: 'Description',
+                  
                 ),
+                 keyboardType: TextInputType.multiline,
+                    scrollPhysics: const BouncingScrollPhysics(),
               ),
               SizedBox(height: 16.h),
               ElevatedButton(

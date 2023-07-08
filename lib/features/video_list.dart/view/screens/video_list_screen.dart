@@ -42,78 +42,80 @@ class _VideoListScreenState extends State<VideoListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            elevation: 1.h,
-            iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor: Colors.white.withOpacity(.9),
-            title: Text(
-              widget.selectedPlaylist.title,
-              style: GoogleFonts.readexPro(color: Colors.black),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              elevation: 1.h,
+              iconTheme: const IconThemeData(color: Colors.black),
+              backgroundColor: Colors.white.withOpacity(.9),
+              title: Text(
+                widget.selectedPlaylist.title,
+                style: GoogleFonts.readexPro(color: Colors.black),
+              ),
+              floating: true,
+              snap: true,
+              pinned: true,
             ),
-            floating: true,
-            snap: true,
-            pinned: true,
-          ),
-          BlocBuilder<VideoListBloc, VideoListState>(
-            builder: (context, state) {
-              if (state is VideoListLoading) {
-                return const SliverToBoxAdapter(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else if (state is VideoListData) {
-                final videoList = state.videoList;
-
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      if (index == 0) {
-                        return imageVideoTitleAndDescription();
-                      } else if (index == 1) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: Text(
-                            'Videos',
-                            style: GoogleFonts.readexPro(
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        );
-                      } else {
-                        final videoIndex = index - 2;
-
-                        if (videoIndex < videoList.length) {
-                          final video = videoList[videoIndex];
-                          return VideoListTile(video: video);
-                        } else if (videoIndex == videoList.length) {
-                          return const SliverToBoxAdapter(
-                            child: ListTile(
-                              title: Text("End of the list"),
+            BlocBuilder<VideoListBloc, VideoListState>(
+              builder: (context, state) {
+                if (state is VideoListLoading) {
+                  return const SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else if (state is VideoListData) {
+                  final videoList = state.videoList;
+      
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (index == 0) {
+                          return imageVideoTitleAndDescription();
+                        } else if (index == 1) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: Text(
+                              'Videos',
+                              style: GoogleFonts.readexPro(
+                                fontSize: 18.sp,
+                              ),
                             ),
                           );
+                        } else {
+                          final videoIndex = index - 2;
+      
+                          if (videoIndex < videoList.length) {
+                            final video = videoList[videoIndex];
+                            return VideoListTile(video: video);
+                          } else if (videoIndex == videoList.length) {
+                            return const SliverToBoxAdapter(
+                              child: ListTile(
+                                title: Text("End of the list"),
+                              ),
+                            );
+                          }
                         }
-                      }
-
-                      return const SliverToBoxAdapter();
-                    },
-                    childCount: videoList.length + 2,
-                  ),
-                );
-              } else if (state is VideoListError) {
-                return SliverToBoxAdapter(
-                  child: ListTile(
-                    title: Text('Error occurred: ${state.errorMessage}'),
-                  ),
-                );
-              }
-
-              return const SliverToBoxAdapter(); // this is the adapter
-            },
-          ),
-        ],
+      
+                        return const SliverToBoxAdapter();
+                      },
+                      childCount: videoList.length + 2,
+                    ),
+                  );
+                } else if (state is VideoListError) {
+                  return SliverToBoxAdapter(
+                    child: ListTile(
+                      title: Text('Error occurred: ${state.errorMessage}'),
+                    ),
+                  );
+                }
+      
+                return const SliverToBoxAdapter(); // this is the adapter
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

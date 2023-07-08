@@ -16,16 +16,10 @@ class VideoListTile extends StatelessWidget {
   // final String imageUrl;
   // final String title;
   final Video video;
-  const VideoListTile({required this.video});
+  const VideoListTile({super.key, required this.video});
 
   @override
   Widget build(BuildContext context) {
-    return OpenContainer(
-      transitionType: ContainerTransitionType.fadeThrough,
-      openBuilder: (context, action) {
-        return VideoScreen(currentVideo: video);
-      },
-      closedBuilder: (context, action) {
         return Column(
           children: [
             InkWell(
@@ -108,9 +102,9 @@ class VideoListTile extends StatelessWidget {
                         children: [
                           Text(
                             video.title,
-                            style: GoogleFonts.outfit(
+                            style: GoogleFonts.readexPro(
                               fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.normal,
                             ),
                             maxLines: 3, // Limit the text to 2 lines
                             overflow: TextOverflow
@@ -126,7 +120,7 @@ class VideoListTile extends StatelessWidget {
             //const Divider()
           ],
         );
-      },
-    );
+      }
+    
   }
-}
+
