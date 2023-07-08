@@ -98,7 +98,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black38),
                               ),
-                             const SizedBox(
+                              const SizedBox(
                                 height: 24,
                               ),
                               SizedBox(
@@ -168,7 +168,7 @@ class _VideoScreenState extends State<VideoScreen> {
                       )));
         },
         label: Text(
-          "Pause and add note",
+          "Add note",
           style: GoogleFonts.readexPro(color: AppColors.gold),
         ),
         icon: const Icon(
@@ -176,6 +176,61 @@ class _VideoScreenState extends State<VideoScreen> {
           color: AppColors.gold,
         ),
       ),
+    );
+  }
+
+  void openModalBottomSheet(
+      BuildContext context, String title, String description) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.readexPro(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.sp,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+                const SizedBox(height: 16.0),
+                Text(
+                  description,
+                  style: GoogleFonts.outfit(),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -209,10 +264,27 @@ class _VideoScreenState extends State<VideoScreen> {
                     overflow: TextOverflow.ellipsis,
                     widget.currentVideo.title,
                     style: GoogleFonts.readexPro(
-                        fontSize: 16.sp, fontWeight: FontWeight.w500),
+                        fontSize: 14.sp, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 16.w),
+            child: InkWell(
+              onTap: () => openModalBottomSheet(
+          context, 'Desription', widget.currentVideo.description),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "...more",
+                    style: GoogleFonts.readexPro(
+                        color: Colors.black54, fontSize: 10.sp),
+                  ),
+                ],
+              ),
             ),
           ),
           const Divider()
@@ -227,14 +299,14 @@ class _VideoScreenState extends State<VideoScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          height: 56.h,
+          height: 84.h,
         ),
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
           child: Text(
             'Make notes!',
             style: GoogleFonts.readexPro(
-                fontSize: 24.sp,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.black87),
           ),
@@ -305,8 +377,10 @@ class TakeNotesFloatingButton extends StatelessWidget {
                   children: [
                     Text(
                       "Pause and take notes ...",
-                      style: GoogleFonts.outfit(
-                          fontSize: 16.sp, color: Colors.black87),
+                      style: GoogleFonts.readexPro(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.sp,
+                          color: Colors.black87),
                     ),
                     const Icon(
                       Iconsax.pen_add,

@@ -79,7 +79,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                             child: Text(
                               'Videos',
                               style: GoogleFonts.readexPro(
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                               ),
                             ),
                           );
@@ -153,7 +153,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
           Text(
             widget.selectedPlaylist.title,
             style: GoogleFonts.readexPro(
-                fontSize: 18, fontWeight: FontWeight.w600),
+                fontSize: 16.sp, fontWeight: FontWeight.w600),
           ),
           SizedBox(height: 12.r),
           Text(
@@ -162,7 +162,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                 : "No description",
             maxLines: 3,
             overflow: TextOverflow.fade,
-            style: GoogleFonts.outfit(fontSize: 14.sp, color: Colors.black45),
+            style: GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black45),
           ),
           const Divider(),
           SizedBox(height: 16.h),

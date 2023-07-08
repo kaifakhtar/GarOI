@@ -98,20 +98,20 @@ class PlaylistTile extends StatelessWidget {
                     children: [
                       Text(
                         playlist.title,
-                        style: GoogleFonts.outfit(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
+                        style: GoogleFonts.readexPro(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.normal,
                         ),
-                        maxLines: 2, // Limit the text to 2 lines
+                        maxLines: 3, // Limit the text to 2 lines
                         overflow: TextOverflow
                             .ellipsis, // Apply ellipsis for overflow
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                        "videos : ${playlist.videoCount.toString()}",
+                        "Videos : ${playlist.videoCount.toString()}",
                         style: GoogleFonts.lato(
-                          fontSize: 12.sp,
-                          color: Colors.black54,
+                          fontSize: 10.sp,
+                          color: Colors.black45,
                           fontWeight: FontWeight.normal,
                         ),
                       ),

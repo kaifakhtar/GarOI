@@ -61,7 +61,7 @@ class APIService {
     etag = prefs.getString(keyForEtag) ?? ''; //* get from this key else ''
 
     Map<String, String> parameters = {
-      'part': 'snippet',
+      'part': 'snippet,contentDetails',
       'playlistId': playlistId,
       'maxResults': '1000',
       //'pageToken': _nextPageToken,
@@ -216,7 +216,7 @@ print("responce ${response.statusCode}");
 
     for (var json in videosJson) {
       videos.add(
-        Video.fromMap(json['snippet']),
+        Video.fromMap(json['snippet'],json['contentDetails']),
       );
     }
 

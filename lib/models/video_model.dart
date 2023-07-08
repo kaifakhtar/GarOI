@@ -3,28 +3,48 @@ class Video {
   final String title;
   final String thumbnailUrl;
   final String channelTitle;
-  int position;
+  final String description;
+  final int position;
+  final DateTime? dateTime;
 
   Video({
     required this.id,
     required this.title,
     required this.thumbnailUrl,
     required this.channelTitle,
+    required this.description,
     required this.position,
+    required this.dateTime,
   });
 
-  factory Video.fromMap(Map<String, dynamic> snippet) {
+  factory Video.fromMap(Map<String, dynamic> snippet, Map<String, dynamic> contentDetails) {
+    final String videoId = snippet['resourceId']['videoId'];
+    final String videoTitle = snippet['title'];
+    final String thumbnailUrl = snippet['thumbnails']?['standard']?['url'] ?? 'https://fastly.picsum.photos/id/130/3807/2538.jpg?hmac=Kl_ZLgNPUBhsKnffomgQvxWA17JhdNLYBnwlPHBEias';
+    final String channelTitle = snippet['channelTitle'];
+    final String description = snippet['description'];
+    final int position = snippet['position'];
+
+    DateTime? dateTime;
+
+    if (contentDetails.containsKey('videoPublishedAt')) {
+      final String publishedAt = contentDetails['videoPublishedAt'];
+      dateTime = DateTime.parse(publishedAt);
+    }
+
     return Video(
-      id: snippet['resourceId']['videoId'],
-      title: snippet['title'],
-      thumbnailUrl: snippet['thumbnails']?['standard']?['url'] ?? '',
-      channelTitle: snippet['channelTitle'],
-      position: snippet['position'], // Set the initial position value as desired
+      id: videoId,
+      title: videoTitle,
+      thumbnailUrl: thumbnailUrl,
+      channelTitle: channelTitle,
+      description: description,
+      position: position,
+      dateTime: dateTime,
     );
   }
 
   @override
   String toString() {
-    return 'Video: {id: $id, title: $title, thumbnailUrl: $thumbnailUrl, channelTitle: $channelTitle, position: $position}';
+    return 'Video: {id: $id, title: $title, thumbnailUrl: $thumbnailUrl, channelTitle: $channelTitle, description: $description, position: $position, dateTime: $dateTime}';
   }
 }
