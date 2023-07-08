@@ -28,6 +28,7 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   late YoutubePlayerController _controller;
   late final NoteBloc noteBloc;
+  final noteCardListScrollController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -103,20 +104,27 @@ class _VideoScreenState extends State<VideoScreen> {
                               ),
                               SizedBox(
                                 height: 330.h,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: state.notes.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8.h, horizontal: 16.w),
-                                      child: NoteCard(
-                                          note: state.notes[index],
-                                          vidId: widget.currentVideo.id),
-                                    );
-                                  },
+                                child: Scrollbar(
+                                //  isAlwaysShown: true,
+                              controller: noteCardListScrollController,
+                                  scrollbarOrientation:
+                                      ScrollbarOrientation.bottom,
+                                  child: ListView.builder(
+                                    controller: noteCardListScrollController,
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: state.notes.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 8.h, horizontal: 16.w),
+                                        child: NoteCard(
+                                            note: state.notes[index],
+                                            vidId: widget.currentVideo.id),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
@@ -190,44 +198,40 @@ class _VideoScreenState extends State<VideoScreen> {
         ),
       ),
       builder: (BuildContext context) {
-        return ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.readexPro(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.sp,
-                      ),
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.readexPro(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20.sp,
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                const SizedBox(height: 16.0),
-                Text(
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 1.h,
+              ),
+              const SizedBox(height: 8.0),
+              SingleChildScrollView(
+                child: Text(
                   description,
                   style: GoogleFonts.outfit(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -274,7 +278,7 @@ class _VideoScreenState extends State<VideoScreen> {
             padding: EdgeInsets.only(right: 16.w),
             child: InkWell(
               onTap: () => openModalBottomSheet(
-          context, 'Desription', widget.currentVideo.description),
+                  context, 'Desription', widget.currentVideo.description),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

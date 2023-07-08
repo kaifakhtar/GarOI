@@ -58,11 +58,27 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
           controller: _scrollController,
           slivers: [
             SliverAppBar(
+                collapsedHeight: 80.h,
+                expandedHeight: 150.h,
                 centerTitle: true,
-                title: Text(
-                  "Garden of Ilm",
-                  style: GoogleFonts.readexPro(color: Colors.black),
-                ),
+                // title: Text(
+                //   "Garden of Ilm",
+                //   style: GoogleFonts.readexPro(color: Colors.black),
+                // ),
+                flexibleSpace: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    radius: 48,
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/goi.jpg',
+                        // width: 550, // adjust the width as needed
+                        // height: 550, // adjust the height as needed
+                      ),
+                    ),
+                  ),
+                )),
                 actions: [
                   Padding(
                     padding: EdgeInsets.only(right: 16.w),
@@ -114,7 +130,9 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                     children: [
                       Text("Kaif!",
                           style: GoogleFonts.readexPro(
-                              color: Colors.black87, fontSize: 32)),
+                              color: Colors.black87,
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w600)),
                       SizedBox(
                         height: 12.h,
                       ),
@@ -148,6 +166,9 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         ),
                       ],
                     );
+                  }
+                  if (state is HomeError) {
+                    return Center(child: Text(state.errorMessage));
                   }
                   return const Placeholder();
                 },

@@ -23,20 +23,22 @@ class _NoteScreenState extends State<NoteScreen> {
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
   final TextEditingController _descriptionController = TextEditingController();
-int countWords(String text) {
-  if (text.isEmpty || text.trim().isEmpty) {
-    return 0;
+  int countWords(String text) {
+    if (text.isEmpty || text.trim().isEmpty) {
+      return 0;
+    }
+
+    // Split the text into words using whitespace, line breaks, and punctuation marks as delimiters
+    final words = text
+        .trim()
+        .split(RegExp(r'\s+|\n|(?<=\w)(?=[^\w\s])|(?<=[^\w\s])(?=\w)'));
+
+    // Remove any empty strings from the list of words
+    final filteredWords = words.where((word) => word.isNotEmpty);
+
+    // Return the count of words
+    return filteredWords.length;
   }
-
-  // Split the text into words using whitespace, line breaks, and punctuation marks as delimiters
-  final words = text.trim().split(RegExp(r'\s+|\n|(?<=\w)(?=[^\w\s])|(?<=[^\w\s])(?=\w)'));
-
-  // Remove any empty strings from the list of words
-  final filteredWords = words.where((word) => word.isNotEmpty);
-
-  // Return the count of words
-  return filteredWords.length;
-}
 
   @override
   void initState() {
@@ -89,11 +91,11 @@ int countWords(String text) {
                   TextField(
                     controller: _descriptionController,
                     decoration: InputDecoration(
-                        //  labelText: 'Description',
-                        hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
-                        border: InputBorder.none,
-                       // hintText: "Write the description and be concise..."
-                        ),
+                      //  labelText: 'Description',
+                      hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
+                      border: InputBorder.none,
+                      // hintText: "Write the description and be concise..."
+                    ),
                     style: GoogleFonts.outfit(fontSize: 16.sp),
                     maxLines: 20,
                     // Allows the text field to grow dynamically
@@ -145,17 +147,19 @@ int countWords(String text) {
               // Save note logic
               String title = _titleController.text;
               String description = _descriptionController.text;
-              Note note = Note(
-                  title: title,
-                  description: description,
-                  videoId: widget.videoId,
-                  words: countWords(description),
-                  timestamp: DateTime.now());
+              if (title.isNotEmpty || description.isNotEmpty) {
+                Note note = Note(
+                    title: title,
+                    description: description,
+                    videoId: widget.videoId,
+                    words: countWords(description),
+                    timestamp: DateTime.now());
 
-              noteBloc.add(AddNote(note: note));
+                noteBloc.add(AddNote(note: note));
+               
+              }
 
-              // Perform necessary actions with the note data
-              print(note.toString());
+              // Perform necessary actions with the note da
             },
             child: const Icon(Iconsax.tick_circle),
           ),

@@ -8,9 +8,15 @@ class HomeInitial extends HomeState {}
 
 class HomeLoading extends HomeState {}
 
+class HomeError extends HomeState {
+  final String errorMessage;
+
+  HomeError(this.errorMessage);
+}
+
 class HomeHasData extends HomeState {
   final List<Playlist> listOfPlaylist;
-  
+
   HomeHasData({
     required this.listOfPlaylist,
   });
