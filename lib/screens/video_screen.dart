@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -48,6 +49,7 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: YoutubePlayerBuilder(
@@ -94,7 +96,9 @@ class _VideoScreenState extends State<VideoScreen> {
                               //     icon: const Icon(Iconsax.export),
                               //     label: const Text("Export these notes")),
                               Text(
-                                "${state.notes.length} cards",
+                                state.notes.length > 1
+                                    ? "${state.notes.length} cards"
+                                    : "${state.notes.length} card",
                                 style: GoogleFonts.outfit(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black38),
@@ -105,8 +109,8 @@ class _VideoScreenState extends State<VideoScreen> {
                               SizedBox(
                                 height: 330.h,
                                 child: Scrollbar(
-                                //  isAlwaysShown: true,
-                              controller: noteCardListScrollController,
+                                  //  isAlwaysShown: true,
+                                  controller: noteCardListScrollController,
                                   scrollbarOrientation:
                                       ScrollbarOrientation.bottom,
                                   child: ListView.builder(
@@ -302,8 +306,10 @@ class _VideoScreenState extends State<VideoScreen> {
         Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          height: 84.h,
+        Image.asset(
+          'assets/images/book_goi.png',
+          height: 200,
+          width: 200,
         ),
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
@@ -352,57 +358,6 @@ class _VideoScreenState extends State<VideoScreen> {
           style: GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
         ),
       ],
-    );
-  }
-}
-
-class TakeNotesFloatingButton extends StatelessWidget {
-  final String videoId;
-  const TakeNotesFloatingButton({
-    Key? key,
-    required this.videoId,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: OpenContainer(
-        closedBuilder: (context, action) {
-          return SizedBox(
-            width: ScreenUtil.defaultSize.width,
-            child: Card(
-              elevation: 4.h,
-              color: const Color.fromARGB(255, 255, 241, 200),
-              child: Padding(
-                padding: EdgeInsets.all(16.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Pause and take notes ...",
-                      style: GoogleFonts.readexPro(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.sp,
-                          color: Colors.black87),
-                    ),
-                    const Icon(
-                      Iconsax.pen_add,
-                      size: 24,
-                      color: Colors.black,
-                    )
-                  ],
-                ),
-              ).animate().fadeIn(),
-            ),
-          );
-        },
-        openBuilder: (context, action) {
-          return NoteScreen(
-            videoId: videoId,
-          );
-        },
-      ),
     );
   }
 }

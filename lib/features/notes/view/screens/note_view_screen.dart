@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:ytyt/colors/app_colors.dart';
 import '../../../../models/note_modal.dart';
 
 class NoteViewScreen extends StatelessWidget {
@@ -18,7 +19,7 @@ class NoteViewScreen extends StatelessWidget {
         //   style: GoogleFonts.readexPro(color: Colors.black),
         // ),
         elevation: 0,
-        backgroundColor: const Color(0xFFFFF7D4),
+        backgroundColor: AppColors.gold,
       ),
       backgroundColor: const Color(0xFFFFF7D4),
       body: SafeArea(
@@ -54,7 +55,9 @@ class NoteViewScreen extends StatelessWidget {
                     //   color: Colors.black,
                     // ),
                     Text(
-                      "${note.words.toString()} characters",
+                      note.words > 1
+                          ? "${note.words.toString()} words"
+                          : "${note.words.toString()} word",
                       style: GoogleFonts.outfit(
                           fontSize: 12.sp, color: Colors.black38),
                     ),

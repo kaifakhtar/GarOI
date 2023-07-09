@@ -56,7 +56,7 @@ class NoteCard extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      note.title,
+                      note.title.isNotEmpty?note.title:"Untitled",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.outfit(
@@ -134,7 +134,7 @@ class NoteCard extends StatelessWidget {
         Positioned(
           bottom: 24.h,
           left: 108.w,
-          child: Text("${note.words.toString()} words",
+          child: Text(  note.words>1?  "${note.words.toString()} words": "${note.words.toString()} word",
               style:
                   GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
         )
