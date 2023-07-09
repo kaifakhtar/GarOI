@@ -6,6 +6,8 @@ import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 import 'package:ytyt/features/video_list.dart/view/widgets/video_tile.dart';
 
 import '../../../../models/playlistmodal.dart';
+import '../widgets/image_video_title_desc_shimmer.dart';
+import '../widgets/shimmer_video_tile.dart';
 
 class VideoListScreen extends StatefulWidget {
   final Playlist selectedPlaylist;
@@ -26,7 +28,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     videoListBloc = BlocProvider.of<VideoListBloc>(context);
-   // videoListBloc.add(VideoListReset());
+    // videoListBloc.add(VideoListReset());
     videoListBloc
         .add(VideoListFetch(selectedPlaylist: widget.selectedPlaylist));
   }
@@ -60,16 +62,22 @@ class _VideoListScreenState extends State<VideoListScreen> {
             BlocBuilder<VideoListBloc, VideoListState>(
               builder: (context, state) {
                 if (state is VideoListLoading) {
-                  return const SliverToBoxAdapter(
-                    child: Center(
-                      child: CircularProgressIndicator(),
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      if (index == 0) {
+                        return ShimmerImageVideoTitleAndDescription();
+                      }
+                      return ShimmerVideoListTile();
+                    },
+                    childCount: 8
                     ),
                   );
                 } else if (state is VideoListData) {
                   final videoList = state.videoList;
-      
+
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
+                      
                       (context, index) {
                         if (index == 0) {
                           return imageVideoTitleAndDescription();
@@ -85,7 +93,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                           );
                         } else {
                           final videoIndex = index - 2;
-      
+
                           if (videoIndex < videoList.length) {
                             final video = videoList[videoIndex];
                             return VideoListTile(video: video);
@@ -97,7 +105,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                             );
                           }
                         }
-      
+
                         return const SliverToBoxAdapter();
                       },
                       childCount: videoList.length + 2,
@@ -110,7 +118,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                     ),
                   );
                 }
-      
+
                 return const SliverToBoxAdapter(); // this is the adapter
               },
             ),
