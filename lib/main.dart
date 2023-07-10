@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/auth/view/screens/login_screen.dart';
 import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
@@ -23,11 +24,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
   final _approuter = AppRouter();
   // This widget is the root of your application.
   @override
@@ -77,10 +78,12 @@ class MyApp extends StatelessWidget {
                 // This works for code too, not just values: Most code changes can be
                 // tested with just a hot reload.
                 colorScheme: ColorScheme.fromSeed(
+                    primary: AppColors.gold,
+                    secondary: Colors.black,
                     seedColor: const Color.fromARGB(255, 0, 0, 0)),
                 //    useMaterial3: true,
               ),
-             // home: const LoginScreen(),
+              // home: const LoginScreen(),
             ),
           );
         });

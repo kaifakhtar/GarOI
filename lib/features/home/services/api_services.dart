@@ -152,7 +152,7 @@ class APIService {
     };
 
     // Get Channel
-    var response = await http.get(uri, headers: headers);
+    var response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       await cacheManager.putFile(uri.toString(), response.bodyBytes);

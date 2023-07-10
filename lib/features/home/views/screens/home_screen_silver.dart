@@ -168,7 +168,30 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                     );
                   }
                   if (state is HomeError) {
-                    return Center(child: Text(state.errorMessage));
+                    return Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/images/error_goi.jpg',
+                            width: 300, // adjust the width as needed
+                            height: 300, // adjust the height as needed
+                          ),
+                        ),
+                        OutlinedButton.icon(
+                            onPressed: () {
+                              homebloc.add(HomeLoadPlaylist());
+                            },
+                            icon: const Icon(
+                              Icons.replay_rounded,
+                              color: Colors.black,
+                            ),
+                            label: const Text(
+                              "Retry",
+                              style: TextStyle(color: Colors.black),
+                            ))
+                      ],
+                    );
                   }
                   return const Placeholder();
                 },

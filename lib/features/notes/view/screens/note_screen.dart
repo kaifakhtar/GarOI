@@ -60,9 +60,15 @@ class _NoteScreenState extends State<NoteScreen> {
           return true; // You can customize the behavior here
         },
         child: Scaffold(
+          backgroundColor: const Color(0xFFFFF7D4),
           //resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: const Text('Add note'),
+            iconTheme: const IconThemeData(color: Colors.black),
+            elevation: 0,
+            title: Text(
+              'Add note',
+              style: GoogleFonts.readexPro(color: Colors.black),
+            ),
           ),
           body: Padding(
             padding: EdgeInsets.all(16.h),
@@ -91,11 +97,12 @@ class _NoteScreenState extends State<NoteScreen> {
                   TextField(
                     controller: _descriptionController,
                     decoration: InputDecoration(
-                      //  labelText: 'Description',
-                      hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
-                      border: InputBorder.none,
-                      // hintText: "Write the description and be concise..."
-                    ),
+                        //  labelText: 'Description',
+                        hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
+                        border: InputBorder.none,
+                        // hintText: "...",
+                        hintText: "Write the description and be concise..."),
+
                     style: GoogleFonts.outfit(fontSize: 16.sp),
                     maxLines: 20,
                     // Allows the text field to grow dynamically
@@ -149,14 +156,13 @@ class _NoteScreenState extends State<NoteScreen> {
               String description = _descriptionController.text;
               if (title.isNotEmpty || description.isNotEmpty) {
                 Note note = Note(
-                    title: title,
-                    description: description,
+                    title: title.isEmpty?"Untitled":title,
+                    description:description.isEmpty?"No description":description,
                     videoId: widget.videoId,
                     words: countWords(description),
                     timestamp: DateTime.now());
 
                 noteBloc.add(AddNote(note: note));
-               
               }
 
               // Perform necessary actions with the note da
