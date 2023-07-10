@@ -10,9 +10,10 @@ import 'package:ytyt/models/note_modal.dart';
 
 class NoteScreen extends StatefulWidget {
   final String videoId;
+  final String videoTitle;
   const NoteScreen({
     Key? key,
-    required this.videoId,
+    required this.videoId, required this.videoTitle,
   }) : super(key: key);
   @override
   State<NoteScreen> createState() => _NoteScreenState();
@@ -73,78 +74,89 @@ class _NoteScreenState extends State<NoteScreen> {
           body: Padding(
             padding: EdgeInsets.all(16.h),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextField(
-                    controller: _titleController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Title...",
-                      hintStyle: GoogleFonts.outfit(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
+              child: BlocListener<NoteBloc, NoteState>(
+                listener: (context, state) {
+                  if (state is NoteAdded) {
+    //                   ScaffoldMessenger.of(context).showSnackBar(  const SnackBar(
+    //   content: Text('Note added successsfully'),
+    //   duration: Duration(seconds: 2),
+    // ));
+                  }
+                },
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TextField(
+                        controller: _titleController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Title...",
+                          hintStyle: GoogleFonts.outfit(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+
+                          // labelText: 'Title',
+                        ),
+                        style: GoogleFonts.outfit(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
+                      SizedBox(height: 8.h),
+                      TextField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                            //  labelText: 'Description',
+                            hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
+                            border: InputBorder.none,
+                            // hintText: "...",
+                            hintText:
+                                "Write the description and be concise..."),
 
-                      // labelText: 'Title',
-                    ),
-                    style: GoogleFonts.outfit(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  TextField(
-                    controller: _descriptionController,
-                    decoration: InputDecoration(
-                        //  labelText: 'Description',
-                        hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
-                        border: InputBorder.none,
-                        // hintText: "...",
-                        hintText: "Write the description and be concise..."),
+                        style: GoogleFonts.outfit(fontSize: 16.sp),
+                        maxLines: 20,
+                        // Allows the text field to grow dynamically
+                        keyboardType: TextInputType.multiline,
+                        scrollPhysics: const BouncingScrollPhysics(),
+                      ),
+                      SizedBox(height: 16.h),
+                      // ElevatedButton(
+                      //   onPressed: isButtonEnabled
+                      //       ? () {
+                      //           // Save note logic
+                      //           String title = _titleController.text;
+                      //           String description = _descriptionController.text;
+                      //           Note note = Note(
+                      //               title: title,
+                      //               description: description,
+                      //               videoId: widget.videoId,
+                      //               words: countWords(description),
+                      //               timestamp: DateTime.now());
 
-                    style: GoogleFonts.outfit(fontSize: 16.sp),
-                    maxLines: 20,
-                    // Allows the text field to grow dynamically
-                    keyboardType: TextInputType.multiline,
-                    scrollPhysics: const BouncingScrollPhysics(),
-                  ),
-                  SizedBox(height: 16.h),
-                  // ElevatedButton(
-                  //   onPressed: isButtonEnabled
-                  //       ? () {
-                  //           // Save note logic
-                  //           String title = _titleController.text;
-                  //           String description = _descriptionController.text;
-                  //           Note note = Note(
-                  //               title: title,
-                  //               description: description,
-                  //               videoId: widget.videoId,
-                  //               words: countWords(description),
-                  //               timestamp: DateTime.now());
+                      //           noteBloc.add(AddNote(note: note));
 
-                  //           noteBloc.add(AddNote(note: note));
+                      //           // Perform necessary actions with the note data
+                      //           print(note.toString());
+                      //         }
+                      //       : null,
+                      //   child: BlocBuilder<NoteBloc  , NoteState>(
+                      //     builder: (context, state) {
+                      //       if (state is NoteLoading) {
+                      //          print("Note loading state");
+                      //         return const CircularProgressIndicator();
+                      //       }  if (state is NoteAdded) {
+                      //         print("Note added state");
+                      //         isButtonEnabled = false;
 
-                  //           // Perform necessary actions with the note data
-                  //           print(note.toString());
-                  //         }
-                  //       : null,
-                  //   child: BlocBuilder<NoteBloc  , NoteState>(
-                  //     builder: (context, state) {
-                  //       if (state is NoteLoading) {
-                  //          print("Note loading state");
-                  //         return const CircularProgressIndicator();
-                  //       }  if (state is NoteAdded) {
-                  //         print("Note added state");
-                  //         isButtonEnabled = false;
-
-                  //         return const Icon(Iconsax.tick_circle);
-                  //       }
-                  //       return const Text('Save');
-                  //     },
-                  //   ),
-                  // ),
-                ],
+                      //         return const Icon(Iconsax.tick_circle);
+                      //       }
+                      //       return const Text('Save');
+                      //     },
+                      //   ),
+                      // ),
+                    ],
+                )             
               ),
             ),
           ),
@@ -156,10 +168,12 @@ class _NoteScreenState extends State<NoteScreen> {
               String description = _descriptionController.text;
               if (title.isNotEmpty || description.isNotEmpty) {
                 Note note = Note(
-                    title: title.isEmpty?"Untitled":title,
-                    description:description.isEmpty?"No description":description,
+                    title: title.isEmpty ? "Untitled" : title,
+                    description:
+                        description.isEmpty ? "No description" : description,
                     videoId: widget.videoId,
                     words: countWords(description),
+                    videoTitle: widget.videoTitle,
                     timestamp: DateTime.now());
 
                 noteBloc.add(AddNote(note: note));

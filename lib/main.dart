@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ytyt/colors/app_colors.dart';
+import 'package:ytyt/features/all_notes/cubit/all_note_cubit.dart';
 import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/auth/view/screens/login_screen.dart';
 import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
               BlocProvider<AuthCubit>(
                 create: (BuildContext context) =>
                     AuthCubit(FirebaseAuth.instance),
+              ),
+              BlocProvider<AllNoteCubit>(
+                create: (BuildContext context) =>
+                    AllNoteCubit(),
               ),
             ],
             child: MaterialApp.router(

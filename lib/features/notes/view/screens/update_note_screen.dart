@@ -92,6 +92,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                       title: updatedTitle,
                       description: updatedDescription,
                       videoId: widget.videoId,
+                      videoTitle: widget.oldNote.videoTitle,
                       words: countWords(updatedDescription),
                       timestamp: widget.oldNote.timestamp);
 

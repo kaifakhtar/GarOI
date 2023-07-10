@@ -176,6 +176,7 @@ class _VideoScreenState extends State<VideoScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => NoteScreen(
+                    videoTitle: widget.currentVideo.title,
                         videoId: widget.currentVideo.id,
                       )));
         },

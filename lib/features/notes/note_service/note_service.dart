@@ -15,6 +15,7 @@ const String columnNoteTitle = 'note_title';
 const String columnNoteDescription = 'note_description';
 const String columnNoteWords = 'note_words';
 const String columnNoteTimestamp = 'timestamp';
+const String columnNoteVideoTitle = 'note_video_title'; // New column for video title
 
 class NoteDataBaseService {
   static Database? _database;
@@ -57,6 +58,7 @@ class NoteDataBaseService {
             $columnNoteDescription TEXT,
             $columnNoteWords INTEGER,
             $columnNoteTimestamp TEXT,
+            $columnNoteVideoTitle TEXT,
             FOREIGN KEY ($columnNoteVideoId) REFERENCES $tableVideos($columnVideoId)
           )
         ''');
@@ -74,6 +76,7 @@ class NoteDataBaseService {
         columnNoteTitle: note.title,
         columnNoteDescription: note.description,
         columnNoteWords: note.words,
+        columnNoteVideoTitle:note.videoTitle,
         columnNoteTimestamp: DateTime.now().toIso8601String(),
       });
     } catch (err) {
@@ -93,7 +96,7 @@ class NoteDataBaseService {
 
     List<Note> notes = [];
     for (var noteMap in listofNotesMap) {
-      Note note = Note.fromMap(noteMap);
+      Note note = Note.fromJson(noteMap);
       notes.add(note);
     }
     return notes;
@@ -113,7 +116,7 @@ class NoteDataBaseService {
 
     await db.update(
       tableNotes,
-      note.toMap(),
+      note.toJson(),
       where: '$columnNoteId = ?',
       whereArgs: [note.id],
     );
@@ -141,4 +144,21 @@ class NoteDataBaseService {
 
 //     return result.isNotEmpty;
 //   }
+
+
+Future<List<String>> getAllDistinctVideoIdsFromNotesTable() async {
+  Database db = await database;
+  
+  final List<Map<String, dynamic>> result = await db.rawQuery('SELECT DISTINCT $columnNoteVideoId FROM $tableNotes');
+  
+  List<String> videoIdsFromNotesTable = [];
+  for (var row in result) {
+    String videoId = row[columnVideoId] as String;
+    videoIdsFromNotesTable.add(videoId);
+  }
+  
+  return videoIdsFromNotesTable;
+}
+
+
 }

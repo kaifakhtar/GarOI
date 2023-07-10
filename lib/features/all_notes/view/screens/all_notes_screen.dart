@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:ytyt/features/all_notes/cubit/all_note_cubit.dart';
+
+import '../../../../models/vid_id_and_list_of_notes_of_that.dart';
+import '../widgets/all_video_notes_widget.dart';
+
+class AllNotesScreen extends StatefulWidget {
+  const AllNotesScreen({super.key});
+
+  @override
+  State<AllNotesScreen> createState() => _AllNotesScreenState();
+}
+
+class _AllNotesScreenState extends State<AllNotesScreen> {
+  late AllNoteCubit allNotesCubit;
+  List<VidIdAndListOfNotesModal> vidIdAndListOfNotes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    allNotesCubit = BlocProvider.of<AllNoteCubit>(context);
+    allNotesCubit.getVidIdsAndNotesOfThat();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.replay),
+            onPressed: () {
+              setState(() {});
+            },
+          )
+        ],
+        title: Text(
+          "Your notes",
+          style: GoogleFonts.readexPro(color: Colors.black),
+        ),
+      ),
+      body: SafeArea(
+        child: BlocBuilder<AllNoteCubit, AllNotesState>(
+          builder: (context, state) {
+            if (state is AllNotesLoadingSuccess) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.w),
+                child: Scrollbar(
+                  child: ListView.builder(
+                    itemCount: state.vidIdAndListOfNotesModalList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AllVideoNotesWidget(
+                        vidIdAndListOfNotesModal:
+                            state.vidIdAndListOfNotesModalList[index],
+                      );
+                    },
+                  ),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
+  }
+}

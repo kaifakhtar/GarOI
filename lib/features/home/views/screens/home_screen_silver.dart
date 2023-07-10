@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/home/bloc/home_bloc.dart';
 
+import '../../../all_notes/view/screens/all_notes_screen.dart';
 import '../../../auth/view/screens/login_screen.dart';
 import '../../../user_profile/view/screens/user_profile_screen.dart';
 import '../widgets/playlist_tile.dart';
@@ -58,6 +59,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
           controller: _scrollController,
           slivers: [
             SliverAppBar(
+                iconTheme: const IconThemeData(color: Colors.black),
                 collapsedHeight: 80.h,
                 expandedHeight: 150.h,
                 centerTitle: true,
@@ -80,6 +82,15 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                   ),
                 )),
                 actions: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AllNotesScreen()),
+                        );
+                      },
+                      icon: const Icon(Icons.note)),
                   Padding(
                     padding: EdgeInsets.only(right: 16.w),
                     child: InkWell(
@@ -96,7 +107,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         color: Colors.black,
                       ),
                     ),
-                  )
+                  ),
                 ],
                 elevation: 1.h,
                 pinned: true,
