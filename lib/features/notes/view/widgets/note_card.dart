@@ -23,32 +23,34 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => NoteViewScreen(
-                          note: note,
-                        )));
-          },
-          child: Container(
-            width: 328.w,
-            height: 296.h,
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFF7D4),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4.r,
-                  color: const Color.fromARGB(51, 131, 131, 131),
-                  offset: const Offset(0, 0),
-                )
-              ],
-              borderRadius: BorderRadius.circular(16.r),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => NoteViewScreen(
+              note: note,
             ),
-            child: Padding(
+          ),
+        );
+      },
+      child: Container(
+        width: 328.w,
+        height: 296.h,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF7D4),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 4.r,
+              color: const Color.fromARGB(51, 131, 131, 131),
+              offset: const Offset(0, 0),
+            )
+          ],
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        child: Stack(
+          children: [
+            Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16.h, 16.h, 16.h, 16.h),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -56,13 +58,14 @@ class NoteCard extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      note.title.isNotEmpty?note.title:"Untitled",
+                      note.title.isNotEmpty ? note.title : "Untitled",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.sp,
-                          color: Colors.black87),
+                      style: GoogleFonts.readexPro(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16.sp,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -70,75 +73,92 @@ class NoteCard extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 200.h,
-                    child: Text(note.description,
-                        maxLines: 11,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.outfit(
-                            fontSize: 14.sp, color: Colors.black54)),
+                    child: Text(
+                      note.description,
+                      maxLines: 11,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.outfit(
+                        fontSize: 14.sp,
+                        color: Colors.black54,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-        ),
-        Positioned(
-            bottom: 24.h,
-            right: 16.w,
-            child: GestureDetector(
-              onTap: () {
-                final notebloc = BlocProvider.of<NoteBloc>(context);
-                notebloc.add(DeleteNote(noteId: note.id!));
-                notebloc.add(LoadNotes(videoId: vidId));
-              },
-              child: CircleAvatar(
-                radius: 16.r,
-                backgroundColor: Colors.red,
-                child: Icon(
-                  Iconsax.note_remove,
-                  color: Colors.white,
-                  size: 20.h,
+            Positioned(
+              bottom: 16.h,
+              right: 16.w,
+              child: GestureDetector(
+                onTap: () {
+                  final noteBloc = BlocProvider.of<NoteBloc>(context);
+                  noteBloc.add(DeleteNote(noteId: note.id!));
+                  noteBloc.add(LoadNotes(videoId: vidId));
+                },
+                child: CircleAvatar(
+                  radius: 16.r,
+                  backgroundColor: Colors.red,
+                  child: Icon(
+                    Iconsax.note_remove,
+                    color: Colors.white,
+                    size: 20.h,
+                  ),
                 ),
               ),
-            )),
-        Positioned(
-            bottom: 24.h,
-            right: 56.w,
-            child: GestureDetector(
-              onTap: () {
-                // //  final notebloc = BlocProvider.of<NoteBloc>(context);
-                Navigator.push(
+            ),
+            Positioned(
+              bottom: 16.h,
+              right: 56.w,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => UpdateNoteScreen(
-                              videoId: vidId,
-                              oldNote: note,
-                            )));
-              },
-              child: CircleAvatar(
-                radius: 16.r,
-                backgroundColor: Colors.blue,
-                child: Icon(
-                  Iconsax.magicpen5,
-                  color: Colors.white,
-                  size: 20.h,
+                      builder: (context) => UpdateNoteScreen(
+                        videoId: vidId,
+                        oldNote: note,
+                      ),
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 16.r,
+                  backgroundColor: Colors.blue,
+                  child: Icon(
+                    Iconsax.magicpen5,
+                    color: Colors.white,
+                    size: 20.h,
+                  ),
                 ),
               ),
-            )),
-        Positioned(
-          bottom: 24.h,
-          left: 16.w,
-          child: Text(timeago.format(note.timestamp),
-              style:
-                  GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
+            ),
+            Positioned(
+              bottom: 16.h,
+              left: 16.w,
+              child: Text(
+                timeago.format(note.timestamp),
+                style: GoogleFonts.outfit(
+                  fontSize: 12.sp,
+                  color: Colors.black38,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 16.h,
+              left: 108.w,
+              child: Text(
+                note.words > 1
+                    ? "${note.words.toString()} words"
+                    : "${note.words.toString()} word",
+                style: GoogleFonts.outfit(
+                  fontSize: 12.sp,
+                  color: Colors.black38,
+                ),
+              ),
+            ),
+          ],
         ),
-        Positioned(
-          bottom: 24.h,
-          left: 108.w,
-          child: Text(  note.words>1?  "${note.words.toString()} words": "${note.words.toString()} word",
-              style:
-                  GoogleFonts.outfit(fontSize: 12.sp, color: Colors.black38)),
-        )
-      ],
-    ); // Generated code for this Container Widget...
+      ),
+    );
   }
 }
