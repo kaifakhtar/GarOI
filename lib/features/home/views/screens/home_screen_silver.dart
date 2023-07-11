@@ -4,9 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
+import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/home/bloc/home_bloc.dart';
 
 import '../../../all_notes/view/screens/all_notes_screen.dart';
+import '../../../auth/cubit/auth_state.dart';
 import '../../../auth/view/screens/login_screen.dart';
 import '../../../user_profile/view/screens/user_profile_screen.dart';
 import '../widgets/playlist_tile.dart';
@@ -21,6 +23,7 @@ class HomeScreenSilver extends StatefulWidget {
 
 class _HomeScreenSilverState extends State<HomeScreenSilver> {
   late HomeBloc homebloc;
+  late AuthCubit authCubit;
   late ScrollController _scrollController;
 
   @override
@@ -29,6 +32,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     homebloc = BlocProvider.of<HomeBloc>(context);
+    //  authCubit = BlocProvider.of<AuthCubit>(context);
     homebloc.add(HomeLoadPlaylist());
   }
 
@@ -59,9 +63,10 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
           controller: _scrollController,
           slivers: [
             SliverAppBar(
+                automaticallyImplyLeading: false, // Remove back button
                 iconTheme: const IconThemeData(color: Colors.black),
-                collapsedHeight: 80.h,
-                expandedHeight: 150.h,
+                collapsedHeight: 100.h,
+                expandedHeight: 180.h,
                 centerTitle: true,
                 // title: Text(
                 //   "Garden of Ilm",
@@ -69,9 +74,9 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                 // ),
                 flexibleSpace: Center(
                     child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.h),
                   child: CircleAvatar(
-                    radius: 48,
+                    radius: 100.r,
                     child: ClipOval(
                       child: Image.asset(
                         'assets/images/goi.jpg',
@@ -139,11 +144,22 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Kaif!",
-                          style: GoogleFonts.readexPro(
-                              color: Colors.black87,
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.w600)),
+                      BlocBuilder<AuthCubit, AuthState>(
+                        builder: (context, state) {
+                          if (state is AuthLoginSuccess) {
+                            return Text("${state.student.username}!",
+                                style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    fontSize: 24.sp,
+                                    fontWeight: FontWeight.w600));
+                          }
+                          return Text("No student data",
+                              style: GoogleFonts.readexPro(
+                                  color: Colors.black87,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w600));
+                        },
+                      ),
                       SizedBox(
                         height: 12.h,
                       ),

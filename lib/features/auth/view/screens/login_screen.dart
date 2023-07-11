@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // _model.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _authCubit.close();
+  
     super.dispose();
   }
 
