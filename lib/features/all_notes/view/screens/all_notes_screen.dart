@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/all_notes/cubit/all_note_cubit.dart';
 
 import '../../../../models/vid_id_and_list_of_notes_of_that.dart';
@@ -59,6 +60,27 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
                       );
                     },
                   ),
+                ),
+              );
+            }
+            if (state is AllNotesLoading) {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.gold),
+              );
+            }
+            if (state is AllNotesLoadingError) {
+              return Center(
+                child: Text(
+                  state.errorMessage,
+                  style: GoogleFonts.readexPro(),
+                ),
+              );
+            }
+            if (state is AllNotesNoNotes) {
+              return Center(
+                child: Text(
+                  "You have note made any note",
+                  style: GoogleFonts.readexPro(),
                 ),
               );
             }

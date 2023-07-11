@@ -11,6 +11,7 @@ class AllNoteCubit extends Cubit<AllNotesState> {
   AllNoteCubit() : super(AllNotesLoading());
 
   Future<void> getVidIdsAndNotesOfThat() async {
+    emit(AllNotesLoading());
     final noteDataBaseService = NoteDataBaseService();
     List<VidIdAndListOfNotesModal> vidIdAndListOfNotes = [];
     try {
@@ -25,7 +26,11 @@ class AllNoteCubit extends Cubit<AllNotesState> {
         print(vidIdAndListOfNotes.toString());
       }
 
-      emit(AllNotesLoadingSuccess(vidIdAndListOfNotes));
+      if (vidIdAndListOfNotes.isEmpty) {
+        emit(AllNotesNoNotes());
+      } else {
+        emit(AllNotesLoadingSuccess(vidIdAndListOfNotes));
+      }
     } catch (err) {
       print(err.toString());
       emit(AllNotesLoadingError(errorMessage: err.toString()));

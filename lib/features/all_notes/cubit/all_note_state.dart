@@ -17,3 +17,4 @@ class AllNotesLoadingError extends AllNotesState {
     required this.errorMessage,
   });
 }
+class AllNotesNoNotes extends AllNotesState {}
