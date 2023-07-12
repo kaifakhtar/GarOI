@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
@@ -50,12 +51,13 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-       // noteBloc.add(LoadNotes(videoId: widget.videoId));
+        // noteBloc.add(LoadNotes(videoId: widget.videoId));
         // Handle back button press
         // Return true to allow popping the screen, or false to prevent it
         return true; // You can customize the behavior here
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: const Text('Update note'),
         ),
@@ -73,13 +75,19 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
               SizedBox(height: 16.h),
               TextField(
                 controller: _descriptionController,
-              //  maxLines: 8,
                 decoration: const InputDecoration(
-                  labelText: 'Description',
-                  
+                  //  labelText: 'Description',
+
+                  border: InputBorder.none,
+                  // hintText: "...",
                 ),
-                 keyboardType: TextInputType.multiline,
-                    scrollPhysics: const BouncingScrollPhysics(),
+
+                style: GoogleFonts.outfit(fontSize: 16.sp),
+                maxLines: null,
+
+                // Allows the text field to grow dynamically
+                keyboardType: TextInputType.multiline,
+                scrollPhysics: const BouncingScrollPhysics(),
               ),
               SizedBox(height: 16.h),
               ElevatedButton(
@@ -88,7 +96,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                   String updatedTitle = _titleController.text;
                   String updatedDescription = _descriptionController.text;
                   Note updatedNote = Note(
-                    id: widget.oldNote.id,
+                      id: widget.oldNote.id,
                       title: updatedTitle,
                       description: updatedDescription,
                       videoId: widget.videoId,

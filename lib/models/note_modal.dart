@@ -36,7 +36,7 @@ class Note {
     return {
       'note_id': id,
       'video_id': videoId,
-      'video_title': videoTitle,
+      'note_video_title': videoTitle,
       'note_title': title,
       'note_description': description,
       'note_words': words,
