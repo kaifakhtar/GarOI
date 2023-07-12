@@ -44,6 +44,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -113,9 +114,14 @@ class _VideoListScreenState extends State<VideoListScreen> {
                   );
                 } else if (state is VideoListError) {
                   return SliverToBoxAdapter(
-                    child: ListTile(
-                      title: Text('Error occurred: ${state.errorMessage}'),
-                    ),
+                    child:  Container(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/images/error_goi.jpg',
+                            width: 300, // adjust the width as needed
+                            height: 300, // adjust the height as needed
+                          ),
+                        ),
                   );
                 }
 

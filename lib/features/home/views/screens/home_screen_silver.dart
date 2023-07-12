@@ -144,6 +144,9 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 8.h,
+                      ),
                       BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
                           if (state is AuthLoginSuccess) {
@@ -161,7 +164,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         },
                       ),
                       SizedBox(
-                        height: 12.h,
+                        height: 4.h,
                       ),
                       Text("Pick up from my garden",
                           style: GoogleFonts.readexPro(

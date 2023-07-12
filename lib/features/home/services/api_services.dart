@@ -79,7 +79,9 @@ class APIService {
 
     try {
       // Get Playlist Videos
-      var response = await http.get(uri, headers: headers);
+      var response = await http
+          .get(uri, headers: headers)
+          .timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         print(response.headers);
@@ -152,7 +154,9 @@ class APIService {
     };
 
     // Get Channel
-    var response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 6));
+    var response = await http
+        .get(uri, headers: headers)
+        .timeout(const Duration(seconds: 10));
 
     if (response.statusCode == 200) {
       await cacheManager.putFile(uri.toString(), response.bodyBytes);
@@ -187,7 +191,7 @@ class APIService {
       // return channel;
     } else if (response.statusCode == 304) {
       final file = await cacheManager.getFileFromCache(uri.toString());
-print("responce ${response.statusCode}");
+      print("responce ${response.statusCode}");
       if (file != null) {
         final cachedData = file.file;
         // Process the cached data as needed
@@ -216,7 +220,7 @@ print("responce ${response.statusCode}");
 
     for (var json in videosJson) {
       videos.add(
-        Video.fromMap(json['snippet'],json['contentDetails']),
+        Video.fromMap(json['snippet'], json['contentDetails']),
       );
     }
 

@@ -112,4 +112,20 @@ class AuthCubit extends Cubit<AuthState> {
       return null;
     }
   }
+
+  Future<void > getStudentDataOnStartup()async{
+     try {
+      final student =   await getStudentDataFromFirebase();
+ 
+       if (student == null) {
+         emit(AuthError("Student does not exist or something is wrong"));
+       }
+       else{
+  emit(AuthLoginSuccess(successMessage: "Login successful",student: student));
+       }
+     } catch (err) {
+      emit(AuthError(err.toString()));
+     }
+ 
+  }
 }
