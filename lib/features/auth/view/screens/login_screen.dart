@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // _model.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-  
+
     super.dispose();
   }
 
@@ -203,20 +204,32 @@ class _LoginScreenState extends State<LoginScreen> {
                         String email = _emailController.text.trim();
                         String password = _passwordController.text.trim();
 
-                        if (email.isEmpty) {
-                          print('Email field is empty');
+                        if (email.isNotEmpty && password.isNotEmpty) {
+                          _authCubit.login(email, password);
                           // Add code to show an error message or perform any other necessary action
-                          return; // Stop execution if the email field is empty
-                        }
-
-                        if (password.isEmpty) {
-                          print('Password field is empty');
+                          //  return; // Stop execution if the email field is empty
+                        } else if (email.isEmpty) {
+                          Fluttertoast.showToast(
+                              msg: "Enter your email",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.sp);
                           // Add code to show an error message or perform any other necessary action
-                          return; // Stop execution if the password field is empty
+                          //return; // Stop execution if the password field is empty
+                        } else if (password.isEmpty) {
+                          Fluttertoast.showToast(
+                              msg: "Enter your password",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.sp);
                         }
-
                         // Both fields are not empty, proceed with login
-                        _authCubit.login(email, password);
 
                         print('Button pressed ...');
                       },

@@ -80,8 +80,7 @@ class APIService {
     try {
       // Get Playlist Videos
       var response = await http
-          .get(uri, headers: headers)
-          .timeout(const Duration(seconds: 10));
+          .get(uri, headers: headers);
 
       if (response.statusCode == 200) {
         print(response.headers);
@@ -133,8 +132,8 @@ class APIService {
 
   Future<List<Playlist>> fetchPlaylists({required String channelId}) async {
     String keyForEtag = channelId;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    etag = prefs.getString(keyForEtag) ?? ''; //* get from this key else ''
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // etag = prefs.getString(keyForEtag) ?? ''; //* get from this key else ''
 
     Map<String, String> parameters = {
       'part': 'snippet,contentDetails',
@@ -149,23 +148,22 @@ class APIService {
       parameters,
     );
     Map<String, String> headers = {
-      'If-None-Match': etag,
+      // 'If-None-Match': etag,
       HttpHeaders.contentTypeHeader: 'application/json',
     };
 
     // Get Channel
     var response = await http
-        .get(uri, headers: headers)
-        .timeout(const Duration(seconds: 10));
+        .get(uri, headers: headers);
 
     if (response.statusCode == 200) {
-      await cacheManager.putFile(uri.toString(), response.bodyBytes);
+      // await cacheManager.putFile(uri.toString(), response.bodyBytes);
       final listOfPlaylistsJSON = json.decode(response.body)['items'];
 
       final jsondata = json.decode(response.body);
       etag = jsondata['etag'];
-      print(etag + "etag of playlists");
-      await prefs.setString(keyForEtag, etag); //* store the etag in the prefs
+      //  print(etag + "etag of playlists");
+      //await prefs.setString(keyForEtag, etag); //* store the etag in the prefs
       // if (jsondata.containsKey('nextPageToken')) {
       //   _nextPageTokenForPlaylist = jsondata['nextPageToken'];
       //   // Perform the desired action when 'nextPageToken' exists
@@ -189,24 +187,25 @@ class APIService {
       //   playlistId: channel.uploadPlaylistId,
       // );
       // return channel;
-    } else if (response.statusCode == 304) {
-      final file = await cacheManager.getFileFromCache(uri.toString());
-      print("responce ${response.statusCode}");
-      if (file != null) {
-        final cachedData = file.file;
-        // Process the cached data as needed
-        final listOfPlaylistsJSON =
-            json.decode(cachedData.readAsStringSync())['items'];
-        // final listOfPlaylistsJSON = json.decode(response.body)['items'];
-        List<Playlist> listOfPlaylistModals = [];
-        for (var json in listOfPlaylistsJSON) {
-          listOfPlaylistModals.add(
-            Playlist.fromMap(json),
-          );
-        }
-        return listOfPlaylistModals;
-      }
-      return [];
+      // } else if (response.statusCode == 304) {
+      //   final file = await cacheManager.getFileFromCache(uri.toString());
+      //   print("responce ${response.statusCode}");
+      //   if (file != null) {
+      //     final cachedData = file.file;
+      //     // Process the cached data as needed
+      //     final listOfPlaylistsJSON =
+      //         json.decode(cachedData.readAsStringSync())['items'];
+      //     // final listOfPlaylistsJSON = json.decode(response.body)['items'];
+      //     List<Playlist> listOfPlaylistModals = [];
+      //     for (var json in listOfPlaylistsJSON) {
+      //       listOfPlaylistModals.add(
+      //         Playlist.fromMap(json),
+      //       );
+      //     }
+      //     return listOfPlaylistModals;
+      //   }
+      //   return [];
+      // }
     } else {
       throw json.decode(response.body)['error']['message'];
     }

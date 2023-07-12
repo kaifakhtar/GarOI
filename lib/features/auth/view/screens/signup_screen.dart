@@ -1,9 +1,11 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
@@ -13,8 +15,10 @@ import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
 import 'package:ytyt/models/student_modal.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ytyt/routes/routes_imports.gr.dart';
 import '../../cubit/auth_cubit.dart';
 import '../../cubit/auth_state.dart';
+
 @RoutePage()
 class SignUpScreen extends StatefulWidget {
   @override
@@ -39,12 +43,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-        _emailController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
     super.dispose();
-
-
   }
 
   @override
@@ -180,7 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     //     _model.textController2Validator.asValidator(context),
                   ),
                 ),
-          
+
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 12.h, 0, 0),
                   child: TextFormField(
@@ -239,8 +241,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Handle sign up logic here
                       String email = _emailController.text;
                       String password = _passwordController.text;
-                      _authCubit.signUp(
-                          email, password, _usernameController.text);
+                      String username = _usernameController.text;
+                      if (email.isNotEmpty &&
+                          password.isNotEmpty &&
+                          username.isNotEmpty) {
+                        _authCubit.signUp(
+                            email, password, _usernameController.text);
+                      } else if (email.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: "Enter your email",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.sp);
+                      } else if (password.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: "Enter your password",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.sp);
+                      } else if (username.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: "Enter your username",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.sp);
+                      }
                       // Perform sign up operations with the entered data
                     },
                     style: ElevatedButton.styleFrom(
@@ -264,15 +298,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       builder: (context, state) {
                         if (state is AuthLoading) {
-                                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const LoadingDialog();
-                  },
-                );
-              });
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const LoadingDialog();
+                              },
+                            );
+                          });
                         } else if (state is AuthSignUpSuccess) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             Navigator.pushReplacement(
@@ -302,10 +336,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const LoginScreen()));
+                          AutoRouter.of(context)
+                              .replace(const LoginScreenRoute());
                         },
                         child: Text(
                           'Log in',
