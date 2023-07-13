@@ -11,6 +11,7 @@ import 'package:ytyt/features/notes/view/screens/note_view_screen.dart';
 import 'package:ytyt/features/notes/view/screens/update_note_screen.dart';
 
 import '../../../../models/note_modal.dart';
+import 'delete_confirmation_dialog.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -20,6 +21,21 @@ class NoteCard extends StatelessWidget {
     required this.note,
     required this.vidId,
   }) : super(key: key);
+  void showDeleteConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DeleteConfirmationDialog(
+          onDelete: () {
+            final noteBloc = BlocProvider.of<NoteBloc>(context);
+            noteBloc.add(DeleteNote(noteId: note.id!));
+            noteBloc.add(LoadNotes(videoId: vidId));
+            Navigator.pop(context); // Close the dialog after delete
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +107,10 @@ class NoteCard extends StatelessWidget {
               right: 16.w,
               child: GestureDetector(
                 onTap: () {
-                  final noteBloc = BlocProvider.of<NoteBloc>(context);
-                  noteBloc.add(DeleteNote(noteId: note.id!));
-                  noteBloc.add(LoadNotes(videoId: vidId));
+                  // final noteBloc = BlocProvider.of<NoteBloc>(context);
+                  // noteBloc.add(DeleteNote(noteId: note.id!));
+                  // noteBloc.add(LoadNotes(videoId: vidId));
+                  showDeleteConfirmation(context);
                 },
                 child: CircleAvatar(
                   radius: 16.r,
@@ -137,7 +154,7 @@ class NoteCard extends StatelessWidget {
               left: 16.w,
               child: Text(
                 timeago.format(note.timestamp),
-                style: GoogleFonts.outfit(
+                style: GoogleFonts.readexPro(
                   fontSize: 12.sp,
                   color: Colors.black38,
                 ),
@@ -150,7 +167,7 @@ class NoteCard extends StatelessWidget {
                 note.words > 1
                     ? "${note.words.toString()} words"
                     : "${note.words.toString()} word",
-                style: GoogleFonts.outfit(
+                style: GoogleFonts.readexPro(
                   fontSize: 12.sp,
                   color: Colors.black38,
                 ),

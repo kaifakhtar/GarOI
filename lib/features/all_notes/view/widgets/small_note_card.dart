@@ -19,8 +19,28 @@ class SmallNoteCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            color: const Color(0xFFFFF7D4),
-            borderRadius: BorderRadius.all(Radius.circular(16.r))),
+          //  color: const Color(0xFFFFF7D4),
+          gradient: const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              AppColors.gold, // Start color
+              Color.fromARGB(255, 255, 253, 240), // End color
+            ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 4.r,
+              color: const Color.fromARGB(51, 131, 131, 131),
+              offset: const Offset(0, 0),
+            )
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(16.r)),
+          // border: Border.all(
+          //   color: AppColors.gold, // Set the border color here
+          //   width: 1.0, // Set the border width if needed
+          // ),
+        ),
         height: 200.h,
         width: 200.w,
         child: Padding(
@@ -41,7 +61,7 @@ class SmallNoteCard extends StatelessWidget {
                   ),
                   Text(
                     note.description,
-                  style: GoogleFonts.lato(fontSize: 12.sp),
+                    style: GoogleFonts.lato(fontSize: 12.sp),
                   )
                 ],
               ),

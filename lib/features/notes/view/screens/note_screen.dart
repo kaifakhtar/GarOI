@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:ytyt/colors/app_colors.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/models/note_modal.dart';
@@ -13,7 +14,8 @@ class NoteScreen extends StatefulWidget {
   final String videoTitle;
   const NoteScreen({
     Key? key,
-    required this.videoId, required this.videoTitle,
+    required this.videoId,
+    required this.videoTitle,
   }) : super(key: key);
   @override
   State<NoteScreen> createState() => _NoteScreenState();
@@ -21,6 +23,7 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> {
   bool isButtonEnabled = true;
+  bool isNoteSaved = false;
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
   final TextEditingController _descriptionController = TextEditingController();
@@ -67,120 +70,134 @@ class _NoteScreenState extends State<NoteScreen> {
             iconTheme: const IconThemeData(color: Colors.black),
             elevation: 0,
             title: Text(
-              'Add note',
+              isNoteSaved ? "Note Saved" : "Add note",
               style: GoogleFonts.readexPro(color: Colors.black),
             ),
           ),
           body: Padding(
             padding: EdgeInsets.all(16.h),
-            child: SingleChildScrollView(
-              child: BlocListener<NoteBloc, NoteState>(
-                listener: (context, state) {
-                  if (state is NoteAdded) {
-    //                   ScaffoldMessenger.of(context).showSnackBar(  const SnackBar(
-    //   content: Text('Note added successsfully'),
-    //   duration: Duration(seconds: 2),
-    // ));
-                  }
-                },
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextField(
-                        controller: _titleController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Title...",
-                          hintStyle: GoogleFonts.outfit(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+            child: SingleChildScrollView(child:
+                BlocBuilder<NoteBloc, NoteState>(builder: (context, state) {
+              if (state is NoteAdded) {
+                // isButtonEnabled = false;
+                isNoteSaved = true;
 
-                          // labelText: 'Title',
-                        ),
-                        style: GoogleFonts.outfit(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(height: 8.h),
-                      TextField(
-                        controller: _descriptionController,
-                        decoration: InputDecoration(
-                            //  labelText: 'Description',
-                            hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
-                            border: InputBorder.none,
-                            // hintText: "...",
-                            hintText:
-                                "Write the description and be concise..."),
-
-                        style: GoogleFonts.outfit(fontSize: 16.sp),
-                        maxLines: 20,
-                        // Allows the text field to grow dynamically
-                        keyboardType: TextInputType.multiline,
-                        scrollPhysics: const BouncingScrollPhysics(),
-                      ),
-                      SizedBox(height: 16.h),
-                      // ElevatedButton(
-                      //   onPressed: isButtonEnabled
-                      //       ? () {
-                      //           // Save note logic
-                      //           String title = _titleController.text;
-                      //           String description = _descriptionController.text;
-                      //           Note note = Note(
-                      //               title: title,
-                      //               description: description,
-                      //               videoId: widget.videoId,
-                      //               words: countWords(description),
-                      //               timestamp: DateTime.now());
-
-                      //           noteBloc.add(AddNote(note: note));
-
-                      //           // Perform necessary actions with the note data
-                      //           print(note.toString());
-                      //         }
-                      //       : null,
-                      //   child: BlocBuilder<NoteBloc  , NoteState>(
-                      //     builder: (context, state) {
-                      //       if (state is NoteLoading) {
-                      //          print("Note loading state");
-                      //         return const CircularProgressIndicator();
-                      //       }  if (state is NoteAdded) {
-                      //         print("Note added state");
-                      //         isButtonEnabled = false;
-
-                      //         return const Icon(Iconsax.tick_circle);
-                      //       }
-                      //       return const Text('Save');
-                      //     },
-                      //   ),
-                      // ),
-                    ],
-                )             
-              ),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            heroTag: null,
-            onPressed: () {
-              // Save note logic
-              String title = _titleController.text;
-              String description = _descriptionController.text;
-              if (title.isNotEmpty || description.isNotEmpty) {
-                Note note = Note(
-                    title: title.isEmpty ? "Untitled" : title,
-                    description:
-                        description.isEmpty ? "No description" : description,
-                    videoId: widget.videoId,
-                    words: countWords(description),
-                    videoTitle: widget.videoTitle,
-                    timestamp: DateTime.now());
-
-                noteBloc.add(AddNote(note: note));
+                print("isNoteSaved is inside noteadded state $isNoteSaved");
               }
 
-              // Perform necessary actions with the note da
-            },
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Title...",
+                      hintStyle: GoogleFonts.outfit(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+
+                      // labelText: 'Title',
+                    ),
+                    style: GoogleFonts.outfit(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  // SizedBox(height: 4.h),
+                  TextField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                        //  labelText: 'Description',
+                        hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
+                        border: InputBorder.none,
+                        // hintText: "...",
+                        hintText: "Write the description and be concise..."),
+
+                    style: GoogleFonts.outfit(fontSize: 16.sp),
+                    maxLines: 20,
+                    // Allows the text field to grow dynamically
+                    keyboardType: TextInputType.multiline,
+                    scrollPhysics: const BouncingScrollPhysics(),
+                  ),
+                  SizedBox(height: 16.h),
+                  // ElevatedButton(
+                  //   onPressed: isButtonEnabled
+                  //       ? () {
+                  //           // Save note logic
+                  //           String title = _titleController.text;
+                  //           String description = _descriptionController.text;
+                  //           Note note = Note(
+                  //               title: title,
+                  //               description: description,
+                  //               videoId: widget.videoId,
+                  //               words: countWords(description),
+                  //               timestamp: DateTime.now());
+
+                  //           noteBloc.add(AddNote(note: note));
+
+                  //           // Perform necessary actions with the note data
+                  //           print(note.toString());
+                  //         }
+                  //       : null,
+                  //   child: BlocBuilder<NoteBloc  , NoteState>(
+                  //     builder: (context, state) {
+                  //       if (state is NoteLoading) {
+                  //          print("Note loading state");
+                  //         return const CircularProgressIndicator();
+                  //       }  if (state is NoteAdded) {
+                  //         print("Note added state");
+                  //         isButtonEnabled = false;
+
+                  //         return const Icon(Iconsax.tick_circle);
+                  //       }
+                  //       return const Text('Save');
+                  //     },
+                  //   ),
+                  // ),
+                ],
+              );
+            })),
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor:
+                isButtonEnabled ? AppColors.blackTintGold : Colors.grey,
+            heroTag: null,
+            onPressed: isButtonEnabled
+                ? () {
+                    // Save note logic
+                    setState(() {
+                      isButtonEnabled = false;
+                    });
+                    if (isNoteSaved) {
+                      setState(() {});
+                    }
+                    String title = _titleController.text;
+                    String description = _descriptionController.text;
+                    if (title.isNotEmpty || description.isNotEmpty) {
+                      Note note = Note(
+                          title: title.isEmpty ? "Untitled" : title,
+                          description: description.isEmpty
+                              ? "No description"
+                              : description,
+                          videoId: widget.videoId,
+                          words: countWords(description),
+                          videoTitle: widget.videoTitle,
+                          timestamp: DateTime.now());
+
+                      noteBloc.add(AddNote(note: note));
+                      setState(() {
+                        isNoteSaved = true;
+                      });
+                      // if (isNoteSaved) {
+                      //   setState(() {});
+                      // }
+                    }
+
+                    // Perform necessary actions with the note da
+                  }
+                : null,
             child: const Icon(Iconsax.tick_circle),
           ),
         ),

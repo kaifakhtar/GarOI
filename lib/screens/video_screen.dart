@@ -176,7 +176,7 @@ class _VideoScreenState extends State<VideoScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => NoteScreen(
-                    videoTitle: widget.currentVideo.title,
+                        videoTitle: widget.currentVideo.title,
                         videoId: widget.currentVideo.id,
                       )));
         },
@@ -255,38 +255,30 @@ class _VideoScreenState extends State<VideoScreen> {
           SizedBox(
             height: 4.h,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 24.r,
-                  foregroundImage:
-                      NetworkImage(widget.currentVideo.thumbnailUrl),
-                ),
-                SizedBox(
-                  width: 8.w,
-                ),
-                Flexible(
-                  child: Text(
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    widget.currentVideo.title,
-                    style: GoogleFonts.readexPro(
-                        fontSize: 14.sp, fontWeight: FontWeight.normal),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 16.w),
-            child: InkWell(
-              onTap: () => openModalBottomSheet(
-                  context, 'Desription', widget.currentVideo.description),
+          InkWell(
+            onTap: () => openModalBottomSheet(
+                context, 'Desription', widget.currentVideo.description),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  CircleAvatar(
+                    radius: 20.r,
+                    foregroundImage:
+                        NetworkImage(widget.currentVideo.thumbnailUrl),
+                  ),
+                  SizedBox(
+                    width: 8.w,
+                  ),
+                  Flexible(
+                    child: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      widget.currentVideo.title,
+                      style: GoogleFonts.readexPro(
+                          fontSize: 14.sp, fontWeight: FontWeight.normal),
+                    ),
+                  ),
                   Text(
                     "...more",
                     style: GoogleFonts.readexPro(

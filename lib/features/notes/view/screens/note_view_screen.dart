@@ -14,10 +14,10 @@ class NoteViewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        // title: Text(
-        //   note.title,
-        //   style: GoogleFonts.readexPro(color: Colors.black),
-        // ),
+        title: Text(
+          "View note",
+          style: GoogleFonts.readexPro(color: Colors.black),
+        ),
         elevation: 0,
         backgroundColor: AppColors.gold,
       ),

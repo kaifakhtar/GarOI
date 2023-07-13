@@ -14,34 +14,41 @@ class AllVideoNotesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text(
-        vidIdAndListOfNotesModal.notesOfThisVideoId[0].videoTitle,
-        style: GoogleFonts.readexPro(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-      children: [
-        SizedBox(
-          height: 200.h,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: vidIdAndListOfNotesModal.notesOfThisVideoId.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
-                  child: SmallNoteCard(
-                    note: vidIdAndListOfNotesModal.notesOfThisVideoId[index],
-                  ),
-                );
-              },
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(8.h),
+        child: ExpansionTile(
+          title: Text(
+            vidIdAndListOfNotesModal.notesOfThisVideoId[0].videoTitle,
+            style: GoogleFonts.readexPro(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.normal,
             ),
           ),
+          children: [
+            SizedBox(
+              height: 200.h,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: vidIdAndListOfNotesModal.notesOfThisVideoId.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
+                      child: SmallNoteCard(
+                        note:
+                            vidIdAndListOfNotesModal.notesOfThisVideoId[index],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

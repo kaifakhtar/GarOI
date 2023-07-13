@@ -31,22 +31,23 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.replay),
-            onPressed: () {
-              allNotesCubit.getVidIdsAndNotesOfThat();
-              Fluttertoast.showToast(
-  msg: "Please refresh",
-  toastLength: Toast.LENGTH_SHORT,
-  gravity: ToastGravity.BOTTOM,
-  backgroundColor: Colors.black87,
-  textColor: Colors.white,
-);
-            },
-          )
-        ],
+//         actions: [
+//           IconButton(
+//             icon: const Icon(Icons.replay),
+//             onPressed: () {
+//               allNotesCubit.getVidIdsAndNotesOfThat();
+//               Fluttertoast.showToast(
+//   msg: "Please refresh",
+//   toastLength: Toast.LENGTH_SHORT,
+//   gravity: ToastGravity.BOTTOM,
+//   backgroundColor: Colors.black87,
+//   textColor: Colors.white,
+// );
+//             },
+//           )
+//         ],
         title: Text(
           "Your notes",
           style: GoogleFonts.readexPro(color: Colors.black),
