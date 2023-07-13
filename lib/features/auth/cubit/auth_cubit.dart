@@ -23,16 +23,28 @@ class AuthCubit extends Cubit<AuthState> {
       );
 
       // final User user = userCredential.user!;
-      final student =   await getStudentDataFromFirebase();
+      final student = await getStudentDataFromFirebase();
 
       if (student == null) {
         emit(AuthError("Student does not exist or something is wrong"));
+      } else {
+        emit(AuthLoginSuccess(
+            successMessage: "Login successful", student: student));
       }
-      else{
- emit(AuthLoginSuccess(successMessage: "Login successful",student: student));
+    } on FirebaseAuthException catch (err) {
+      switch (err.code) {
+        case "user-not-found":
+          emit(AuthError("No student found, try creating a new account"));
+          break;
+        case "wrong-password":
+          emit(AuthError("Wrong password"));
+          break;
+        case "invalid-email":
+          emit(AuthError("Please enter valid email address"));
+          break;
+        default:
+          emit(AuthError("Login failed! Please try again later."));
       }
-
-     
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -51,11 +63,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   // Sign up method
   Future<void> signUp(String email, String password, String username) async {
-         emit(AuthLoading());
-   
+    emit(AuthLoading());
+
     try {
-
-
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -65,18 +75,32 @@ class AuthCubit extends Cubit<AuthState> {
       final student =
           Student(uid: userCredential.user!.uid, username: username);
 
-    await  createStudentDocument(student).then((value) =>  emit(AuthSignUpSuccess(successMessage: "Sign up successful")));
+      await createStudentDocument(student).then((value) =>
+          emit(AuthSignUpSuccess(successMessage: "Sign up successful")));
       // final User user = userCredential.user!;
-     
+    } on FirebaseAuthException catch (err) {
+      switch (err.code) {
+        case "email-already-in-use":
+          emit(AuthError("Email already in use, try logging in."));
+          break;
+        case "weak-password":
+          emit(AuthError("Weak password, make it atleast 6 characters"));
+          break;
+        case "invalid-email":
+          emit(AuthError("Please enter valid email address"));
+          break;
+        default:
+          emit(AuthError("Sign up failed! Please try again later."));
+      }
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  Future<void> createStudentDocument(Student student)async {
+  Future<void> createStudentDocument(Student student) async {
     // Replace with your desired student ID
 
-   await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('students')
         .doc(student.uid)
         .set(student.toJson())
@@ -113,19 +137,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void > getStudentDataOnStartup()async{
-     try {
-      final student =   await getStudentDataFromFirebase();
- 
-       if (student == null) {
-         emit(AuthError("Student does not exist or something is wrong"));
-       }
-       else{
-  emit(AuthLoginSuccess(successMessage: "Login successful",student: student));
-       }
-     } catch (err) {
+  Future<void> getStudentDataOnStartup() async {
+    try {
+      final student = await getStudentDataFromFirebase();
+
+      if (student == null) {
+        emit(AuthError("Student does not exist or something is wrong"));
+      } else {
+        emit(AuthLoginSuccess(
+            successMessage: "Login successful", student: student));
+      }
+    } catch (err) {
       emit(AuthError(err.toString()));
-     }
- 
+    }
   }
 }

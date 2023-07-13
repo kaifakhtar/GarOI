@@ -23,6 +23,7 @@ class UpdateNoteScreen extends StatefulWidget {
 class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
+  bool isButtonEnabled = true;
   final TextEditingController _descriptionController = TextEditingController();
   int countWords(String text) {
     if (text.isEmpty) {
@@ -57,6 +58,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
         return true; // You can customize the behavior here
       },
       child: Scaffold(
+        backgroundColor: const Color(0xFFFFF7D4),
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: const Text('Update note'),
@@ -69,7 +71,8 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
               TextField(
                 controller: _titleController,
                 decoration: const InputDecoration(
-                  labelText: 'Title',
+                  border: InputBorder.none,
+                  //labelText: 'Title',
                 ),
               ),
               SizedBox(height: 16.h),
@@ -82,7 +85,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                   // hintText: "...",
                 ),
 
-                style: GoogleFonts.outfit(fontSize: 16.sp),
+                style: GoogleFonts.lato(fontSize: 16.sp),
                 maxLines: null,
 
                 // Allows the text field to grow dynamically
@@ -90,37 +93,66 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                 scrollPhysics: const BouncingScrollPhysics(),
               ),
               SizedBox(height: 16.h),
-              ElevatedButton(
-                onPressed: () {
-                  // Save note logic
-                  String updatedTitle = _titleController.text;
-                  String updatedDescription = _descriptionController.text;
-                  Note updatedNote = Note(
-                      id: widget.oldNote.id,
-                      title: updatedTitle,
-                      description: updatedDescription,
-                      videoId: widget.videoId,
-                      videoTitle: widget.oldNote.videoTitle,
-                      words: countWords(updatedDescription),
-                      timestamp: widget.oldNote.timestamp);
+              // ElevatedButton(
+              //   onPressed: () {
+              //     // Save note logic
+              //     // String updatedTitle = _titleController.text;
+              //     // String updatedDescription = _descriptionController.text;
+              //     // Note updatedNote = Note(
+              //     //     id: widget.oldNote.id,
+              //     //     title: updatedTitle,
+              //     //     description: updatedDescription,
+              //     //     videoId: widget.videoId,
+              //     //     videoTitle: widget.oldNote.videoTitle,
+              //     //     words: countWords(updatedDescription),
+              //     //     timestamp: widget.oldNote.timestamp);
 
-                  noteBloc.add(UpdateNote(updatedNote: updatedNote));
-                  noteBloc.add(LoadNotes(videoId: widget.videoId));
-                  // Perform necessary actions with the note data
-                  print(updatedNote.toString());
-                },
-                child: BlocBuilder<NoteBloc, NoteState>(
-                  builder: (context, state) {
-                    if (state is NoteLoading) {
-                      return const CircularProgressIndicator();
-                    } else if (state is NoteAdded) {
-                      return const Icon(Iconsax.tick_circle);
-                    }
-                    return const Text('Save');
-                  },
-                ),
-              ),
+              //     // noteBloc.add(UpdateNote(updatedNote: updatedNote));
+              //     // noteBloc.add(LoadNotes(videoId: widget.videoId));
+              //     // // Perform necessary actions with the note data
+              //     // print(updatedNote.toString());
+              //   },
+              //   // child: BlocBuilder<NoteBloc, NoteState>(
+              //   //   builder: (context, state) {
+              //   //     if (state is NoteLoading) {
+              //   //       return const CircularProgressIndicator();
+              //   //     } else if (state is NoteAdded) {
+              //   //       return const Icon(Iconsax.tick_circle);
+              //   //     }
+              //   //     return const Text('Save');
+              //   //   },
+              //   // ),
+              // ),
             ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            String updatedTitle = _titleController.text;
+            String updatedDescription = _descriptionController.text;
+            Note updatedNote = Note(
+                id: widget.oldNote.id,
+                title: updatedTitle,
+                description: updatedDescription,
+                videoId: widget.videoId,
+                videoTitle: widget.oldNote.videoTitle,
+                words: countWords(updatedDescription),
+                timestamp: widget.oldNote.timestamp);
+
+            noteBloc.add(UpdateNote(updatedNote: updatedNote));
+            noteBloc.add(LoadNotes(videoId: widget.videoId));
+            // Perform necessary actions with the note data
+            print(updatedNote.toString());
+          },
+          child: BlocBuilder<NoteBloc, NoteState>(
+            builder: (context, state) {
+              if (state is NoteLoading) {
+                return const CircularProgressIndicator();
+              } else if (state is NoteAdded) {
+                return const Icon(Iconsax.tick_circle);
+              }
+              return const Icon(Iconsax.tick_circle);
+            },
           ),
         ),
       ),

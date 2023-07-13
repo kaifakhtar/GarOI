@@ -62,7 +62,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     emit(NoteLoading());
     try {
       noteDataBaseService.updateNote(event.updatedNote);
-      emit(NoteSuccess(message: "Done updating"));
+    //  emit(NoteSuccess(message: "Done updating"));
       emit(NoteAdded());
     } catch (e) {
       emit(NoteError(message: "Something error happened while updating"));
