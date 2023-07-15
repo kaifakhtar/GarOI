@@ -93,7 +93,7 @@ class NoteCard extends StatelessWidget {
                       note.description,
                       maxLines: 11,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.outfit(
+                      style: GoogleFonts.lato(
                         fontSize: 14.sp,
                         color: Colors.black54,
                       ),

@@ -87,17 +87,8 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                   ),
                 )),
                 actions: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AllNotesScreen()),
-                        );
-                      },
-                      icon: const Icon(Icons.note)),
                   Padding(
-                    padding: EdgeInsets.only(right: 16.w),
+                    padding: EdgeInsets.only(right: 16.w, top: 8.h),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -106,10 +97,22 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                               builder: (context) => UserProfilePage()),
                         );
                       },
-                      child: Icon(
-                        Iconsax.user,
-                        size: 20.h,
-                        color: Colors.black,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.gold.withOpacity(.25),
+                          borderRadius: BorderRadius.circular(16.0),
+                          border: Border.all(
+                            color: Colors.orangeAccent,
+                            width: 2.0,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        // color: AppColors.gold.withOpacity(.5),
+                        child: Icon(
+                          Icons.person,
+                          size: 24.h,
+                          color: Colors.orangeAccent,
+                        ),
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/all_notes/cubit/all_note_cubit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,6 +32,13 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                allNotesCubit.getVidIdsAndNotesOfThat();
+              },
+              icon: const Icon(Iconsax.refresh))
+        ],
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
 //         actions: [
@@ -58,7 +66,7 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
           builder: (context, state) {
             if (state is AllNotesLoadingSuccess) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.w),
+                padding: EdgeInsets.only(top: 16.h),
                 child: Scrollbar(
                   child: ListView.builder(
                     itemCount: state.vidIdAndListOfNotesModalList.length,

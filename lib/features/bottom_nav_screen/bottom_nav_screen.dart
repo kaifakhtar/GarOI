@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
+import 'package:ytyt/features/all_notes/view/screens/all_notes_screen.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
 import 'package:ytyt/screens/home_screen.dart';
 
@@ -23,7 +24,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
     const HomeScreenSilver(),
-    const ImportantsScreen(),
+    const AllNotesScreen(),
     const AskQuesScreen(),
   ];
 

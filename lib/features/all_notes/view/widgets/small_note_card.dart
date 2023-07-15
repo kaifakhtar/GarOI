@@ -25,7 +25,7 @@ class SmallNoteCard extends StatelessWidget {
             end: Alignment.centerRight,
             colors: [
               AppColors.gold, // Start color
-              Color.fromARGB(255, 255, 253, 240), // End color
+              Color(0xffFFF8CF), // End color
             ],
           ),
           boxShadow: [

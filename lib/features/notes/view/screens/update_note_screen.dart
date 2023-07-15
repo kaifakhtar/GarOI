@@ -61,7 +61,9 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
         backgroundColor: const Color(0xFFFFF7D4),
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: const Text('Update note'),
+          iconTheme: const IconThemeData(color: Colors.black),
+          title:  Text('Update note',
+          style: GoogleFonts.readexPro(),),
         ),
         body: Padding(
           padding: EdgeInsets.all(16.h),
