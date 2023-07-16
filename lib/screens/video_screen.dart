@@ -84,7 +84,7 @@ class _VideoScreenState extends State<VideoScreen> {
                             //   crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               SizedBox(
-                                height: 20.h,
+                                height: 4.h,
                               ),
                               // OutlinedButton.icon(
                               //     onPressed: () {
@@ -99,12 +99,13 @@ class _VideoScreenState extends State<VideoScreen> {
                                 state.notes.length > 1
                                     ? "${state.notes.length} cards"
                                     : "${state.notes.length} card",
-                                style: GoogleFonts.outfit(
+                                style: GoogleFonts.readexPro(
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black38),
                               ),
-                              const SizedBox(
-                                height: 24,
+                              SizedBox(
+                                height: 16.h,
                               ),
                               SizedBox(
                                 height: 330.h,
@@ -204,7 +205,7 @@ class _VideoScreenState extends State<VideoScreen> {
       ),
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -229,7 +230,7 @@ class _VideoScreenState extends State<VideoScreen> {
               Divider(
                 thickness: 1.h,
               ),
-              const SizedBox(height: 8.0),
+              SizedBox(height: 8.h),
               SingleChildScrollView(
                 child: Text(
                   description,
@@ -261,6 +262,7 @@ class _VideoScreenState extends State<VideoScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(
                     radius: 20.r,
@@ -301,11 +303,11 @@ class _VideoScreenState extends State<VideoScreen> {
       children: [
         Image.asset(
           'assets/images/book_goi.png',
-          height: 200,
-          width: 200,
+          height: 200.h,
+          width: 200.h,
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12.h),
           child: Text(
             'Make notes!',
             style: GoogleFonts.readexPro(
@@ -315,7 +317,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
           child: Text(
             'Improved retention and understanding.',
             style:
@@ -323,7 +325,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
           child: Text(
             'Enhanced organization and structure.',
             style:
@@ -331,7 +333,7 @@ class _VideoScreenState extends State<VideoScreen> {
           ),
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
           child: Text(
             'Promotes active learning.',
             style:

@@ -93,14 +93,14 @@ class _NoteScreenState extends State<NoteScreen> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Title...",
-                      hintStyle: GoogleFonts.outfit(
+                      hintStyle: GoogleFonts.readexPro(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
 
                       // labelText: 'Title',
                     ),
-                    style: GoogleFonts.outfit(
+                    style: GoogleFonts.readexPro(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -110,12 +110,12 @@ class _NoteScreenState extends State<NoteScreen> {
                     controller: _descriptionController,
                     decoration: InputDecoration(
                         //  labelText: 'Description',
-                        hintStyle: GoogleFonts.outfit(fontSize: 16.sp),
+                        hintStyle: GoogleFonts.lato(fontSize: 16.sp),
                         border: InputBorder.none,
                         // hintText: "...",
                         hintText: "Write the description and be concise..."),
 
-                    style: GoogleFonts.outfit(fontSize: 16.sp),
+                    style: GoogleFonts.lato(fontSize: 16.sp),
                     maxLines: 20,
                     // Allows the text field to grow dynamically
                     keyboardType: TextInputType.multiline,

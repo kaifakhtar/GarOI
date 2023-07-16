@@ -59,11 +59,14 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFFF7D4),
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          elevation: 0,
           iconTheme: const IconThemeData(color: Colors.black),
-          title:  Text('Update note',
-          style: GoogleFonts.readexPro(),),
+          title: Text(
+            'Update note',
+            style: GoogleFonts.readexPro(color: Colors.black),
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.all(16.h),
@@ -72,14 +75,18 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
             children: [
               TextField(
                 controller: _titleController,
+                style: GoogleFonts.readexPro(
+                    fontSize: 20.sp, fontWeight: FontWeight.w600),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
+
                   //labelText: 'Title',
                 ),
               ),
-              SizedBox(height: 16.h),
+
               TextField(
                 controller: _descriptionController,
+                style: GoogleFonts.lato(fontSize: 16.sp),
                 decoration: const InputDecoration(
                   //  labelText: 'Description',
 
@@ -87,14 +94,13 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                   // hintText: "...",
                 ),
 
-                style: GoogleFonts.lato(fontSize: 16.sp),
-                maxLines: null,
+                maxLines: 20,
 
                 // Allows the text field to grow dynamically
                 keyboardType: TextInputType.multiline,
                 scrollPhysics: const BouncingScrollPhysics(),
               ),
-              SizedBox(height: 16.h),
+
               // ElevatedButton(
               //   onPressed: () {
               //     // Save note logic

@@ -144,12 +144,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextFormField(
                       controller: _passwordController,
                       autofocus: true,
-                      obscureText: false,
+                      obscureText: true,
                       decoration: InputDecoration(
                         //   labelText: 'Password',
                         labelStyle: GoogleFonts.readexPro(
                             fontSize: 14.sp, fontWeight: FontWeight.normal),
                         hintText: 'Enter your password...',
+
                         hintStyle: GoogleFonts.readexPro(
                             fontSize: 14.sp, fontWeight: FontWeight.normal),
                         enabledBorder: OutlineInputBorder(

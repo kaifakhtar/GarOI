@@ -188,7 +188,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     controller: _passwordController,
                     autofocus: true,
-                    obscureText: false,
+                    obscureText: true,
                     decoration: InputDecoration(
                       //   labelText: 'Password',
                       labelStyle: GoogleFonts.readexPro(

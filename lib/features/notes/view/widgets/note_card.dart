@@ -162,7 +162,7 @@ class NoteCard extends StatelessWidget {
             ),
             Positioned(
               bottom: 16.h,
-              left: 108.w,
+              left: 108.w + 32.w,
               child: Text(
                 note.words > 1
                     ? "${note.words.toString()} words"

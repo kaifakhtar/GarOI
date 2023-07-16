@@ -155,6 +155,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                           if (state is AuthLoginSuccess) {
                             return Text("${state.student.username}!",
                                 style: GoogleFonts.readexPro(
+                                    letterSpacing: 1.2,
                                     color: Colors.black87,
                                     fontSize: 24.sp,
                                     fontWeight: FontWeight.w600));
