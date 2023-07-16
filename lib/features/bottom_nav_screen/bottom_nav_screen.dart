@@ -42,56 +42,43 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           index: _currentIndex,
           children: _screens,
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: const Offset(0, 0),
+        bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: AppColors.blackTintGold,
+            type: BottomNavigationBarType.fixed,
+            elevation: 4,
+            onTap: (selectedIndex) {
+              setState(() {
+                _currentIndex = selectedIndex;
+              });
+            },
+            currentIndex: _currentIndex,
+            selectedItemColor: AppColors.gold,
+            unselectedItemColor: AppColors.gold.withOpacity(0.7),
+            selectedFontSize: 16.sp,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Iconsax.home,
+                  weight: 5,
+                ),
+                label: "Home",
               ),
-            ],
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            child: GNav(
-                backgroundColor: Colors.white,
-                gap: 8.w,
-                activeColor: AppColors.gold,
-                iconSize: 20.h,
-                color: Colors.black,
-                tabBackgroundColor: Colors.black,
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-                tabBorderRadius: 1000.r,
-                tabs: const [
-                  GButton(
-                    icon: Iconsax.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: Iconsax.star,
-                    text: 'Importants',
-                  ),
-                  GButton(
-                    icon: Iconsax.message_question,
-                    text: 'Ask',
-                  ),
-                ],
-                selectedIndex: _currentIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                }),
-          ),
-        ));
+              BottomNavigationBarItem(
+                icon: Icon(Iconsax.note_square),
+                label: "Notes",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Iconsax.message_question),
+                label: "Ask",
+              )
+            ]));
   }
 
   void setUpPushNotification() async {
     final fcm = FirebaseMessaging.instance;
     await fcm.requestPermission();
     fcm.subscribeToTopic('update');
+    fcm.subscribeToTopic('news');
     // String? token = await fcm.getToken();
     // print(token);
   }
