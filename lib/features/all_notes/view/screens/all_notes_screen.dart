@@ -32,6 +32,7 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {
@@ -96,7 +97,7 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
             if (state is AllNotesNoNotes) {
               return Center(
                 child: Text(
-                  "You have not made any note",
+                  "All your notes here",
                   style: GoogleFonts.readexPro(fontSize: 16.sp),
                 ),
               );
