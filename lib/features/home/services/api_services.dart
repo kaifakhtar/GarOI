@@ -79,8 +79,7 @@ class APIService {
 
     try {
       // Get Playlist Videos
-      var response = await http
-          .get(uri, headers: headers);
+      var response = await http.get(uri, headers: headers);
 
       if (response.statusCode == 200) {
         print(response.headers);
@@ -138,7 +137,7 @@ class APIService {
     Map<String, String> parameters = {
       'part': 'snippet,contentDetails',
       'channelId': channelId,
-      'maxResults': '50',
+      'maxResults': '1000',
       'pageToken': _nextPageTokenForPlaylist,
       'key': API_KEY,
     };
@@ -153,8 +152,7 @@ class APIService {
     };
 
     // Get Channel
-    var response = await http
-        .get(uri, headers: headers);
+    var response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {
       // await cacheManager.putFile(uri.toString(), response.bodyBytes);

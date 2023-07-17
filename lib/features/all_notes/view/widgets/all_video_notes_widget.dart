@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ytyt/features/all_notes/view/widgets/small_note_card.dart';
 
 import '../../../../models/vid_id_and_list_of_notes_of_that.dart';
-import '../../../notes/view/widgets/note_card.dart';
+
 
 class AllVideoNotesWidget extends StatefulWidget {
   final VidIdAndListOfNotesModal vidIdAndListOfNotesModal;

@@ -2,15 +2,15 @@ import 'package:auto_route/annotations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+
 import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/all_notes/view/screens/all_notes_screen.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
-import 'package:ytyt/screens/home_screen.dart';
+
 
 import '../askQ/view/screen/ask_question_screen.dart';
-import '../importants/view/screens/importants_screen.dart';
+
 
 @RoutePage()
 class BottomNavScreen extends StatefulWidget {

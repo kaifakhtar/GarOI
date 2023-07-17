@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
+
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/home/bloc/home_bloc.dart';
 
-import '../../../all_notes/view/screens/all_notes_screen.dart';
 import '../../../auth/cubit/auth_state.dart';
-import '../../../auth/view/screens/login_screen.dart';
+
 import '../../../user_profile/view/screens/user_profile_screen.dart';
 import '../widgets/playlist_tile.dart';
 import '../widgets/playlist_tile_shimmer.dart';

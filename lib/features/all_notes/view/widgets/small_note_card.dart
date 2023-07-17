@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/notes/view/screens/note_view_screen.dart';
-import 'package:ytyt/routes/routes_imports.dart';
+
 
 import '../../../../models/note_modal.dart';
 

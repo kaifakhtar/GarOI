@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "ytyt" "\0"
+            VALUE "FileDescription", "Garden of Ilm" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "ytyt" "\0"
+            VALUE "InternalName", "Garden of Ilm" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "ytyt.exe" "\0"
-            VALUE "ProductName", "ytyt" "\0"
+            VALUE "ProductName", "Garden of Ilm" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
