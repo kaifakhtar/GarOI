@@ -284,15 +284,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: GoogleFonts.readexPro(
                               fontSize: 14.sp, fontWeight: FontWeight.normal),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            AutoRouter.of(context)
+                        OutlinedButton(
+                          onPressed: () { 
+                               AutoRouter.of(context)
                                 .replace(const SignUpScreenRoute());
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (_) => SignUpScreen()));
-                          },
+                           },
                           child: Text(
                             'Create one',
                             style: GoogleFonts.readexPro(

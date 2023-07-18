@@ -24,6 +24,7 @@ class NoteScreen extends StatefulWidget {
 class _NoteScreenState extends State<NoteScreen> {
   bool isButtonEnabled = true;
   bool isNoteSaved = false;
+  //bool isEnglish = true;
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
   final TextEditingController _descriptionController = TextEditingController();
@@ -73,6 +74,31 @@ class _NoteScreenState extends State<NoteScreen> {
               isNoteSaved ? "Note Saved" : "Add note",
               style: GoogleFonts.readexPro(color: Colors.black),
             ),
+            // actions: [
+            //   Padding(
+            //     padding: EdgeInsets.only(right: 10.0),
+            //     child: Row(
+            //       children: [
+            //         Text(
+            //           "En",
+            //           style: GoogleFonts.readexPro(color: Colors.black),
+            //         ),
+            //         Switch(
+            //           value: isEnglish,
+            //           onChanged: (value) {
+            //             setState(() {
+            //               isEnglish = value;
+            //             });
+            //           },
+            //         ),
+            //         Text(
+            //           "Ar",
+            //           style: GoogleFonts.readexPro(color: Colors.black),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ],
           ),
           body: Padding(
             padding: EdgeInsets.all(16.h),
@@ -93,6 +119,7 @@ class _NoteScreenState extends State<NoteScreen> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Title...",
+
                       hintStyle: GoogleFonts.readexPro(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,

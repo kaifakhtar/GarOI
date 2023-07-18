@@ -334,13 +334,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: GoogleFonts.readexPro(
                             fontSize: 14.sp, fontWeight: FontWeight.normal),
                       ),
-                      GestureDetector(
-                        onTap: () {
+                      OutlinedButton(
+                        onPressed: () {
                           AutoRouter.of(context)
                               .replace(const LoginScreenRoute());
                         },
                         child: Text(
-                          'Log in',
+                          'Login',
                           style: GoogleFonts.readexPro(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.normal,

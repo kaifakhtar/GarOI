@@ -152,12 +152,15 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                       BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
                           if (state is AuthLoginSuccess) {
-                            return Text("${state.student.username}!",
-                                style: GoogleFonts.readexPro(
-                                    letterSpacing: 1.2,
-                                    color: Colors.black87,
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w600));
+                            return FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text("${state.student.username}!",
+                                  style: GoogleFonts.readexPro(
+                                      letterSpacing: 1.2,
+                                      color: Colors.black87,
+                                      fontSize: 24.sp,
+                                      fontWeight: FontWeight.w600)),
+                            );
                           }
                           return Text("No student data",
                               style: GoogleFonts.readexPro(
