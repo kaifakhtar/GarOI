@@ -1,21 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
-
 import 'package:ytyt/features/notes/view/screens/note_screen.dart';
 import 'package:ytyt/features/notes/view/widgets/note_card.dart';
 import 'package:ytyt/models/video_model.dart';
-
-import '../features/notes/note_service/note_pdf_service.dart';
 
 class VideoScreen extends StatefulWidget {
   final Video currentVideo;

@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import 'package:ytyt/utilities/channel.dart';
 
-import '../../../models/channel_model.dart';
 import '../../../models/playlistmodal.dart';
 import '../services/api_services.dart';
 

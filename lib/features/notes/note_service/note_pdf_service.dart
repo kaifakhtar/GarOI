@@ -1,14 +1,10 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:open_file/open_file.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../../../models/note_modal.dart';
 import 'note_service.dart';

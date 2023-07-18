@@ -1,21 +1,14 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/common_widgets/loading_dialog.dart';
 import 'package:ytyt/features/auth/view/screens/login_screen.dart';
-import 'package:ytyt/features/bottom_nav_screen/bottom_nav_screen.dart';
-import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
-import 'package:ytyt/models/student_modal.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ytyt/routes/routes_imports.gr.dart';
+
 import '../../cubit/auth_cubit.dart';
 import '../../cubit/auth_state.dart';
 

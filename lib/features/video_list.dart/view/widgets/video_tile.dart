@@ -1,18 +1,11 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:ytyt/colors/app_colors.dart';
 
-import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
-
-import '../../../../models/playlistmodal.dart';
 import '../../../../models/video_model.dart';
 import '../../../../screens/video_screen.dart';
-import '../../../video_list.dart/view/screens/video_list_screen.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class VideoListTile extends StatelessWidget {
   // final String imageUrl;

@@ -1,15 +1,11 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/auth/cubit/auth_state.dart';
-import 'package:ytyt/features/auth/view/screens/signup_screen.dart';
 import 'package:ytyt/routes/routes_imports.gr.dart';
 
 import '../../../../common_widgets/loading_dialog.dart';
