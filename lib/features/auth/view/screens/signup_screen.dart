@@ -232,9 +232,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       // Handle sign up logic here
-                      String email = _emailController.text;
-                      String password = _passwordController.text;
-                      String username = _usernameController.text;
+                      String email = _emailController.text.trim();
+                      String password = _passwordController.text.trim();
+                      String username = _usernameController.text.trim();
                       if (email.isNotEmpty &&
                           password.isNotEmpty &&
                           username.isNotEmpty) {

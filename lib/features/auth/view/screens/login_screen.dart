@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/auth/cubit/auth_state.dart';
+import 'package:ytyt/features/auth/view/screens/forgot_pass_screen.dart';
 import 'package:ytyt/routes/routes_imports.gr.dart';
 
 import '../../../../common_widgets/loading_dialog.dart';
@@ -185,7 +186,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 24.h,
+                    height: 12.h,
+                  ),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const ForgotPasswordScreen())),
+                        child: Text(
+                          "Forgot password?",
+                          style: GoogleFonts.readexPro(color: Colors.blue),
+                        ),
+                      )),
+                  SizedBox(
+                    height: 12.h,
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -281,10 +297,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 14.sp, fontWeight: FontWeight.normal),
                         ),
                         OutlinedButton(
-                          onPressed: () { 
-                               AutoRouter.of(context)
+                          onPressed: () {
+                            AutoRouter.of(context)
                                 .replace(const SignUpScreenRoute());
-                           },
+                          },
                           child: Text(
                             'Create one',
                             style: GoogleFonts.readexPro(
