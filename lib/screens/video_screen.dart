@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
@@ -38,6 +40,25 @@ class _VideoScreenState extends State<VideoScreen> {
         autoPlay: true,
       ),
     );
+  }
+
+  Future<void> requestStoragePermission() async {
+    final permission = Permission.storage.request();
+    if (await permission.isGranted) {
+      // Permission is granted, you can proceed with your app logic here
+      if (kDebugMode) print("permission granted");
+    } else {
+      // If permissions are denied, you can show a dialog or request again
+      if (await permission.isPermanentlyDenied) {
+        if (kDebugMode) print("permission permanently denied");
+        // The user has permanently denied storage permission, you can open settings to prompt them manually
+        openAppSettings();
+      } else {
+        if (kDebugMode) print("again requesting permission ");
+        // The user denied storage permission, you can request again
+        requestStoragePermission();
+      }
+    }
   }
 
   @override
@@ -89,14 +110,25 @@ class _VideoScreenState extends State<VideoScreen> {
                               //     },
                               //     icon: const Icon(Iconsax.export),
                               //     label: const Text("Export these notes")),
-                              Text(
-                                state.notes.length > 1
-                                    ? "${state.notes.length} cards"
-                                    : "${state.notes.length} card",
-                                style: GoogleFonts.readexPro(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black38),
+                              Row(
+                                children: [
+                                  Text(
+                                    state.notes.length > 1
+                                        ? "${state.notes.length} cards"
+                                        : "${state.notes.length} card",
+                                    style: GoogleFonts.readexPro(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black38),
+                                  ),
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        requestStoragePermission();
+                                        noteBloc.add(ExportNotesToPdf(
+                                            videoID: widget.currentVideo.id));
+                                      },
+                                      child: const Text("Export notes"))
+                                ],
                               ),
                               SizedBox(
                                 height: 16.h,

@@ -1,9 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:iconsax/iconsax.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/all_notes/view/screens/all_notes_screen.dart';
 import 'package:ytyt/features/home/views/screens/home_screen_silver.dart';
@@ -33,6 +35,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     // TODO: implement initState
     super.initState();
     setUpPushNotification();
+     // requestStoragePermission();
   }
 
   @override

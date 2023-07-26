@@ -39,3 +39,9 @@ class UpdateNote extends NoteEvent {
     required this.updatedNote,
   });
 }
+
+class ExportNotesToPdf extends NoteEvent {
+  final String videoID;
+
+  ExportNotesToPdf({required this.videoID});
+}

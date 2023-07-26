@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,17 +11,22 @@ import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'features/home/bloc/home_bloc.dart';
 import 'features/notes/note_service/note_service.dart';
 import 'routes/routes_imports.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -52,8 +58,7 @@ class MyApp extends StatelessWidget {
                     AuthCubit(FirebaseAuth.instance),
               ),
               BlocProvider<AllNoteCubit>(
-                create: (BuildContext context) =>
-                    AllNoteCubit(),
+                create: (BuildContext context) => AllNoteCubit(),
               ),
             ],
             child: MaterialApp.router(
