@@ -277,7 +277,7 @@ class _VideoScreenState extends State<VideoScreen>
         indicator: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withOpacity(0.05),
               blurRadius: 8.0,
               spreadRadius: 4.0,
             ),
