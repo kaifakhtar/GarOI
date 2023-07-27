@@ -10,6 +10,7 @@ import 'package:ytyt/features/all_notes/cubit/all_note_cubit.dart';
 import 'package:ytyt/features/auth/cubit/auth_cubit.dart';
 import 'package:ytyt/features/home/services/api_services.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
+import 'package:ytyt/features/pdf/cubit/pdf_cubit.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -59,6 +60,10 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider<AllNoteCubit>(
                 create: (BuildContext context) => AllNoteCubit(),
+              ),
+              BlocProvider<PdfCubit>(
+                create: (BuildContext context) =>
+                   PdfCubit(),
               ),
             ],
             child: MaterialApp.router(

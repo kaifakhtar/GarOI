@@ -68,6 +68,8 @@ dependencies:
   sqflite: ^2.2.8+4
   timeago: ^3.4.0
   youtube_player_flutter: ^8.1.2
+  syncfusion_flutter_pdfviewer: ^22.1.39
+  file_picker: ^5.3.3
 
 dev_dependencies:
   auto_route_generator: ^7.1.1

@@ -89,9 +89,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         await noteDataBaseService.getNotesForVideo(event.videoID);
 
     final pdf = await generatePDF(notes);
-
-    final String dir = (await getExternalStorageDirectory())!.path;
-    final String path = '$dir/notes_${event.videoID}.pdf';
+    final Directory dir = Directory('/storage/emulated/0/Download');
+    //final String dir = (await getExternalStorageDirectory())!.path;
+    //  final String dir = (await getApplicationDocumentsDirectory()).path;
+    //String _localPath = (await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS))!;
+    final String path = '${dir.path}/notes_${event.videoID}.pdf';
     if (kDebugMode) print("path is$path");
     final file = File(path);
     await file.writeAsBytes(await pdf.save());

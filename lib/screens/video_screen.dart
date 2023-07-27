@@ -13,6 +13,8 @@ import 'package:ytyt/features/notes/view/screens/note_screen.dart';
 import 'package:ytyt/features/notes/view/widgets/note_card.dart';
 import 'package:ytyt/models/video_model.dart';
 
+import '../features/video_player/view/widgets/video_page_view.dart';
+
 class VideoScreen extends StatefulWidget {
   final Video currentVideo;
 
@@ -22,14 +24,16 @@ class VideoScreen extends StatefulWidget {
   _VideoScreenState createState() => _VideoScreenState();
 }
 
-class _VideoScreenState extends State<VideoScreen> {
+class _VideoScreenState extends State<VideoScreen>
+    with SingleTickerProviderStateMixin {
   late YoutubePlayerController _controller;
   late final NoteBloc noteBloc;
+  late TabController _tabController;
   final noteCardListScrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-
+    _tabController = TabController(length: 2, vsync: this);
     noteBloc = BlocProvider.of<NoteBloc>(context);
     noteBloc.add(LoadNotes(videoId: widget.currentVideo.id));
     _controller = YoutubePlayerController(
@@ -40,6 +44,12 @@ class _VideoScreenState extends State<VideoScreen> {
         autoPlay: true,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   Future<void> requestStoragePermission() async {
@@ -79,91 +89,11 @@ class _VideoScreenState extends State<VideoScreen> {
                     SizedBox(
                       height: 300.h,
                     ),
-                    BlocBuilder<NoteBloc, NoteState>(
-                      builder: (context, state) {
-                        if (state is NoNotes) {
-                          print("No state ran");
-                          return Center(
-                            child: noNotesWidget(),
-                          );
-                        }
-
-                        if (state is NoteLoading) {
-                          print("Loading state ran");
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (state is NoteLoaded) {
-                          return Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                height: 4.h,
-                              ),
-                              // OutlinedButton.icon(
-                              //     onPressed: () {
-                              //       final notePdfService =
-                              //           NotePdfService(context);
-                              //       notePdfService
-                              //           .generatePDF(widget.currentVideo.id);
-                              //     },
-                              //     icon: const Icon(Iconsax.export),
-                              //     label: const Text("Export these notes")),
-                              Row(
-                                children: [
-                                  Text(
-                                    state.notes.length > 1
-                                        ? "${state.notes.length} cards"
-                                        : "${state.notes.length} card",
-                                    style: GoogleFonts.readexPro(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black38),
-                                  ),
-                                  OutlinedButton(
-                                      onPressed: () {
-                                        requestStoragePermission();
-                                        noteBloc.add(ExportNotesToPdf(
-                                            videoID: widget.currentVideo.id));
-                                      },
-                                      child: const Text("Export notes"))
-                                ],
-                              ),
-                              SizedBox(
-                                height: 16.h,
-                              ),
-                              SizedBox(
-                                height: 330.h,
-                                child: Scrollbar(
-                                  //  isAlwaysShown: true,
-                                  controller: noteCardListScrollController,
-                                  scrollbarOrientation:
-                                      ScrollbarOrientation.bottom,
-                                  child: ListView.builder(
-                                    controller: noteCardListScrollController,
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemCount: state.notes.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8.h, horizontal: 16.w),
-                                        child: NoteCard(
-                                            note: state.notes[index],
-                                            vidId: widget.currentVideo.id),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                        return const Text("Useless builer");
-                      },
-                    ),
+                     tabs(),
+                    Expanded(
+                        child: VideoPageView(
+                      currentVideo: widget.currentVideo,
+                    ))
                   ],
                 ),
                 Positioned(
@@ -322,63 +252,89 @@ class _VideoScreenState extends State<VideoScreen> {
     );
   }
 
-  Widget noNotesWidget() {
-    return // Generated code for this Column Widget...
-        Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Image.asset(
-          'assets/images/book_goi.png',
-          height: 200.h,
-          width: 200.h,
+  Widget tabs() {
+    return SizedBox(
+      width: 200.w,
+      height: 35.h,
+      child: TabBar(
+        unselectedLabelColor: Colors.grey,
+        labelColor: Colors.black,
+        indicatorColor: Colors.amber,
+        indicatorWeight: 2,
+        indicator: BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(5),
         ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12.h),
-          child: Text(
-            'Make notes!',
-            style: GoogleFonts.readexPro(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87),
+        controller: _tabController,
+        tabs: [
+          const Tab(
+            text: 'Notes',
           ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
-          child: Text(
-            'Improved retention and understanding.',
-            style:
-                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+          const Tab(
+            text: 'Read',
           ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
-          child: Text(
-            'Enhanced organization and structure.',
-            style:
-                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
-          child: Text(
-            'Promotes active learning.',
-            style:
-                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-          child: Text(
-            'Increases focus and attention.',
-            style:
-                GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
-          ),
-        ),
-        Text(
-          'Effective study aid.',
-          style: GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
+  // Widget noNotesWidget() {
+  //   return // Generated code for this Column Widget...
+  //       Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       Image.asset(
+  //         'assets/images/book_goi.png',
+  //         height: 200.h,
+  //         width: 200.h,
+  //       ),
+  //       Padding(
+  //         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12.h),
+  //         child: Text(
+  //           'Make notes!',
+  //           style: GoogleFonts.readexPro(
+  //               fontSize: 20.sp,
+  //               fontWeight: FontWeight.w600,
+  //               color: Colors.black87),
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
+  //         child: Text(
+  //           'Improved retention and understanding.',
+  //           style:
+  //               GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
+  //         child: Text(
+  //           'Enhanced organization and structure.',
+  //           style:
+  //               GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
+  //         child: Text(
+  //           'Promotes active learning.',
+  //           style:
+  //               GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+  //         child: Text(
+  //           'Increases focus and attention.',
+  //           style:
+  //               GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+  //         ),
+  //       ),
+  //       Text(
+  //         'Effective study aid.',
+  //         style: GoogleFonts.readexPro(fontSize: 14.sp, color: Colors.black54),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
