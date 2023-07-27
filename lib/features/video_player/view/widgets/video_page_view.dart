@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/notes/view/widgets/note_card.dart';
 import 'package:ytyt/features/pdf/cubit/pdf_cubit.dart';
@@ -14,8 +16,12 @@ import '../../../pdf/view/widgets/select_pdf_view_widg.dart';
 
 class VideoPageView extends StatefulWidget {
   final Video currentVideo;
-
-  VideoPageView({required this.currentVideo});
+  final TabController tabController;
+  VideoPageView({
+    Key? key,
+    required this.currentVideo,
+    required this.tabController,
+  }) : super(key: key);
 
   @override
   _VideoPageViewState createState() => _VideoPageViewState();
@@ -38,7 +44,8 @@ class _VideoPageViewState extends State<VideoPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
+    return TabBarView(
+      controller: widget.tabController,
       children: [
         // Page 1: The page with the BlocBuilder
         BlocBuilder<NoteBloc, NoteState>(
@@ -56,8 +63,9 @@ class _VideoPageViewState extends State<VideoPageView> {
             if (state is NoteLoaded) {
               return Column(
                 children: [
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 0.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         state.notes.length > 1
@@ -79,7 +87,7 @@ class _VideoPageViewState extends State<VideoPageView> {
                       )
                     ],
                   ),
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 8.h),
                   SizedBox(
                     height: 330.h,
                     child: Scrollbar(

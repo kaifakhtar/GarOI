@@ -89,10 +89,11 @@ class _VideoScreenState extends State<VideoScreen>
                     SizedBox(
                       height: 300.h,
                     ),
-                     tabs(),
+                    // tabs(),
                     Expanded(
                         child: VideoPageView(
                       currentVideo: widget.currentVideo,
+                      tabController: _tabController,
                     ))
                   ],
                 ),
@@ -119,7 +120,7 @@ class _VideoScreenState extends State<VideoScreen>
             showVideoProgressIndicator: true,
             onReady: () {
               //_controller.addListener(listener);
-              print('Player is ready.');
+              if (kDebugMode) print('Player is ready.');
             },
           ),
         ),
@@ -206,46 +207,48 @@ class _VideoScreenState extends State<VideoScreen>
       height: 400.h,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           player,
           SizedBox(
-            height: 4.h,
+            height: 8.h,
           ),
-          InkWell(
-            onTap: () => openModalBottomSheet(
-                context, 'Desription', widget.currentVideo.description),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleAvatar(
-                    radius: 20.r,
-                    foregroundImage:
-                        NetworkImage(widget.currentVideo.thumbnailUrl),
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  Flexible(
-                    child: Text(
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      widget.currentVideo.title,
-                      style: GoogleFonts.readexPro(
-                          fontSize: 14.sp, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  Text(
-                    "...more",
-                    style: GoogleFonts.readexPro(
-                        color: Colors.black54, fontSize: 10.sp),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          tabs(),
+
+          // InkWell(
+          //   onTap: () => openModalBottomSheet(
+          //       context, 'Desription', widget.currentVideo.description),
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         CircleAvatar(
+          //           radius: 20.r,
+          //           foregroundImage:
+          //               NetworkImage(widget.currentVideo.thumbnailUrl),
+          //         ),
+          //         SizedBox(
+          //           width: 8.w,
+          //         ),
+          //         Flexible(
+          //           child: Text(
+          //             maxLines: 2,
+          //             overflow: TextOverflow.ellipsis,
+          //             widget.currentVideo.title,
+          //             style: GoogleFonts.readexPro(
+          //                 fontSize: 14.sp, fontWeight: FontWeight.normal),
+          //           ),
+          //         ),
+          //         Text(
+          //           "...more",
+          //           style: GoogleFonts.readexPro(
+          //               color: Colors.black54, fontSize: 10.sp),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           const Divider()
         ],
       ),
@@ -253,24 +256,41 @@ class _VideoScreenState extends State<VideoScreen>
   }
 
   Widget tabs() {
-    return SizedBox(
+    return Container(
+      // decoration: BoxDecoration(
+      //   border: Border.all(
+      //     color: Colors.black.withOpacity(
+      //         .1), // You can choose any color you want for the border
+      //     width: 2.0,
+      //     // Adjust the width of the border as needed
+      //   ),
+      //   borderRadius: BorderRadius.circular(12.r),
+      // ),
+      padding: EdgeInsets.all(12.h),
       width: 200.w,
-      height: 35.h,
+      height: 60.h,
       child: TabBar(
         unselectedLabelColor: Colors.grey,
         labelColor: Colors.black,
         indicatorColor: Colors.amber,
         indicatorWeight: 2,
         indicator: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8.0,
+              spreadRadius: 4.0,
+            ),
+          ],
           color: Colors.amber,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(12.r),
         ),
         controller: _tabController,
-        tabs: [
-          const Tab(
+        tabs: const [
+          Tab(
             text: 'Notes',
           ),
-          const Tab(
+          Tab(
             text: 'Read',
           ),
         ],

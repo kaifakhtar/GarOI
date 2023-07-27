@@ -91,7 +91,7 @@ class NoteCard extends StatelessWidget {
                     height: 200.h,
                     child: Text(
                       note.description,
-                      maxLines: 11,
+                      maxLines: 12,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.lato(
                         fontSize: 14.sp,
