@@ -45,6 +45,7 @@ class _VideoPageViewState extends State<VideoPageView> {
   @override
   Widget build(BuildContext context) {
     return TabBarView(
+      physics: NeverScrollableScrollPhysics(),
       controller: widget.tabController,
       children: [
         // Page 1: The page with the BlocBuilder
