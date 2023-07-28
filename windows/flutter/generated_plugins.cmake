@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
+  pasteboard
   permission_handler_windows
   printing
   syncfusion_pdfviewer_windows

@@ -27,6 +27,7 @@ class _NoteScreenState extends State<NoteScreen> {
   //bool isEnglish = true;
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
+  
   final TextEditingController _descriptionController = TextEditingController();
   int countWords(String text) {
     if (text.isEmpty || text.trim().isEmpty) {

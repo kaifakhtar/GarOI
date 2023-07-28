@@ -51,8 +51,9 @@ class NoteAddError extends NoteState {
 class NoNotes extends NoteState {
   @override
   // TODO: implement props
-  List<Object?> get props =>[];
+  List<Object?> get props => [];
 }
+
 class NoteSuccess extends NoteState {
   final String message;
 
@@ -60,4 +61,10 @@ class NoteSuccess extends NoteState {
 
   @override
   List<Object?> get props => [message];
+}
+
+class NoteExportRename extends NoteState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
 }

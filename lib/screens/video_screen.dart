@@ -204,15 +204,15 @@ class _VideoScreenState extends State<VideoScreen>
   Widget videoPlayerCard(Widget player) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 400.h,
+      //height: 350.h,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           player,
-          SizedBox(
-            height: 8.h,
-          ),
+          // SizedBox(
+          //   height: 8.h,
+          // ),
           tabs(),
 
           // InkWell(
@@ -277,13 +277,13 @@ class _VideoScreenState extends State<VideoScreen>
         indicator: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withOpacity(0.1),
               blurRadius: 8.0,
               spreadRadius: 4.0,
             ),
           ],
           color: Colors.amber,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(10000.r),
         ),
         controller: _tabController,
         tabs: const [

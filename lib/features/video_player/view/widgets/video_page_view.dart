@@ -41,16 +41,51 @@ class _VideoPageViewState extends State<VideoPageView> {
   Future<void> requestStoragePermission() async {
     // ... Your implementation of requestStoragePermission ...
   }
+Future<String?> _handleRenameNoteExport(BuildContext context) async {
+  String? fileName;
+  await showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Enter a name'),
+      content: TextField(
+        onChanged: (value) {
+          fileName = value;
+        },
+        decoration: const InputDecoration(hintText: 'File Name'),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(fileName); // Close the dialog and return the filename
+          },
+          child: const Text('Save'),
+        ),
+      ],
+    ),
+  );
+
+  return fileName;
+}
 
   @override
   Widget build(BuildContext context) {
     return TabBarView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       controller: widget.tabController,
       children: [
         // Page 1: The page with the BlocBuilder
         BlocBuilder<NoteBloc, NoteState>(
           builder: (context, state) {
+            if (state is NoteExportRename) {
+//  _handleRenameNoteExport(context);
+            }
+
             if (state is NoNotes) {
               return Center(
                 child: noNotesWidget(),
@@ -79,10 +114,16 @@ class _VideoPageViewState extends State<VideoPageView> {
                       ),
                       OutlinedButton(
                         onPressed: () async {
-                          await requestStoragePermission();
-                          noteBloc.add(
-                            ExportNotesToPdf(videoID: widget.currentVideo.id),
+                           String? filename;
+                          await requestStoragePermission().then((value) async {
+                             filename =
+                                await _handleRenameNoteExport(context);
+                                noteBloc.add(
+                            ExportNotesToPdf(videoID: widget.currentVideo.id, filename:filename!),
                           );
+                          });
+
+                          
                         },
                         child: const Text("Export notes"),
                       )

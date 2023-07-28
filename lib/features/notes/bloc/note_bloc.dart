@@ -85,22 +85,33 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
   FutureOr<void> _exportNotesToPdf(
       ExportNotesToPdf event, Emitter<NoteState> emit) async {
     //final DatabaseHelper dbHelper = DatabaseHelper();
-    final List<Note> notes =
-        await noteDataBaseService.getNotesForVideo(event.videoID);
+    try {
+      // emit State
+      final List<Note> notes =
+          await noteDataBaseService.getNotesForVideo(event.videoID);
 
-    final pdf = await generatePDF(notes);
-    final Directory dir = Directory('/storage/emulated/0/Download');
-    //final String dir = (await getExternalStorageDirectory())!.path;
-    //  final String dir = (await getApplicationDocumentsDirectory()).path;
-    //String _localPath = (await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS))!;
-    final String path = '${dir.path}/notes_${event.videoID}.pdf';
-    if (kDebugMode) print("path is$path");
-    final file = File(path);
-    await file.writeAsBytes(await pdf.save());
-    // Printing.layoutPdf(
-    //         onLayout: (PdfPageFormat format) async => pdf.save(),
-    //       );
-    await OpenFile.open(path);
+      final pdf = await generatePDF(notes);
+      final Directory dir = Directory('/storage/emulated/0/Download');
+      //final String dir = (await getExternalStorageDirectory())!.path;
+      //  final String dir = (await getApplicationDocumentsDirectory()).path;
+      //String _localPath = (await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS))!;
+      final String path = '${dir.path}/${event.filename}.pdf';
+      if (kDebugMode) print("path is$path");
+      final file = File(path);
+          if (await file.exists()) {
+      // If the file already exists, print a message
+     if(kDebugMode) print('File already exists. Please choose a different filename.');
+      return; // Cancel the export process
+    }
+
+      await file.writeAsBytes(await pdf.save());
+      // Printing.layoutPdf(
+      //         onLayout: (PdfPageFormat format) async => pdf.save(),
+      //       );
+      await OpenFile.open(path);
+    } catch (err) {
+      if (kDebugMode) print("Error while exporting");
+    }
   }
 
   Future<pw.Document> generatePDF(List<Note> notes) async {

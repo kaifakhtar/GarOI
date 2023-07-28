@@ -42,6 +42,6 @@ class UpdateNote extends NoteEvent {
 
 class ExportNotesToPdf extends NoteEvent {
   final String videoID;
-
-  ExportNotesToPdf({required this.videoID});
+  final String filename;
+  ExportNotesToPdf({required this.videoID,required this.filename});
 }
