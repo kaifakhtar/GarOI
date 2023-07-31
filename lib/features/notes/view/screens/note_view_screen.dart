@@ -68,7 +68,7 @@ class NoteViewScreen extends StatelessWidget {
                 ),
                 Text(
                   note.description,
-                  style: GoogleFonts.outfit(
+                  style: GoogleFonts.lato(
                       fontSize: 16.sp, color: Colors.black87),
                 )
               ],

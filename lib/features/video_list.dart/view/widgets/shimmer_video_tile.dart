@@ -4,6 +4,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:ytyt/colors/app_colors.dart';
 
 class ShimmerVideoListTile extends StatelessWidget {
+  const ShimmerVideoListTile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

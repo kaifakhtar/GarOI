@@ -48,10 +48,10 @@ class NotePdfService {
               children: [
                 pw.Text(note.title,
                     style: pw.TextStyle(
-                        fontSize: 20.sp, fontBold: pw.Font.courier())),
-                pw.SizedBox(height: 8.h),
-                pw.Text(note.description, style: pw.TextStyle(fontSize: 14.sp)),
-                pw.SizedBox(height: 36.h)
+                        fontSize: 16.sp, fontBold: pw.Font.courier())),
+                pw.SizedBox(height: 8),
+                pw.Text(note.description, style: const pw.TextStyle(fontSize: 12)),
+                pw.SizedBox(height: 36)
               ],
             );
           }).toList();

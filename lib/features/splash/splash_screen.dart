@@ -67,12 +67,12 @@ class _SplashScreenState extends State<SplashScreen> {
             Text(
               'Garden of Ilm',
               style: GoogleFonts.readexPro(
-                fontSize: 32.sp,
-                fontWeight: FontWeight.w700,
+                fontSize: 28.sp,
+                fontWeight: FontWeight.w500,
                 color: AppColors.gold,
               ),
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 32.h),
             const CircularProgressIndicator(),
           ],
         ),

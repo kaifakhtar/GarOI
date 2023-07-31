@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -158,13 +159,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
             // Handle user deletion error
             Navigator.pop(context); // Close the loading dialog
             _showErrorDialog(context);
-            print("Error deleting user account: $error");
+             if(kDebugMode)print("Error deleting student account: $error");
           });
         }).catchError((error) {
           // Handle Firestore document deletion error
           Navigator.pop(context); // Close the loading dialog
           _showErrorDialog(context);
-          print("Error deleting Firestore document: $error");
+         if(kDebugMode) print("Error deleting account: $error");
         });
       }
     });

@@ -98,16 +98,14 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
       final String path = '${dir.path}/${event.filename}.pdf';
       if (kDebugMode) print("path is$path");
       final file = File(path);
-          if (await file.exists()) {
-      // If the file already exists, print a message
-     if(kDebugMode) print('File already exists. Please choose a different filename.');
-      return; // Cancel the export process
-    }
+      if (await file.exists()) {
+        // If the file already exists, print a message
+        if (kDebugMode) print('File already exists. Please choose a different filename.');
+        return; // Cancel the export process
+      }
 
       await file.writeAsBytes(await pdf.save());
-      // Printing.layoutPdf(
-      //         onLayout: (PdfPageFormat format) async => pdf.save(),
-      //       );
+
       await OpenFile.open(path);
     } catch (err) {
       if (kDebugMode) print("Error while exporting");
@@ -164,7 +162,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.center,
             children: <pw.Widget>[
-          pw.Image(goiLogo, height: 100.h, width: 100.h),
+          pw.Image(goiLogo, height: 50, width: 50),
           pw.Header(
               child: pw.Text(note.videoTitle,
                   style: pw.TextStyle(

@@ -1,18 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/notes/view/widgets/note_card.dart';
-import 'package:ytyt/features/pdf/cubit/pdf_cubit.dart';
+
 import 'package:ytyt/models/video_model.dart';
 
 import '../../../pdf/view/widgets/select_pdf_view_widg.dart';
+import 'need_permission.dart';
 
 class VideoPageView extends StatefulWidget {
   final Video currentVideo;
@@ -38,40 +39,72 @@ class _VideoPageViewState extends State<VideoPageView> {
     noteBloc.add(LoadNotes(videoId: widget.currentVideo.id));
   }
 
-  Future<void> requestStoragePermission() async {
-    // ... Your implementation of requestStoragePermission ...
-  }
-Future<String?> _handleRenameNoteExport(BuildContext context) async {
-  String? fileName;
-  await showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('Enter a name'),
-      content: TextField(
-        onChanged: (value) {
-          fileName = value;
-        },
-        decoration: const InputDecoration(hintText: 'File Name'),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // Close the dialog
-          },
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(fileName); // Close the dialog and return the filename
-          },
-          child: const Text('Save'),
-        ),
-      ],
-    ),
-  );
+  Future<void> requestStoragePermission(BuildContext context) async {
+    final permission = Permission.storage.request();
+    if (await permission.isGranted) {
+      // Permission is granted, you can proceed with your app logic here
+      if (kDebugMode) print("permission granted");
+    } else {
+      // If permissions are denied, you can show a dialog or request again
+      if (await permission.isPermanentlyDenied) {
+        if (kDebugMode) print("permission permanently denied");
 
-  return fileName;
-}
+        if (mounted) {
+          showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return NeedPermissionBottomSheet(
+                  message: "We need permission to export your notes.",
+                  buttonText: "Open Settings",
+                  onButtonPressed: () {
+                    Navigator.pop(context); // Close the bottom sheet
+                    openAppSettings(); // Open the app settings
+                  },
+                );
+              });
+        } // The user has permanently denied storage permission, you can open settings to prompt them manually
+
+        // openAppSettings();
+      } else {
+        if (kDebugMode) print("again requesting permission ");
+        // The user denied storage permission, you can request again
+        if (mounted) requestStoragePermission(context);
+      }
+    }
+  }
+
+  Future<String?> _handleRenameNoteExport(BuildContext context) async {
+    String? fileName;
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Enter a name'),
+        content: TextField(
+          onChanged: (value) {
+            fileName = value;
+          },
+          decoration: const InputDecoration(hintText: 'File Name'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pop(fileName); // Close the dialog and return the filename
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+
+    return fileName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +120,7 @@ Future<String?> _handleRenameNoteExport(BuildContext context) async {
             }
 
             if (state is NoNotes) {
-              return Center(
-                child: noNotesWidget(),
-              );
+              return noNotesWidget();
             }
             if (state is NoteLoading) {
               return const Center(
@@ -100,34 +131,48 @@ Future<String?> _handleRenameNoteExport(BuildContext context) async {
               return Column(
                 children: [
                   SizedBox(height: 0.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        state.notes.length > 1
-                            ? "${state.notes.length} cards"
-                            : "${state.notes.length} card",
-                        style: GoogleFonts.readexPro(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black38),
-                      ),
-                      OutlinedButton(
-                        onPressed: () async {
-                           String? filename;
-                          await requestStoragePermission().then((value) async {
-                             filename =
-                                await _handleRenameNoteExport(context);
-                                noteBloc.add(
-                            ExportNotesToPdf(videoID: widget.currentVideo.id, filename:filename!),
-                          );
-                          });
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          state.notes.length > 1
+                              ? "${state.notes.length} cards"
+                              : "${state.notes.length} card",
+                          style: GoogleFonts.readexPro(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black38),
+                        ),
+                        OutlinedButton(
+                            onPressed: () async {
+                              String? filename;
+                              // await requestStoragePermission(context)
+                              //     .then((value) async {
 
-                          
-                        },
-                        child: const Text("Export notes"),
-                      )
-                    ],
+                              // });
+                              filename = await _handleRenameNoteExport(context);
+                              if (filename != null) {
+                                noteBloc.add(
+                                  ExportNotesToPdf(
+                                      videoID: widget.currentVideo.id,
+                                      filename: filename),
+                                );
+                              }
+                            },
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10000),
+                              ),
+                            ),
+                            child: Text(
+                              "Export notes",
+                              style: GoogleFonts.readexPro(
+                                  color: Colors.amber[700]),
+                            ))
+                      ],
+                    ),
                   ),
                   SizedBox(height: 8.h),
                   SizedBox(

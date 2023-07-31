@@ -10,7 +10,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/features/notes/view/screens/note_screen.dart';
-import 'package:ytyt/features/notes/view/widgets/note_card.dart';
+
 import 'package:ytyt/models/video_model.dart';
 
 import '../features/video_player/view/widgets/video_page_view.dart';
@@ -87,7 +87,7 @@ class _VideoScreenState extends State<VideoScreen>
                 Column(
                   children: [
                     SizedBox(
-                      height: 300.h,
+                      height: 280.h,
                     ),
                     // tabs(),
                     Expanded(
@@ -249,7 +249,7 @@ class _VideoScreenState extends State<VideoScreen>
           //     ),
           //   ),
           // ),
-          const Divider()
+          //  const Divider()
         ],
       ),
     );
@@ -270,7 +270,7 @@ class _VideoScreenState extends State<VideoScreen>
       width: 200.w,
       height: 60.h,
       child: TabBar(
-        unselectedLabelColor: Colors.grey,
+        unselectedLabelColor: Colors.black54,
         labelColor: Colors.black,
         indicatorColor: Colors.amber,
         indicatorWeight: 2,
@@ -278,8 +278,8 @@ class _VideoScreenState extends State<VideoScreen>
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
-              blurRadius: 8.0,
-              spreadRadius: 4.0,
+              blurRadius: 8.r,
+              spreadRadius: 4.r,
             ),
           ],
           color: Colors.amber,
