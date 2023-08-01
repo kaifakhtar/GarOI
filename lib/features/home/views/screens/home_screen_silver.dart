@@ -67,6 +67,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                 collapsedHeight: 100.h,
                 expandedHeight: 180.h,
                 centerTitle: true,
+
                 // title: Text(
                 //   "Garden of Ilm",
                 //   style: GoogleFonts.readexPro(color: Colors.black),
@@ -98,19 +99,19 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AppColors.gold.withOpacity(.25),
+                          color: Colors.black,
                           borderRadius: BorderRadius.circular(16.0),
-                          border: Border.all(
-                            color: Colors.orangeAccent,
-                            width: 2.0,
-                          ),
+                          // border: Border.all(
+                          //   color: const Color.fromARGB(255, 255, 255, 255),
+                          //   width: 2.0,
+                          // ),
                         ),
                         padding: const EdgeInsets.all(8.0),
                         // color: AppColors.gold.withOpacity(.5),
                         child: Icon(
                           Icons.person,
                           size: 24.h,
-                          color: Colors.orangeAccent,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -137,7 +138,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                 //     );
                 //   },
                 // ),
-                backgroundColor: Colors.white.withOpacity(.9)),
+                backgroundColor: AppColors.gold.withOpacity(.9)),
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 100.h,
@@ -147,7 +148,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 8.h,
+                        height: 16.h,
                       ),
                       BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
@@ -210,8 +211,8 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                           alignment: Alignment.center,
                           child: Image.asset(
                             'assets/images/error_goi.jpg',
-                            width: 300, // adjust the width as needed
-                            height: 300, // adjust the height as needed
+                            width: 300.w, // adjust the width as needed
+                            height: 300.h, // adjust the height as needed
                           ),
                         ),
                         OutlinedButton.icon(
