@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../video_player/view/widgets/need_permission.dart';
 import '../../cubit/pdf_cubit.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class SelectPdfAndView extends StatefulWidget {
   const SelectPdfAndView({super.key});
@@ -109,40 +111,51 @@ class _SelectPdfAndViewState extends State<SelectPdfAndView>
         ));
   }
 
+  // Get the Android version.
+  Future<int> getAndroidVersion() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    var androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.version.sdkInt;
+  }
+
   Future<bool> requestStoragePermission(BuildContext context) async {
-    final permission = Permission.storage.request();
-    if (await permission.isGranted) {
-      // Permission is granted, you can proceed with your app logic here
-      if (kDebugMode) print("permission granted");
-      return true;
-    } else {
-      // If permissions are denied, you can show a dialog or request again
-      if (await permission.isPermanentlyDenied) {
-        if (kDebugMode) print("permission permanently denied");
-
-        if (mounted) {
-          showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return NeedPermissionBottomSheet(
-                  message: "We need permission to select the book.",
-                  buttonText: "Open Settings",
-                  onButtonPressed: () {
-                    Navigator.pop(context); // Close the bottom sheet
-                    openAppSettings(); // Open the app settings
-                  },
-                );
-              });
-        } // The user has permanently denied storage permission, you can open settings to prompt them manually
-
-        // openAppSettings();
+    int androidVersion = await getAndroidVersion();
+    if (kDebugMode) print(androidVersion);
+    if (androidVersion < 33) {
+      final permission = Permission.storage.request();
+      if (await permission.isGranted) {
+        // Permission is granted, you can proceed with your app logic here
+        if (kDebugMode) print("permission granted");
+        return true;
       } else {
-        if (kDebugMode) print("again requesting permission ");
-        // The user denied storage permission, you can request again
-        if (mounted) requestStoragePermission(context);
+        // If permissions are denied, you can show a dialog or request again
+        if (await permission.isPermanentlyDenied) {
+          if (kDebugMode) print("permission permanently denied");
+
+          if (mounted) {
+            showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return NeedPermissionBottomSheet(
+                    message: "We need permission to select the book.",
+                    buttonText: "Open Settings",
+                    onButtonPressed: () {
+                      Navigator.pop(context); // Close the bottom sheet
+                      openAppSettings(); // Open the app settings
+                    },
+                  );
+                });
+          } // The user has permanently denied storage permission, you can open settings to prompt them manually
+          return false;
+          // openAppSettings();
+        } else {
+          if (kDebugMode) print("again requesting permission ");
+          // The user denied storage permission, you can request again
+          if (mounted) requestStoragePermission(context);
+        }
       }
     }
-    return false;
+    return true;
   }
 
   @override

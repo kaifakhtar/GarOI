@@ -6,7 +6,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/all_notes/cubit/all_note_cubit.dart';
 
-
 import '../../../../models/vid_id_and_list_of_notes_of_that.dart';
 import '../widgets/all_video_notes_widget.dart';
 
@@ -32,6 +31,7 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(

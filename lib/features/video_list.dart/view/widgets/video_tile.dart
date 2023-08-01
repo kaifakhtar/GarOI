@@ -7,28 +7,39 @@ import 'package:ytyt/colors/app_colors.dart';
 import '../../../../models/video_model.dart';
 import '../../../../screens/video_screen.dart';
 
-class VideoListTile extends StatelessWidget {
+class VideoListTile extends StatefulWidget {
   // final String imageUrl;
   // final String title;
   final Video video;
-  const VideoListTile({super.key, required this.video});
+
+   VideoListTile({super.key, required this.video});
+
+  @override
+  State<VideoListTile> createState() => _VideoListTileState();
+}
+
+class _VideoListTileState extends State<VideoListTile> {
+  bool istapped = false;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Ink(
-          color: Colors.white,
+          color:istapped?Colors.amber[100]:Colors.white,
           child: InkWell(
             splashColor: AppColors.gold.withOpacity(0.2),
             onTap: () {
+              setState(() {
+                istapped = true;
+              });
               // final videolistbloc = BlocProvider.of<VideoListBloc>(context);
               // videolistbloc.add(VideoListFetch(selectedPlaylist: playlist));
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => VideoScreen(
-                            currentVideo: video,
+                            currentVideo: widget.video,
                           )));
             },
             child: Container(
@@ -45,8 +56,9 @@ class VideoListTile extends StatelessWidget {
                         width: 150.w,
                         height: 090.h,
                         decoration: BoxDecoration(
+                          color: istapped?Colors.amber[100]:Colors.white,
                           image: DecorationImage(
-                            image: NetworkImage(video.thumbnailUrl),
+                            image: NetworkImage(widget.video.thumbnailUrl),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -99,7 +111,7 @@ class VideoListTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          video.title,
+                          widget.video.title,
                           style: GoogleFonts.readexPro(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.normal,
@@ -111,9 +123,9 @@ class VideoListTile extends StatelessWidget {
                         SizedBox(
                           height: 8.h,
                         ),
-                        if (video.dateTime != null)
+                        if (widget.video.dateTime != null)
                           Text(
-                            timeago.format(video.dateTime!),
+                            timeago.format(widget.video.dateTime!),
                             style: GoogleFonts.readexPro(
                                 fontSize: 10.sp, color: Colors.black45),
                           )

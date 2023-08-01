@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp.router(
               routerConfig: _approuter.config(),
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
+              title: 'Garden of Ilm',
               theme: ThemeData(
                 // This is the theme of your application.
                 //

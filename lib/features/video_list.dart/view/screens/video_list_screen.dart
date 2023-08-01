@@ -68,7 +68,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                       if (index == 0) {
                         return ShimmerImageVideoTitleAndDescription();
                       }
-                      return ShimmerVideoListTile();
+                      return const ShimmerVideoListTile();
                     },
                     childCount: 8
                     ),

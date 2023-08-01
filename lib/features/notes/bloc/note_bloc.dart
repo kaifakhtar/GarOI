@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:faker/faker.dart';
@@ -91,7 +92,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
           await noteDataBaseService.getNotesForVideo(event.videoID);
 
       final pdf = await generatePDF(notes);
-      final Directory dir = Directory('/storage/emulated/0/Download');
+      final Directory dir = Directory('/storage/emulated/0/Documents');
       //final String dir = (await getExternalStorageDirectory())!.path;
       //  final String dir = (await getApplicationDocumentsDirectory()).path;
       //String _localPath = (await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS))!;
@@ -100,11 +101,26 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
       final file = File(path);
       if (await file.exists()) {
         // If the file already exists, print a message
-        if (kDebugMode) print('File already exists. Please choose a different filename.');
+        if (kDebugMode) print('Notes already exists. Please choose a different filename.');
+         Fluttertoast.showToast(
+        msg: 'File with the same name already exists. Please choose a different filename.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
         return; // Cancel the export process
       }
 
-      await file.writeAsBytes(await pdf.save());
+      await file.writeAsBytes(await pdf.save()).then((value) {
+         Fluttertoast.showToast(
+      msg: "File exported successfully. Path: $path",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+      });
 
       await OpenFile.open(path);
     } catch (err) {

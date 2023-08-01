@@ -71,6 +71,8 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^22.1.39
   file_picker: ^5.3.3
   flutter_quill: ^7.2.18
+  device_info_plus: ^9.0.2
+  
 
 dev_dependencies:
   auto_route_generator: ^7.1.1
