@@ -27,7 +27,7 @@ class _NoteScreenState extends State<NoteScreen> {
   //bool isEnglish = true;
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
-  
+
   final TextEditingController _descriptionController = TextEditingController();
   int countWords(String text) {
     if (text.isEmpty || text.trim().isEmpty) {
@@ -144,7 +144,7 @@ class _NoteScreenState extends State<NoteScreen> {
                         hintText: "Write the description and be concise..."),
 
                     style: GoogleFonts.lato(fontSize: 16.sp),
-                    maxLines: 20,
+                    maxLines: 35,
                     // Allows the text field to grow dynamically
                     keyboardType: TextInputType.multiline,
                     scrollPhysics: const BouncingScrollPhysics(),

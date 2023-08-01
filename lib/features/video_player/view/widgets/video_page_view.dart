@@ -72,39 +72,45 @@ class _VideoPageViewState extends State<VideoPageView> {
       }
     }
   }
+Future<String?> _handleRenameNoteExport(BuildContext context) async {
+  String? fileName;
+  bool saveClicked = false; // Track if "Save" button was clicked
 
-  Future<String?> _handleRenameNoteExport(BuildContext context) async {
-    String? fileName;
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Enter a name'),
-        content: TextField(
-          onChanged: (value) {
-            fileName = value;
-          },
-          decoration: const InputDecoration(hintText: 'File Name'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .pop(fileName); // Close the dialog and return the filename
-            },
-            child: const Text('Save'),
-          ),
-        ],
+  await showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Enter a name'),
+      content: TextField(
+        onChanged: (value) {
+          fileName = value;
+        },
+        decoration: const InputDecoration(hintText: 'File Name'),
       ),
-    );
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog without saving
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            saveClicked = true; // Mark "Save" button was clicked
+            Navigator.of(context).pop(); // Close the dialog after saving
+          },
+          child: const Text('Save'),
+        ),
+      ],
+    ),
+  );
 
-    return fileName;
+  if (saveClicked) {
+    return fileName; // Return the filename if "Save" button was clicked
+  } else {
+    return null; // Return null if the dialog was dismissed or "Cancel" was clicked
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

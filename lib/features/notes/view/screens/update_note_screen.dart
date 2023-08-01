@@ -59,7 +59,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFFF7D4),
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           elevation: 0,
           iconTheme: const IconThemeData(color: Colors.black),
@@ -68,70 +68,71 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
             style: GoogleFonts.readexPro(color: Colors.black),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(16.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: _titleController,
-                style: GoogleFonts.readexPro(
-                    fontSize: 20.sp, fontWeight: FontWeight.w600),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  controller: _titleController,
+                  style: GoogleFonts.readexPro(
+                      fontSize: 20.sp, fontWeight: FontWeight.w600),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
 
-                  //labelText: 'Title',
-                ),
-              ),
-
-              TextField(
-                controller: _descriptionController,
-                style: GoogleFonts.lato(fontSize: 16.sp),
-                decoration: const InputDecoration(
-                  //  labelText: 'Description',
-
-                  border: InputBorder.none,
-                  // hintText: "...",
+                    //labelText: 'Title',
+                  ),
                 ),
 
-                maxLines: 20,
+                TextField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                      //  labelText: 'Description',
+                      hintStyle: GoogleFonts.lato(fontSize: 16.sp),
+                      border: InputBorder.none,
+                      // hintText: "...",
+                      hintText: "Write the description and be concise..."),
 
-                // Allows the text field to grow dynamically
-                keyboardType: TextInputType.multiline,
-                scrollPhysics: const BouncingScrollPhysics(),
-              ),
+                  style: GoogleFonts.lato(fontSize: 16.sp),
+                  maxLines: 30,
+                  // Allows the text field to grow dynamically
+                  keyboardType: TextInputType.multiline,
+                  scrollPhysics: const BouncingScrollPhysics(),
+                ),
 
-              // ElevatedButton(
-              //   onPressed: () {
-              //     // Save note logic
-              //     // String updatedTitle = _titleController.text;
-              //     // String updatedDescription = _descriptionController.text;
-              //     // Note updatedNote = Note(
-              //     //     id: widget.oldNote.id,
-              //     //     title: updatedTitle,
-              //     //     description: updatedDescription,
-              //     //     videoId: widget.videoId,
-              //     //     videoTitle: widget.oldNote.videoTitle,
-              //     //     words: countWords(updatedDescription),
-              //     //     timestamp: widget.oldNote.timestamp);
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // Save note logic
+                //     // String updatedTitle = _titleController.text;
+                //     // String updatedDescription = _descriptionController.text;
+                //     // Note updatedNote = Note(
+                //     //     id: widget.oldNote.id,
+                //     //     title: updatedTitle,
+                //     //     description: updatedDescription,
+                //     //     videoId: widget.videoId,
+                //     //     videoTitle: widget.oldNote.videoTitle,
+                //     //     words: countWords(updatedDescription),
+                //     //     timestamp: widget.oldNote.timestamp);
 
-              //     // noteBloc.add(UpdateNote(updatedNote: updatedNote));
-              //     // noteBloc.add(LoadNotes(videoId: widget.videoId));
-              //     // // Perform necessary actions with the note data
-              //     // print(updatedNote.toString());
-              //   },
-              //   // child: BlocBuilder<NoteBloc, NoteState>(
-              //   //   builder: (context, state) {
-              //   //     if (state is NoteLoading) {
-              //   //       return const CircularProgressIndicator();
-              //   //     } else if (state is NoteAdded) {
-              //   //       return const Icon(Iconsax.tick_circle);
-              //   //     }
-              //   //     return const Text('Save');
-              //   //   },
-              //   // ),
-              // ),
-            ],
+                //     // noteBloc.add(UpdateNote(updatedNote: updatedNote));
+                //     // noteBloc.add(LoadNotes(videoId: widget.videoId));
+                //     // // Perform necessary actions with the note data
+                //     // print(updatedNote.toString());
+                //   },
+                //   // child: BlocBuilder<NoteBloc, NoteState>(
+                //   //   builder: (context, state) {
+                //   //     if (state is NoteLoading) {
+                //   //       return const CircularProgressIndicator();
+                //   //     } else if (state is NoteAdded) {
+                //   //       return const Icon(Iconsax.tick_circle);
+                //   //     }
+                //   //     return const Text('Save');
+                //   //   },
+                //   // ),
+                // ),
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

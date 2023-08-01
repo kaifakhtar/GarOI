@@ -52,12 +52,13 @@ class NoteCard extends StatelessWidget {
       },
       child: Container(
         width: 328.w,
-        height: 296.h,
+        height: 328.h,
         decoration: BoxDecoration(
           color: const Color(0xFFFFF7D4),
           boxShadow: [
             BoxShadow(
               blurRadius: 4.r,
+              spreadRadius: 4.r,
               color: const Color.fromARGB(51, 131, 131, 131),
               offset: const Offset(0, 0),
             )
@@ -88,14 +89,18 @@ class NoteCard extends StatelessWidget {
                     height: 16.h,
                   ),
                   SizedBox(
-                    height: 200.h,
-                    child: Text(
-                      note.description,
-                      maxLines: 12,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        color: Colors.black54,
+                    height: 215.h,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        note.description,
+                        //  maxLines: null,
+                        //overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.lato(
+                          fontSize: 14.sp,
+                          color: Colors.black54,
+                        ),
                       ),
                     ),
                   ),

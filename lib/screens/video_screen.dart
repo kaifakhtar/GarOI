@@ -257,6 +257,7 @@ class _VideoScreenState extends State<VideoScreen>
 
   Widget tabs() {
     return Container(
+      color: AppColors.gold.withOpacity(.1),
       // decoration: BoxDecoration(
       //   border: Border.all(
       //     color: Colors.black.withOpacity(
@@ -267,7 +268,7 @@ class _VideoScreenState extends State<VideoScreen>
       //   borderRadius: BorderRadius.circular(12.r),
       // ),
       padding: EdgeInsets.all(12.h),
-      width: 200.w,
+      width: double.infinity,
       height: 60.h,
       child: TabBar(
         unselectedLabelColor: Colors.black54,
