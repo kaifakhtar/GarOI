@@ -140,15 +140,15 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     widgets.add(goilogo);
     //widgets.add();
     for (int i = 0; i < notes.length; i++) {
-      widgets.add(pw.Text("${i + 1}) ${notes[i].title}",
-          style: pw.TextStyle(font: titleFont, fontSize: 20),
+      widgets.add(pw.Text(notes[i].title,
+          style: pw.TextStyle(font: titleFont, fontSize: 14),
           textDirection: TextDirection.rtl));
       widgets.add(pw.SizedBox(height: 5));
       widgets.add(pw.Paragraph(
           text: notes[i].description,
           style: pw.TextStyle(
             font: descFont,
-            fontSize: 14,
+            fontSize: 12,
           )));
       widgets.add(pw.SizedBox(height: 14));
     }

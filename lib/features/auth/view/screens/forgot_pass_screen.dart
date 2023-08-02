@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,10 +55,11 @@ void handleFirebaseAuthException(BuildContext context, FirebaseAuthException e) 
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Authentication Error'),
+        title: const Text('Authentication Error'),
         content: Text(errorMessage),
         actions: <Widget>[
           TextButton(
+            // ignore: prefer_const_constructors
             child: Text('OK'),
             onPressed: () {
               Navigator.of(context).pop();

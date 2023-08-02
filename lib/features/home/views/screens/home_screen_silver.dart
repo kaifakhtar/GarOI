@@ -41,7 +41,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
         _scrollController.position.maxScrollExtent) {
       // Reach the end of the list
       // Emit an event to fetch more videos
-     if(kDebugMode)  print("In the _scrool");
+      if (kDebugMode) print("In the _scrool");
       // homebloc.add(HomeLoadMorePlaylist());
 
       // Update the state in the BLoC
@@ -63,83 +63,80 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
           controller: _scrollController,
           slivers: [
             SliverAppBar(
-                automaticallyImplyLeading: false, // Remove back button
-                iconTheme: const IconThemeData(color: Colors.black),
-                collapsedHeight: 100.h,
-                expandedHeight: 180.h,
-                centerTitle: true,
+              automaticallyImplyLeading: false, // Remove back button
+              iconTheme: const IconThemeData(color: Colors.black),
+              collapsedHeight: 100.h,
+              expandedHeight: 180.h,
+              centerTitle: true,
 
-                // title: Text(
-                //   "Garden of Ilm",
-                //   style: GoogleFonts.readexPro(color: Colors.black),
-                // ),
-                flexibleSpace: Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(8.h),
-                  child: CircleAvatar(
-                    radius: 100.r,
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/images/goi.jpg',
-                        // width: 550, // adjust the width as needed
-                        // height: 550, // adjust the height as needed
+              // title: Text(
+              //   "Garden of Ilm",
+              //   style: GoogleFonts.readexPro(color: Colors.black),
+              // ),
+              flexibleSpace: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          AppColors.gold, // Gold color at the top
+                          Colors.white // White color below
+                        ],
                       ),
                     ),
                   ),
-                )),
-                actions: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 16.w, top: 8.h),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UserProfilePage()),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(16.0),
-                          // border: Border.all(
-                          //   color: const Color.fromARGB(255, 255, 255, 255),
-                          //   width: 2.0,
-                          // ),
-                        ),
-                        padding: const EdgeInsets.all(8.0),
-                        // color: AppColors.gold.withOpacity(.5),
-                        child: Icon(
-                          Icons.person,
-                          size: 24.h,
-                          color: Colors.white,
-                        ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100.r),
+                    child: SizedBox(
+                      //radius: 100.r,
+                      // height: 100,
+                      // width: 100.w,
+                      child: Image.asset(
+                        'assets/images/goi.jpg',
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ],
-                elevation: 1.h,
-                pinned: true,
-                // expandedHeight: 100.h,
-                // flexibleSpace: LayoutBuilder(
-                //   builder: (BuildContext context, BoxConstraints constraints) {
-                //     return FlexibleSpaceBar(
-                //       centerTitle: true,
-                //       title: Align(
-                //         alignment: Alignment.bottomCenter,
-                //         child: Text(
-                //           'Playlists',
-                //           style: GoogleFonts.readexPro(
-                //             color: Colors.black,
-                //             fontSize: 20.sp,
-                //             fontWeight: FontWeight.w500,
-                //           ),
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // ),
-                backgroundColor: AppColors.gold.withOpacity(.9)),
+              ),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: 16.w, top: 8.h),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserProfilePage()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(16.r),
+                        // border: Border.all(
+                        //   color: const Color.fromARGB(255, 255, 255, 255),
+                        //   width: 2.0,
+                        // ),
+                      ),
+                      padding: EdgeInsets.all(8.h),
+                      // color: AppColors.gold.withOpacity(.5),
+                      child: Icon(
+                        Icons.person,
+                        size: 24.h,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              elevation: 1.h,
+              pinned: true,
+              //backgroundColor: AppColors.gold.withOpacity(.9)
+            ),
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 100.h,

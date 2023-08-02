@@ -18,7 +18,7 @@ import '../features/video_player/view/widgets/video_page_view.dart';
 class VideoScreen extends StatefulWidget {
   final Video currentVideo;
 
-  const VideoScreen({required this.currentVideo});
+  const VideoScreen({super.key, required this.currentVideo});
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
@@ -130,14 +130,14 @@ class _VideoScreenState extends State<VideoScreen>
         backgroundColor: Colors.black,
         heroTag: 'addnote',
         onPressed: () {
+          _controller.pause();
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => NoteScreen(
-                        videoTitle: widget.currentVideo.title,
-                        videoId: widget.currentVideo.id,
-                        ytcontroller:_controller
-                      )));
+                      videoTitle: widget.currentVideo.title,
+                      videoId: widget.currentVideo.id,
+                      ytcontroller: _controller)));
         },
         label: Text(
           "Add note",

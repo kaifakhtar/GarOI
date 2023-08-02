@@ -17,15 +17,15 @@ class NeedPermissionBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            "We need permission to export your notes",
+           Text(
+           message,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+            style: GoogleFonts.readexPro(fontSize: 16.sp),
           ),
            SizedBox(height: 16.h),
           ElevatedButton(

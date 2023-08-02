@@ -15,24 +15,24 @@ class NotePdfService {
 
   NotePdfService(this.context);
 
-  Future<void> generatePDF(String vidId) async {
-    PermissionStatus storageStatus = await Permission.storage.request();
-    // Check if storage permission is granted
-    //final PermissionStatus status = await Permission.storage.status;
-    if (storageStatus.isGranted) {
-      // Permission is already granted
-      await createPDFAndOpen(vidId);
-    } else if (storageStatus.isDenied) {
-      // Permission has been denied once
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("We need this permission to export your notes.")));
-     // final bool? isOpenSettings = await showOpenSettingsDialog();
-    } 
-      if (storageStatus.isPermanentlyDenied) {
-        // User has chosen to open app settings
-        await openAppSettings();
-      } 
-  }
+  // Future<void> generatePDF(String vidId) async {
+  //   PermissionStatus storageStatus = await Permission.storage.request();
+  //   // Check if storage permission is granted
+  //   //final PermissionStatus status = await Permission.storage.status;
+  //   if (storageStatus.isGranted) {
+  //     // Permission is already granted
+  //     await createPDFAndOpen(vidId);
+  //   } else if (storageStatus.isDenied) {
+  //     // Permission has been denied once
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //         content: Text("We need this permission to export your notes.")));
+  //    // final bool? isOpenSettings = await showOpenSettingsDialog();
+  //   } 
+  //     if (storageStatus.isPermanentlyDenied) {
+  //       // User has chosen to open app settings
+  //       await openAppSettings();
+  //     } 
+  // }
 
   Future<void> createPDFAndOpen(String vidId) async {
     // Create a new PDF document
