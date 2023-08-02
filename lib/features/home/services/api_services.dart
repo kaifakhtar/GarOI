@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ class APIService {
   static final APIService instance = APIService._instantiate();
 
   final String _baseUrl = 'www.googleapis.com';
-  String _nextPageToken = '';
+  //String _nextPageToken = '';
   String _nextPageTokenForPlaylist = '';
 
   final cacheManager = DefaultCacheManager();
@@ -84,8 +85,8 @@ class APIService {
       var response = await http.get(uri, headers: headers);
 
       if (response.statusCode == 200) {
-        print(response.headers);
-        print("response code is ${response.statusCode}");
+       if(kDebugMode) print(response.headers);
+        if(kDebugMode) print("response code is ${response.statusCode}");
         // Cache the data
         await cacheManager.putFile(uri.toString(), response.bodyBytes);
 
@@ -93,10 +94,10 @@ class APIService {
         etag = data['etag'];
         await prefs.setString(keyForEtag, etag); //* store the etag in the prefs
 
-        print("etag is in 200 ${etag}");
+        if(kDebugMode) print("etag is in 200 $etag");
         int totalVideosFromResponse = data['pageInfo']['totalResults'];
 
-        _nextPageToken = data['nextPageToken'] ?? '';
+      //  _nextPageToken = data['nextPageToken'] ?? '';
         // List<dynamic> videosJson = data['items'];
 
         // // Fetch videos from uploads playlist
@@ -111,8 +112,8 @@ class APIService {
         // return videos;
         return getVideosFromResponse(data);
       } else if (response.statusCode == 304) {
-        print("etag is in 304 taken from prefs ${etag}");
-        print("response code is ${response.statusCode}");
+       if(kDebugMode)  print("etag is in 304 taken from prefs ${etag}");
+       if(kDebugMode)  print("response code is ${response.statusCode}");
         // Get the data from the cache
         final file = await cacheManager.getFileFromCache(uri.toString());
         List<Video> videos = [];
@@ -176,7 +177,7 @@ class APIService {
         );
       }
 
-      print(listOfPlaylistModals);
+      if(kDebugMode) print(listOfPlaylistModals);
       return listOfPlaylistModals;
 
       // Map<String, dynamic> data = json.decode(response.body)['items'][0];

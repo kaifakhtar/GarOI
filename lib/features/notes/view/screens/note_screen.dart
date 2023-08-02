@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:ytyt/colors/app_colors.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
@@ -12,16 +14,19 @@ import 'package:ytyt/models/note_modal.dart';
 class NoteScreen extends StatefulWidget {
   final String videoId;
   final String videoTitle;
+  final YoutubePlayerController ytcontroller;
   const NoteScreen({
     Key? key,
     required this.videoId,
     required this.videoTitle,
+    required this.ytcontroller,
   }) : super(key: key);
   @override
   State<NoteScreen> createState() => _NoteScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> {
+class _NoteScreenState extends State<NoteScreen> with TickerProviderStateMixin {
+  late AnimationController _animController;
   bool isButtonEnabled = true;
   bool isNoteSaved = false;
   //bool isEnglish = true;
@@ -50,8 +55,18 @@ class _NoteScreenState extends State<NoteScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
     noteBloc = BlocProvider.of<NoteBloc>(context);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _animController.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,31 +90,25 @@ class _NoteScreenState extends State<NoteScreen> {
               isNoteSaved ? "Note Saved" : "Add note",
               style: GoogleFonts.readexPro(color: Colors.black),
             ),
-            // actions: [
-            //   Padding(
-            //     padding: EdgeInsets.only(right: 10.0),
-            //     child: Row(
-            //       children: [
-            //         Text(
-            //           "En",
-            //           style: GoogleFonts.readexPro(color: Colors.black),
-            //         ),
-            //         Switch(
-            //           value: isEnglish,
-            //           onChanged: (value) {
-            //             setState(() {
-            //               isEnglish = value;
-            //             });
-            //           },
-            //         ),
-            //         Text(
-            //           "Ar",
-            //           style: GoogleFonts.readexPro(color: Colors.black),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ],
+            actions: [
+              IconButton(
+                onPressed: () {
+                  if (widget.ytcontroller.value.isPlaying) {
+                    _animController.reverse();
+                    widget.ytcontroller.pause();
+                    
+                  } else {
+                     _animController.forward();
+                     widget.ytcontroller.play();
+                   
+                  }
+                },
+                icon: AnimatedIcon(
+                  icon: AnimatedIcons.play_pause,
+                  progress: _animController,
+                ),
+              ),
+            ],
           ),
           body: Padding(
             padding: EdgeInsets.all(16.h),
@@ -109,7 +118,8 @@ class _NoteScreenState extends State<NoteScreen> {
                 // isButtonEnabled = false;
                 isNoteSaved = true;
 
-                print("isNoteSaved is inside noteadded state $isNoteSaved");
+                if (kDebugMode)
+                  print("isNoteSaved is inside noteadded state $isNoteSaved");
               }
 
               return Column(

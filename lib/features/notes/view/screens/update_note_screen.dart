@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/models/note_modal.dart';
@@ -11,6 +13,7 @@ import 'package:ytyt/models/note_modal.dart';
 class UpdateNoteScreen extends StatefulWidget {
   final String videoId;
   final Note oldNote;
+
   const UpdateNoteScreen({
     Key? key,
     required this.videoId,
@@ -20,9 +23,10 @@ class UpdateNoteScreen extends StatefulWidget {
   State<UpdateNoteScreen> createState() => _UpdateNoteScreenState();
 }
 
-class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
+class _UpdateNoteScreenState extends State<UpdateNoteScreen> with TickerProviderStateMixin {
   final TextEditingController _titleController = TextEditingController();
   late final NoteBloc noteBloc;
+    late AnimationController _animController;
   bool isButtonEnabled = true;
   final TextEditingController _descriptionController = TextEditingController();
   int countWords(String text) {
@@ -41,8 +45,12 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+   
     super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
     _titleController.text = widget.oldNote.title;
     _descriptionController.text = widget.oldNote.description;
     noteBloc = BlocProvider.of<NoteBloc>(context);
@@ -67,6 +75,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
             'Update note',
             style: GoogleFonts.readexPro(color: Colors.black),
           ),
+          
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -100,37 +109,6 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                   keyboardType: TextInputType.multiline,
                   scrollPhysics: const BouncingScrollPhysics(),
                 ),
-
-                // ElevatedButton(
-                //   onPressed: () {
-                //     // Save note logic
-                //     // String updatedTitle = _titleController.text;
-                //     // String updatedDescription = _descriptionController.text;
-                //     // Note updatedNote = Note(
-                //     //     id: widget.oldNote.id,
-                //     //     title: updatedTitle,
-                //     //     description: updatedDescription,
-                //     //     videoId: widget.videoId,
-                //     //     videoTitle: widget.oldNote.videoTitle,
-                //     //     words: countWords(updatedDescription),
-                //     //     timestamp: widget.oldNote.timestamp);
-
-                //     // noteBloc.add(UpdateNote(updatedNote: updatedNote));
-                //     // noteBloc.add(LoadNotes(videoId: widget.videoId));
-                //     // // Perform necessary actions with the note data
-                //     // print(updatedNote.toString());
-                //   },
-                //   // child: BlocBuilder<NoteBloc, NoteState>(
-                //   //   builder: (context, state) {
-                //   //     if (state is NoteLoading) {
-                //   //       return const CircularProgressIndicator();
-                //   //     } else if (state is NoteAdded) {
-                //   //       return const Icon(Iconsax.tick_circle);
-                //   //     }
-                //   //     return const Text('Save');
-                //   //   },
-                //   // ),
-                // ),
               ],
             ),
           ),
@@ -151,7 +129,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
             noteBloc.add(UpdateNote(updatedNote: updatedNote));
             noteBloc.add(LoadNotes(videoId: widget.videoId));
             // Perform necessary actions with the note data
-            print(updatedNote.toString());
+         if(kDebugMode)   print(updatedNote.toString());
           },
           child: BlocBuilder<NoteBloc, NoteState>(
             builder: (context, state) {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:open_file/open_file.dart';
@@ -71,7 +72,7 @@ class NotePdfService {
     // Save the PDF document to a file
     final file = await File(path).writeAsBytes(await pdf.save());
 
-    print('PDF saved to: $path');
+    if(kDebugMode) print('PDF saved to: $path');
     OpenFile.open(path);
   }
 

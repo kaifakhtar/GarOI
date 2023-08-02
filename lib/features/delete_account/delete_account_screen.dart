@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -48,7 +49,7 @@ class AccountDeletionScreen extends StatelessWidget {
       );
 
       // You can also log the error for debugging purposes
-      print("Error deleting account: $error");
+      if(kDebugMode) print("Error deleting account: $error");
     }
   }
 

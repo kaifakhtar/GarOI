@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:ytyt/features/notes/note_service/note_service.dart';
 
@@ -23,7 +24,7 @@ class AllNoteCubit extends Cubit<AllNotesState> {
         final vidIdAndListOfNotesModal = VidIdAndListOfNotesModal(
             videoId: vidId, notesOfThisVideoId: notesOfThisVidId);
         vidIdAndListOfNotes.add(vidIdAndListOfNotesModal);
-        print(vidIdAndListOfNotes.toString());
+       if(kDebugMode)  print(vidIdAndListOfNotes.toString());
       }
 
       if (vidIdAndListOfNotes.isEmpty) {
@@ -32,7 +33,7 @@ class AllNoteCubit extends Cubit<AllNotesState> {
         emit(AllNotesLoadingSuccess(vidIdAndListOfNotes));
       }
     } catch (err) {
-      print(err.toString());
+     if(kDebugMode)  print(err.toString());
       emit(AllNotesLoadingError(errorMessage: err.toString()));
     }
   }

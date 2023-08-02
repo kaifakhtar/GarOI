@@ -12,7 +12,7 @@ class VideoListTile extends StatefulWidget {
   // final String title;
   final Video video;
 
-   VideoListTile({super.key, required this.video});
+   const VideoListTile({super.key, required this.video});
 
   @override
   State<VideoListTile> createState() => _VideoListTileState();

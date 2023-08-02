@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:faker/faker.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:open_file/open_file.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -39,15 +38,15 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     try {
       List<Note> fetchedNotes =
           await noteDataBaseService.getNotesForVideo(event.videoId);
-      print(fetchedNotes.length);
+     if(kDebugMode)  print(fetchedNotes.length);
       if (fetchedNotes.isNotEmpty) {
-        print(fetchedNotes.length);
+       if(kDebugMode)  print(fetchedNotes.length);
         emit(NoteLoaded(notes: fetchedNotes));
       } else {
         emit(NoNotes());
       }
     } catch (e) {
-      print("Error:${e.toString}");
+     if(kDebugMode)  print("Error:${e.toString}");
     }
   }
 
@@ -55,10 +54,10 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     emit(NoteLoading());
     try {
       await noteDataBaseService.insertNoteForVideo(event.note);
-      print("after add note");
+     if(kDebugMode)  print("after add note");
       emit(NoteAdded());
     } catch (e) {
-      print("Error:${e.toString}");
+    if(kDebugMode)   print("Error:${e.toString}");
     }
   }
 

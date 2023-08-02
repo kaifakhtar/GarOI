@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,7 +41,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
         _scrollController.position.maxScrollExtent) {
       // Reach the end of the list
       // Emit an event to fetch more videos
-      print("In the _scrool");
+     if(kDebugMode)  print("In the _scrool");
       // homebloc.add(HomeLoadMorePlaylist());
 
       // Update the state in the BLoC

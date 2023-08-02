@@ -18,7 +18,7 @@ import 'need_permission.dart';
 class VideoPageView extends StatefulWidget {
   final Video currentVideo;
   final TabController tabController;
-  VideoPageView({
+  const VideoPageView({
     Key? key,
     required this.currentVideo,
     required this.tabController,

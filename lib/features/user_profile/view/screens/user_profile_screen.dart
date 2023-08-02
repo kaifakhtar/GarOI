@@ -14,6 +14,8 @@ import '../../../auth/view/screens/signup_screen.dart';
 
 @RoutePage()
 class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({super.key});
+
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
@@ -35,7 +37,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     _authCubit = BlocProvider.of<AuthCubit>(context);
   }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../models/student_modal.dart';
 import 'auth_state.dart';
@@ -106,9 +107,9 @@ class AuthCubit extends Cubit<AuthState> {
         .doc(student.uid)
         .set(student.toJson())
         .then((value) {
-      print("Student document created successfully!");
+     if(kDebugMode)  print("Student document created successfully!");
     }).catchError((error) {
-      print("Failed to create student document: $error");
+      if(kDebugMode) print("Failed to create student document: $error");
     });
   }
 
@@ -129,11 +130,11 @@ class AuthCubit extends Cubit<AuthState> {
         // Process the data as needed
       } else {
         // Document does not exist
-        print("Document student does not exist");
+       if(kDebugMode)  print("Document student does not exist");
         return null;
       }
     } catch (err) {
-      print(err.toString());
+       if(kDebugMode)print(err.toString());
       return null;
     }
   }

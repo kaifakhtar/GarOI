@@ -139,6 +139,7 @@ class NoteCard extends StatelessWidget {
                       builder: (context) => UpdateNoteScreen(
                         videoId: vidId,
                         oldNote: note,
+                        
                       ),
                     ),
                   );

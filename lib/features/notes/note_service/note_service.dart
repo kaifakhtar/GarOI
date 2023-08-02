@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -87,7 +88,7 @@ class NoteDataBaseService {
   // Example method to retrieve all notes for a particular video
   Future<List<Note>> getNotesForVideo(String videoId) async {
     Database db = await database;
-    print("inside getNotes for video service");
+     if(kDebugMode)print("inside getNotes for video service");
     final listofNotesMap = await db.query(
       tableNotes,
       where: '$columnNoteVideoId = ?',
