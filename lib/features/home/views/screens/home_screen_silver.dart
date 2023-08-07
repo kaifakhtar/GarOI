@@ -116,7 +116,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(1000.r),
                         // border: Border.all(
                         //   color: const Color.fromARGB(255, 255, 255, 255),
                         //   width: 2.0,
@@ -139,7 +139,7 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
             ),
             SliverToBoxAdapter(
               child: SizedBox(
-                height: 100.h,
+                height: 162.h,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16.h, right: 16.h),
                   child: Column(
@@ -169,11 +169,40 @@ class _HomeScreenSilverState extends State<HomeScreenSilver> {
                         },
                       ),
                       SizedBox(
-                        height: 4.h,
+                        height: 8.h,
                       ),
-                      Text("Pick up from my garden",
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.gold,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: AppColors
+                                .blackTintGold, // Set the border color to gold
+                            width: 2, // Set the border width
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.2), // Shadow color
+                              spreadRadius: 2.r, // Spread radius
+                              blurRadius: 4.r, // Blur radius
+                              offset:
+                                  Offset(0, 2.h), // Offset in x and y direction
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(16.h),
+                        child: Text(
+                          "The Messenger of Allah (ﷺ) said, 'Allah makes the way to Jannah easy for him who treads the path in search of knowledge.'",
                           style: GoogleFonts.readexPro(
-                              color: Colors.black54, fontSize: 20)),
+                              color: AppColors.blackTintGold.withOpacity(.87),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12.h,
+                      ),
                     ],
                   ),
                 ),

@@ -56,81 +56,61 @@ class APIService {
 // Flag to track availability of more items
   // Flag to track availability of more items
 
-  Future<List<Video>> fetchVideosFromPlaylist(
-      {required String playlistId}) async {
-    // Obtain shared preferences.
-    String keyForEtag = playlistId;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    etag = prefs.getString(keyForEtag) ?? ''; //* get from this key else ''
+Future<List<Video>> fetchVideosFromPlaylist({
+  required String playlistId,
+}) async {
+  Map<String, String> parameters = {
+    'part': 'snippet,contentDetails',
+    'playlistId': playlistId,
+    'maxResults': '1000',
+    //'pageToken': _nextPageToken,
+    'key': dotenv.env['API_KEY'] ?? "",
+  };
+  Uri uri = Uri.https(
+    _baseUrl,
+    '/youtube/v3/playlistItems',
+    parameters,
+  );
+  Map<String, String> headers = {
+    HttpHeaders.contentTypeHeader: 'application/json',
+  };
 
-    Map<String, String> parameters = {
-      'part': 'snippet,contentDetails',
-      'playlistId': playlistId,
-      'maxResults': '1000',
-      //'pageToken': _nextPageToken,
-      'key': dotenv.env['API_KEY'] ?? "",
-    };
-    Uri uri = Uri.https(
-      _baseUrl,
-      '/youtube/v3/playlistItems',
-      parameters,
-    );
-    Map<String, String> headers = {
-      'If-None-Match': etag,
-      HttpHeaders.contentTypeHeader: 'application/json',
-    };
+  try {
+    // Get Playlist Videos
+    var response = await http.get(uri, headers: headers);
 
-    try {
-      // Get Playlist Videos
-      var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      if (kDebugMode) print(response.headers);
+      if (kDebugMode) print("response code is ${response.statusCode}");
+      
+      var data = json.decode(response.body);
 
-      if (response.statusCode == 200) {
-       if(kDebugMode) print(response.headers);
-        if(kDebugMode) print("response code is ${response.statusCode}");
-        // Cache the data
-        await cacheManager.putFile(uri.toString(), response.bodyBytes);
+      // Cache the data
+      await cacheManager.putFile(uri.toString(), response.bodyBytes);
 
-        var data = json.decode(response.body);
-        etag = data['etag'];
-        await prefs.setString(keyForEtag, etag); //* store the etag in the prefs
-
-        if(kDebugMode) print("etag is in 200 $etag");
-        int totalVideosFromResponse = data['pageInfo']['totalResults'];
+      int totalVideosFromResponse = data['pageInfo']['totalResults'];
 
       //  _nextPageToken = data['nextPageToken'] ?? '';
-        // List<dynamic> videosJson = data['items'];
+      // List<dynamic> videosJson = data['items'];
 
-        // // Fetch videos from uploads playlist
-        // List<Video> videos = [];
+      // // Fetch videos from uploads playlist
+      // List<Video> videos = [];
 
-        // for (var json in videosJson) {
-        //   videos.add(
-        //     Video.fromMap(json['snippet']),
-        //   );
-        // }
+      // for (var json in videosJson) {
+      //   videos.add(
+      //     Video.fromMap(json['snippet']),
+      //   );
+      // }
 
-        // return videos;
-        return getVideosFromResponse(data);
-      } else if (response.statusCode == 304) {
-       if(kDebugMode)  print("etag is in 304 taken from prefs ${etag}");
-       if(kDebugMode)  print("response code is ${response.statusCode}");
-        // Get the data from the cache
-        final file = await cacheManager.getFileFromCache(uri.toString());
-        List<Video> videos = [];
-        if (file != null) {
-          final cachedData = file.file;
-          // Process the cached data as needed
-          final data = json.decode(cachedData.readAsStringSync());
-          videos = getVideosFromResponse(data);
-        }
-        return videos;
-      } else {
-        throw Exception('Failed to fetch videos: ${response.statusCode}');
-      }
-    } catch (error) {
-      throw Exception('Failed to fetch videos: $error');
+      // return videos;
+      return getVideosFromResponse(data);
+    } else {
+      throw Exception('Failed to fetch videos: ${response.statusCode}');
     }
+  } catch (error) {
+    throw Exception('Failed to fetch videos: $error');
   }
+}
 
   Future<List<Playlist>> fetchPlaylists({required String channelId}) async {
     String keyForEtag = channelId;
