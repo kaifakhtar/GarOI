@@ -6,6 +6,7 @@ class Video {
   final String description;
   final int position;
   final DateTime? dateTime;
+  double completionPercentage; // New property
 
   Video({
     required this.id,
@@ -15,6 +16,7 @@ class Video {
     required this.description,
     required this.position,
     required this.dateTime,
+    this.completionPercentage = 0.0, // Default value is 0.0
   });
 
   factory Video.fromMap(Map<String, dynamic> snippet, Map<String, dynamic> contentDetails) {
@@ -45,6 +47,6 @@ class Video {
 
   @override
   String toString() {
-    return 'Video: {id: $id, title: $title, thumbnailUrl: $thumbnailUrl, channelTitle: $channelTitle, description: $description, position: $position, dateTime: $dateTime}';
+    return 'Video: {id: $id, title: $title, thumbnailUrl: $thumbnailUrl, channelTitle: $channelTitle, description: $description, position: $position, dateTime: $dateTime, completionPercentage: $completionPercentage}';
   }
 }

@@ -107,9 +107,10 @@ class _VideoListTileState extends State<VideoListTile> {
                     bottom: 0,
                     right: 0,
                     child: CircularPercentageIndicator(
-                      percentage: 100,
+                      percentage: widget.video.completionPercentage,
                       radius: 12.r,
-                      progressColor: getPercentageColor(100),
+                      progressColor:
+                          getPercentageColor(widget.video.completionPercentage),
                     ),
                   ),
                 ],
