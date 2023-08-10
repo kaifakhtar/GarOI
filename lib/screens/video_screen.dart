@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:ytyt/colors/app_colors.dart';
@@ -29,6 +30,7 @@ class _VideoScreenState extends State<VideoScreen>
   late YoutubePlayerController _controller;
   late final NoteBloc noteBloc;
   late TabController _tabController;
+  double _savedDuration = 0.0; // Initialize to 0
   final noteCardListScrollController = ScrollController();
   @override
   void initState() {
@@ -43,7 +45,28 @@ class _VideoScreenState extends State<VideoScreen>
         useHybridComposition: false,
         autoPlay: true,
       ),
-    );
+    )..addListener(_videoPlayerListener);
+
+    // Retrieve saved duration and update the state
+    getSavedDuration().then((value) {
+      setState(() {
+        _savedDuration = value;
+      });
+    });
+  }
+
+  void _videoPlayerListener() {
+    if (_controller.value.isReady) {
+      _controller.removeListener(_videoPlayerListener);
+      _controller.seekTo(Duration(milliseconds: _savedDuration.toInt()));
+    }
+  }
+
+  Future<void> initializeVideo() async {
+    double savedDuration = await getSavedDuration();
+    if (savedDuration > 0) {
+      _controller.seekTo(Duration(milliseconds: savedDuration.toInt()));
+    }
   }
 
   @override
@@ -102,6 +125,41 @@ class _VideoScreenState extends State<VideoScreen>
                     left: 0,
                     //width: MediaQuery.of(context).size.width,
                     child: videoPlayerCard(player)),
+                Positioned(
+                  bottom: 16.h,
+                  right: 16.h,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.r),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: PopupMenuButton<String>(
+                      itemBuilder: (BuildContext context) {
+                        return [
+                          PopupMenuItem<String>(
+                            value: 'save',
+                            child: Text(
+                              "Save video progress",
+                              style: GoogleFonts.readexPro(fontSize: 12.sp),
+                            ),
+                          ),
+                        ];
+                      },
+                      onSelected: (String value) {
+                        if (value == 'save') {
+                          saveVideoProgress();
+                        }
+                      },
+                      icon: const Icon(Icons.more_vert),
+                      color: Colors.amber, // Three dots icon
+                    ),
+                  ),
+                )
+
                 // Positioned(
                 //     bottom: 24.h,
                 //     child: Padding(
@@ -359,4 +417,70 @@ class _VideoScreenState extends State<VideoScreen>
   //     ],
   //   );
   // }
+
+  Future<double> getSavedDuration() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double savedDuration =
+        prefs.getDouble('video_duration_${widget.currentVideo.id}') ?? 0.0;
+    return savedDuration;
+  }
+
+  Future<void> saveProgress(
+      String videoId, double percentage, double currentDuration) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (kDebugMode) print(percentage);
+    if (kDebugMode) print(currentDuration);
+    await prefs.setDouble('video_progress_$videoId', percentage);
+    await prefs.setDouble('video_duration_$videoId', currentDuration);
+  }
+
+  double calculatePercentage(double currentDuration, double totalDuration) {
+    return (currentDuration / totalDuration) * 100.0;
+  }
+
+  void showSaveProgressDialog(
+      Video video, double currentDuration, double totalDuration) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Save Progress'),
+          content: const Text('Do you want to save your progress?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                String videoId = widget.currentVideo.id;
+                double percentage =
+                    calculatePercentage(currentDuration, totalDuration);
+
+                await saveProgress(videoId, percentage, currentDuration)
+                    .then((value) {
+                  video.completionPercentage = percentage;
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Progress saved')),
+                  );
+                });
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void saveVideoProgress() {
+    showSaveProgressDialog(
+      widget.currentVideo,
+      _controller.value.position.inMilliseconds.toDouble(),
+      _controller.metadata.duration.inMilliseconds.toDouble(),
+    );
+  }
 }

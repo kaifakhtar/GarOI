@@ -8,7 +8,8 @@ class CircularPercentageIndicator extends StatelessWidget {
   final Color backgroundColor;
   final Color progressColor;
 
-  const CircularPercentageIndicator({super.key, 
+  const CircularPercentageIndicator({
+    super.key,
     required this.percentage,
     this.radius = 50.0,
     this.backgroundColor = Colors.black12,
@@ -34,7 +35,7 @@ class CircularPercentageIndicator extends StatelessWidget {
               percentage.toStringAsFixed(0),
               style: TextStyle(
                 fontSize: 10.sp,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w700,
                 color: progressColor,
               ),
             ),

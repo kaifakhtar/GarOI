@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:ytyt/colors/app_colors.dart';
 
@@ -18,15 +20,27 @@ class VideoListTile extends StatefulWidget {
 }
 
 class _VideoListTileState extends State<VideoListTile> {
+  double completionPercentage = 0.0;
   bool isTapped = false;
   Color getPercentageColor(double percentage) {
     if (percentage < 20) {
       return Colors.red;
     } else if (percentage >= 20 && percentage <= 80) {
-      return const Color.fromARGB(255, 255, 185, 81);
+      return const Color.fromARGB(255, 255, 161, 21);
     } else {
       return Colors.green;
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialisePer();
+  }
+
+  initialisePer() {
+    initializeCompletionPercentage();
   }
 
   @override
@@ -36,7 +50,7 @@ class _VideoListTileState extends State<VideoListTile> {
         Ink(
           color: isTapped ? Colors.amber[100] : Colors.white,
           child: InkWell(
-            splashColor: AppColors.gold.withOpacity(0.2),
+            splashColor: AppColors.gold.withOpacity(0.1),
             onTap: () {
               setState(() {
                 isTapped = true;
@@ -120,5 +134,16 @@ class _VideoListTileState extends State<VideoListTile> {
         ),
       ],
     );
+  }
+
+  Future<void> initializeCompletionPercentage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double savedCompletion =
+        prefs.getDouble('video_progress_${widget.video.id}') ?? 0.0;
+    if (kDebugMode) print("saved per in tile$savedCompletion");
+    setState(() {
+      // completionPercentage = savedCompletion;
+      widget.video.completionPercentage = savedCompletion;
+    });
   }
 }

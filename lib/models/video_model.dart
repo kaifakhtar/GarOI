@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Video {
   final String id;
   final String title;
@@ -19,10 +22,12 @@ class Video {
     this.completionPercentage = 0.0, // Default value is 0.0
   });
 
-  factory Video.fromMap(Map<String, dynamic> snippet, Map<String, dynamic> contentDetails) {
+  factory Video.fromMap(
+      Map<String, dynamic> snippet, Map<String, dynamic> contentDetails) {
     final String videoId = snippet['resourceId']['videoId'];
     final String videoTitle = snippet['title'];
-    final String thumbnailUrl = snippet['thumbnails']?['standard']?['url'] ?? 'https://fastly.picsum.photos/id/130/3807/2538.jpg?hmac=Kl_ZLgNPUBhsKnffomgQvxWA17JhdNLYBnwlPHBEias';
+    final String thumbnailUrl = snippet['thumbnails']?['standard']?['url'] ??
+        'https://fastly.picsum.photos/id/130/3807/2538.jpg?hmac=Kl_ZLgNPUBhsKnffomgQvxWA17JhdNLYBnwlPHBEias';
     final String channelTitle = snippet['channelTitle'];
     final String description = snippet['description'];
     final int position = snippet['position'];
@@ -44,9 +49,15 @@ class Video {
       dateTime: dateTime,
     );
   }
-
   @override
   String toString() {
     return 'Video: {id: $id, title: $title, thumbnailUrl: $thumbnailUrl, channelTitle: $channelTitle, description: $description, position: $position, dateTime: $dateTime, completionPercentage: $completionPercentage}';
+  }
+
+  Future<void> initializeCompletionPercentage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double savedCompletion = prefs.getDouble('video_progress_$id') ?? 0.0;
+    if (kDebugMode) print("Save completed per: " + savedCompletion.toString());
+    completionPercentage = savedCompletion;
   }
 }
