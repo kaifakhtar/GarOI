@@ -8,6 +8,7 @@ import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/video_list.dart/bloc/video_list_bloc.dart';
 
 import '../../../../models/playlistmodal.dart';
+import '../../../../utilities/firebase_analytics.dart';
 import '../../../video_list.dart/view/screens/video_list_screen.dart';
 
 class PlaylistTile extends StatelessWidget {
@@ -25,6 +26,7 @@ class PlaylistTile extends StatelessWidget {
           child: InkWell(
             splashColor: AppColors.gold.withOpacity(.2),
             onTap: () {
+                trackButtonClickedEvent('playlist tile named ${playlist.title}', 'playlist tile named ${playlist.title} tapped');
               final videolistbloc = BlocProvider.of<VideoListBloc>(context);
               videolistbloc.add(VideoListFetch(selectedPlaylist: playlist));
               Navigator.push(

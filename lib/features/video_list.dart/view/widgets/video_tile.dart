@@ -8,6 +8,7 @@ import 'package:ytyt/colors/app_colors.dart';
 
 import '../../../../models/video_model.dart';
 import '../../../../screens/video_screen.dart';
+import '../../../../utilities/firebase_analytics.dart';
 import 'circular_perc_indicator.dart';
 
 class VideoListTile extends StatefulWidget {
@@ -52,6 +53,9 @@ class _VideoListTileState extends State<VideoListTile> {
           child: InkWell(
             splashColor: AppColors.gold.withOpacity(0.1),
             onTap: () {
+              trackButtonClickedEvent(
+                  'Video tile ${widget.video.title}', 'video tile tapped');
+
               setState(() {
                 isTapped = true;
               });

@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../../utilities/firebase_analytics.dart';
 import '../../../video_player/view/widgets/need_permission.dart';
 import '../../cubit/pdf_cubit.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -48,6 +49,7 @@ class _SelectPdfAndViewState extends State<SelectPdfAndView>
                     height: 200,
                     child: ElevatedButton(
                       onPressed: () {
+                          trackButtonClickedEvent('open book button', 'open book button tapped');
                         requestStoragePermission(context).then((value) {
                           if (value) {
                             BlocProvider.of<PdfCubit>(context).selectPdf();

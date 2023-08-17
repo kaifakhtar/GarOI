@@ -67,6 +67,7 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp.router(
+             
               routerConfig: _approuter.config(),
               debugShowCheckedModeBanner: false,
               title: 'Garden of Ilm',
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
                     seedColor: const Color.fromARGB(255, 0, 0, 0)),
                 //    useMaterial3: true,
               ),
+              
               // home: const LoginScreen(),
             ),
           );

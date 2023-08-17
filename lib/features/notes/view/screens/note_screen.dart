@@ -11,6 +11,8 @@ import 'package:ytyt/colors/app_colors.dart';
 import 'package:ytyt/features/notes/bloc/note_bloc.dart';
 import 'package:ytyt/models/note_modal.dart';
 
+import '../../../../utilities/firebase_analytics.dart';
+
 class NoteScreen extends StatefulWidget {
   final String videoId;
   final String videoTitle;
@@ -93,14 +95,14 @@ class _NoteScreenState extends State<NoteScreen> with TickerProviderStateMixin {
             actions: [
               IconButton(
                 onPressed: () {
+                  trackButtonClickedEvent('video pause play from insert note',
+                      'video pause play from insert note');
                   if (widget.ytcontroller.value.isPlaying) {
                     _animController.reverse();
                     widget.ytcontroller.pause();
-                    
                   } else {
-                     _animController.forward();
-                     widget.ytcontroller.play();
-                   
+                    _animController.forward();
+                    widget.ytcontroller.play();
                   }
                 },
                 icon: AnimatedIcon(
@@ -118,8 +120,8 @@ class _NoteScreenState extends State<NoteScreen> with TickerProviderStateMixin {
                 // isButtonEnabled = false;
                 isNoteSaved = true;
 
-                if (kDebugMode)
-                  print("isNoteSaved is inside noteadded state $isNoteSaved");
+                debugPrint(
+                    "isNoteSaved is inside noteadded state $isNoteSaved");
               }
 
               return Column(

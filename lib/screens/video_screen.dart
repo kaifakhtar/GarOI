@@ -15,6 +15,7 @@ import 'package:ytyt/features/notes/view/screens/note_screen.dart';
 import 'package:ytyt/models/video_model.dart';
 
 import '../features/video_player/view/widgets/video_page_view.dart';
+import '../utilities/firebase_analytics.dart';
 
 class VideoScreen extends StatefulWidget {
   final Video currentVideo;
@@ -178,7 +179,7 @@ class _VideoScreenState extends State<VideoScreen>
             showVideoProgressIndicator: true,
             onReady: () {
               //_controller.addListener(listener);
-              if (kDebugMode) print('Player is ready.');
+              debugPrint('Player is ready.');
             },
           ),
         ),
@@ -188,6 +189,7 @@ class _VideoScreenState extends State<VideoScreen>
         backgroundColor: Colors.black,
         heroTag: 'addnote',
         onPressed: () {
+            trackButtonClickedEvent('add note floating button', 'add note floating button tapped');
           _controller.pause();
           Navigator.push(
               context,
